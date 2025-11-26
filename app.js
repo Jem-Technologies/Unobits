@@ -785,3 +785,205 @@
     renderRoute();
   });
 })();
+
+
+
+/* UNOBITS AUTH START */
+(function(){
+  'use strict';
+  // Do not leak globals, expose minimal API under window.auth
+  const APP_ORIGIN = 'https://unobits.app';
+  const API_BASE   = `${APP_ORIGIN}/api`;
+
+  // --- tiny helpers (scoped) ---
+  const $  = (sel, d=document)=> d.querySelector(sel);
+  const $$ = (sel, d=document)=> Array.from(d.querySelectorAll(sel));
+  const on = (el, ev, fn)=> el && el.addEventListener(ev, fn);
+  const slugifyOrg = (s='')=> (s||'').toString()
+      .trim().toLowerCase()
+      .replace(/[^a-z0-9]+/g,'-')
+      .replace(/^-+|-+$/g,'');
+
+  function getOrgFromPath(){
+    try {
+      const parts = location.pathname.split('/').filter(Boolean);
+      const i = parts.findIndex(p => p === 'o' || p === 'organization');
+      if (i >= 0 && parts[i+1]) return parts[i+1].toLowerCase();
+    } catch(_) {}
+    return null;
+  }
+
+  async function apiPost(url, payload){
+    const isAbs = /^https?:\/\//i.test(url);
+    const full  = isAbs ? url : (url.startsWith('/api') ? `${APP_ORIGIN}${url}` : `${API_BASE}${url}`);
+    const res = await fetch(full, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      credentials: 'include', // cookie-based auth
+      body: JSON.stringify(payload||{})
+    });
+    const raw = await res.text();
+    let json = null;
+    try { json = JSON.parse(raw); } catch {}
+    if (!res.ok){
+      const msg = (json && (json.error||json.detail)) || raw || (`HTTP ${res.status}`);
+      throw new Error(msg);
+    }
+    return json || {};
+  }
+
+  // minimal toast (non-invasive)
+  function toast(msg, variant='error'){
+    let el = $('#unbToast');
+    if (!el){
+      el = document.createElement('div');
+      el.id = 'unbToast';
+      el.setAttribute('aria-live','polite');
+      el.className = 'fixed left-1/2 -translate-x-1/2 top-4 z-[999999]';
+      document.body.appendChild(el);
+    }
+    const item = document.createElement('div');
+    item.className = 'mb-2 rounded-lg border px-3 py-2 text-xs shadow-xl bg-white/95 dark:bg-slate-900/95 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100';
+    item.textContent = msg;
+    el.appendChild(item);
+    setTimeout(()=>{ item.style.opacity='0'; item.style.transform='translateY(-4px)'; item.style.transition='all .3s ease'; }, 3200);
+    setTimeout(()=>{ item.remove(); }, 3600);
+  }
+
+  function setBusy(btn, busy){
+    if (!btn) return;
+    if (busy){
+      btn.disabled = true;
+      if (!btn.querySelector('.unb-spinner')){
+        const svg = '<svg class="unb-spinner w-4 h-4 mr-2 inline-block animate-spin" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>';
+        const span = btn.querySelector('.unb-btn-text');
+        if (span) span.insertAdjacentHTML('afterbegin', svg);
+        else btn.insertAdjacentHTML('afterbegin', svg);
+      }
+    } else {
+      btn.disabled = false;
+      const s = btn.querySelector('.unb-spinner');
+      if (s) s.remove();
+    }
+  }
+
+  function openLogin(){ const d = $('#loginModal'); d && d.showModal(); }
+  function openSignup(){ const d = $('#signupModal'); d && d.showModal(); }
+
+  async function doLogin(){
+    const email    = $('#loginEmail')?.value.trim();
+    const password = $('#loginPwd')?.value;
+    let org_slug   = getOrgFromPath();
+    if (!org_slug){
+      const raw = $('#loginOrg')?.value.trim();
+      if (!raw){ toast('Please enter your Organization or leave it blank.'); org_slug = undefined; }
+      else org_slug = slugifyOrg(raw);
+    }
+    if (!email || !password) return toast('Please enter your email and password.');
+    const btn = $('#loginSubmit');
+    try {
+      setBusy(btn, true);
+      await apiPost('/api/login', { email, password, org_slug });
+      location.href = APP_ORIGIN + '/';
+    } catch (err) {
+      toast('Login failed: ' + err.message);
+    } finally {
+      setBusy(btn, false);
+    }
+  }
+
+  async function doSignup(){
+    const name     = $('#suName')?.value.trim();
+    const email    = $('#suEmail')?.value.trim();
+    const company  = $('#suCompany')?.value.trim();
+    const pass1    = $('#suPwd')?.value;
+    const pass2    = $('#suPwd2')?.value;
+    const tosOk    = $('#suTos')?.checked;
+
+    if (!name || !email) return toast('Please fill your name and email.');
+    if ((pass1||'').length < 8) return toast('Password must be at least 8 characters.');
+    if (pass1 !== pass2) return toast('Passwords do not match.');
+    if (!tosOk) return toast('Please accept Terms & Privacy.');
+
+    const btn = $('#signupSubmit');
+    try {
+      setBusy(btn, true);
+      await apiPost('/api/signup', { name, email, company, password: pass1 });
+      toast('Account created! Check your inbox to verify.');
+      $('#signupModal')?.close();
+      openLogin();
+      $('#loginEmail') && ($('#loginEmail').value = email);
+    } catch (err) {
+      toast('Signup failed: ' + err.message);
+    } finally {
+      setBusy(btn, false);
+    }
+  }
+
+  function bindAuth(){
+    const loginModal  = $('#loginModal');
+    const signupModal = $('#signupModal');
+
+    // open triggers if present
+    ['openLogin','openSignup','openLoginM','openSignupM','ctaSignup','ctaSignup2','footerSignup']
+      .forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        on(el, 'click', (e)=>{
+          e.preventDefault();
+          (id.toLowerCase().includes('login') ? openLogin() : openSignup());
+        });
+      });
+
+    // swap links
+    on($('#swapToSignup'), 'click', (e)=>{ e.preventDefault(); loginModal?.close(); openSignup(); });
+    on($('#swapToLogin'),  'click', (e)=>{ e.preventDefault(); signupModal?.close(); openLogin();  });
+
+    // form bindings
+    on($('#loginForm'),  'submit', (e)=>{ e.preventDefault(); doLogin(); });
+    on($('#loginSubmit'),'click',  (e)=>{ e.preventDefault(); doLogin(); });
+    on($('#signupForm'), 'submit', (e)=>{ e.preventDefault(); doSignup(); });
+    on($('#signupSubmit'),'click', (e)=>{ e.preventDefault(); doSignup(); });
+
+    // close on ESC
+    on(document, 'keydown', (e)=>{
+      if (e.key === 'Escape'){
+        if (loginModal?.open) loginModal.close();
+        if (signupModal?.open) signupModal.close();
+      }
+    });
+
+    // click on backdrop closes
+    [loginModal, signupModal].forEach(d => {
+      if (!d) return;
+      on(d, 'click', (e)=>{
+        const rect = d.querySelector('form')?.getBoundingClientRect();
+        if (!rect) return;
+        const x = e.clientX, y = e.clientY;
+        if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom){
+          d.close();
+        }
+      });
+    });
+
+    // open via routes/links
+    function maybeOpenFromURL(){
+      const h = (location.hash||'').toLowerCase();
+      const q = new URLSearchParams(location.search);
+      if (h === '#login'  || q.get('login')  === '1') openLogin();
+      if (h === '#signup' || q.get('signup') === '1') openSignup();
+    }
+    maybeOpenFromURL();
+    on(window, 'hashchange', maybeOpenFromURL);
+
+    // expose minimal API
+    window.auth = Object.freeze({ openLogin, openSignup });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindAuth);
+  } else {
+    bindAuth();
+  }
+})();
+/* UNOBITS AUTH END */
