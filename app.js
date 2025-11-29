@@ -299,6 +299,93 @@
     'Our mission is to provide the "Operating System" for modern enterprises. A sleek, seal-tight environment where data flows freely between finance, marketing, and operations.'
   ];
 
+  const MODULE_OVERVIEW = [
+    {
+      id: 'inbox-chat',
+      group: 'Communication',
+      title: 'Inbox & Chat',
+      caption:
+        'Keep client email, shared inboxes and internal chat in one place so work never falls between tools.',
+      bullets: [
+        'Unified inbox with filters, thread list and full conversation view.',
+        'Channel style chat for teams with file and voice note support.',
+        'Per thread triage actions so you can assign, tag and move work forward.'
+      ]
+    },
+    {
+      id: 'workspace-projects',
+      group: 'Execution',
+      title: 'Workspace & Projects',
+      caption:
+        'Turn every client or initiative into a workspace with projects, tasks and time tracking wired together.',
+      bullets: [
+        'Projects grid plus a global Kanban board across workspaces.',
+        'My Tasks view grouped into Today, Next and Later with drag and drop.',
+        'Built in time tracker with lightweight reporting and CSV export.'
+      ]
+    },
+    {
+      id: 'crm-clients',
+      group: 'Revenue',
+      title: 'CRM & Clients',
+      caption:
+        'Manage the whole client lifecycle from first contact to paid invoice in one operating system.',
+      bullets: [
+        'Drag and drop pipeline board for deals and onboarding stages.',
+        'Client brief pages with brand details, stakeholders and requirements.',
+        'Sequences, reminders and billing tables so no renewal is forgotten.'
+      ]
+    },
+    {
+      id: 'automations',
+      group: 'Automation',
+      title: 'Rules & Automations',
+      caption:
+        'Describe how your business should react to events and let rules keep the system in motion.',
+      bullets: [
+        'Condition and action based rules that watch data and timelines for changes.',
+        'Dry run tester so you can simulate what a rule would do before enabling it.',
+        'System generated log of what ran and when for quick troubleshooting.'
+      ]
+    },
+    {
+      id: 'calendar-notes',
+      group: 'Rhythm',
+      title: 'Calendar & Notes',
+      caption:
+        'Stay on top of meetings and decisions without needing a separate calendar or notes app.',
+      bullets: [
+        'Month, week and day calendar views wired into workspaces and clients.',
+        'Quick add events and lightweight scheduling helpers for busy teams.',
+        'Plain note blocks with tags plus the ability to turn any line into a task.'
+      ]
+    },
+    {
+      id: 'reports-addons',
+      group: 'Insights',
+      title: 'Reports & Add‑Ons',
+      caption:
+        'Bring data and physical space into the same picture with lightweight reporting and digital twin tools.',
+      bullets: [
+        'Built in reports that visualise revenue, workload and pipeline health.',
+        'Desk and space booking grids that mirror real world seating plans.',
+        'Extensible add on surfaces designed to sit next to your everyday work.'
+      ]
+    },
+    {
+      id: 'admin-theme',
+      group: 'Control',
+      title: 'Admin & Theme',
+      caption:
+        'Tune the feel of the OS for different teams with fine grained control over appearance and access.',
+      bullets: [
+        'Theme colour picker, density options and wallpapers for different moods.',
+        'High contrast and reduced motion friendly defaults for accessible workspaces.',
+        'Role aware navigation and settings so Admins, Managers and Clients see the right tools.'
+      ]
+    }
+  ];
+
   // ------------------------
   // PAGE TEMPLATES
   // ------------------------
@@ -369,39 +456,93 @@
   }
 
   function renderFeaturesHub(container) {
-    let cards = '';
-    Object.keys(FEATURE_MODULES).forEach(function (path) {
-      const mod = FEATURE_MODULES[path];
-      cards += `
-        <a href="#${path}" data-route="${path}" class="group rounded-2xl border border-slate-800 bg-slate-950/60 hover:bg-slate-950/90 transition-all p-5 flex flex-col gap-3">
-          <span class="text-[11px] font-mono text-slate-400">${mod.subtitle}</span>
-          <span class="text-lg font-semibold text-white">${mod.title}</span>
-          <p class="text-sm text-slate-400">
-            ${mod.description}
+    const cards = Object.keys(FEATURE_MODULES)
+      .map(function (path) {
+        const mod = FEATURE_MODULES[path];
+        return `
+          <a href="#${path}" data-route="${path}"
+             class="group rounded-2xl border border-slate-800/80 bg-slate-950/70 hover:bg-slate-900 transition-colors p-5 flex flex-col gap-3">
+            <span class="text-[11px] font-mono text-slate-400">${mod.subtitle}</span>
+            <span class="text-lg font-semibold text-white">${mod.title}</span>
+            <p class="text-sm text-slate-400">
+              ${mod.description}
+            </p>
+            <div class="mt-2 inline-flex items-center text-[11px] text-indigo-400">
+              <span class="mr-1">Open module</span>
+              <span aria-hidden="true">&rarr;</span>
+            </div>
+          </a>
+        `;
+      })
+      .join('');
+
+    const moduleCards = MODULE_OVERVIEW.map(function (mod) {
+      const bulletItems = mod.bullets
+        .map(function (text) {
+          return `
+            <li class="flex items-start gap-3">
+              <span class="mt-[3px] inline-flex w-5 h-5 items-center justify-center rounded-full bg-emerald-500/15 text-[11px] text-emerald-400">✓</span>
+              <span class="text-xs md:text-sm text-slate-600 dark:text-slate-200">${text}</span>
+            </li>
+          `;
+        })
+        .join('');
+
+      return `
+        <article class="unb-feature-card glass-panel rounded-2xl p-5 flex flex-col gap-4">
+          <div class="flex items-center justify-between gap-3">
+            <div class="inline-flex items-center gap-2">
+              <div class="unb-feature-icon-ring unb-float inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-900/60">
+                <span class="text-[10px] font-mono text-emerald-300 tracking-[0.16em]">${mod.group}</span>
+              </div>
+              <h3 class="text-sm font-semibold text-slate-100">${mod.title}</h3>
+            </div>
+          </div>
+          <p class="text-xs md:text-sm text-slate-400">
+            ${mod.caption}
           </p>
-          <span class="mt-2 inline-flex items-center text-[11px] text-indigo-400">
-            Open module
-            <span class="ml-1">&rarr;</span>
-          </span>
-        </a>
+          <ul class="space-y-2">
+            ${bulletItems}
+          </ul>
+        </article>
       `;
-    });
+    }).join('');
 
     container.innerHTML = `
-      <section class="pt-10 md:pt-16">
-        <div class="max-w-6xl mx-auto px-6">
-          <header class="mb-12 text-center">
-            <p class="text-[11px] font-mono text-indigo-400 mb-2 uppercase tracking-[0.16em]">System Architecture</p>
-            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3">
-              Every core system, in one stack.
+      <section class="pt-10 md:pt-16 pb-10 border-b border-slate-900/10 dark:border-slate-50/[0.06]">
+        <div class="max-w-6xl mx-auto px-6 space-y-10">
+          <header class="max-w-3xl">
+            <p class="unb-section-kicker text-[11px] font-mono text-indigo-400 mb-3">
+              PLATFORM MODULES
+            </p>
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+              Every major part of your business in one OS.
             </h1>
-            <p class="text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-              Start from a single pane of glass: CRM, analytics, marketing, finance and delivery all share one schema and one login.
+            <p class="text-sm md:text-base text-slate-600 dark:text-slate-300">
+              Start from the modules that matter today and grow into the full CRM, projects, finance and analytics stack without changing systems.
             </p>
           </header>
-
-          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             ${cards}
+          </div>
+        </div>
+      </section>
+
+      <section class="py-12 md:py-16">
+        <div class="max-w-6xl mx-auto px-6 space-y-10">
+          <header class="max-w-3xl">
+            <p class="unb-section-kicker text-[11px] font-mono text-emerald-400 mb-3">
+              INSIDE THE OS
+            </p>
+            <h2 class="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white mb-3">
+              A closer look at what Unobits includes out of the box.
+            </h2>
+            <p class="text-sm md:text-base text-slate-600 dark:text-slate-300">
+              Under the hood you get communication, execution, automation, scheduling and admin controls that are already wired together so teams can just work.
+            </p>
+          </header>
+          <div class="grid gap-5 md:grid-cols-2 unb-feature-grid">
+            ${moduleCards}
           </div>
         </div>
       </section>
