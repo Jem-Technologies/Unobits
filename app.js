@@ -395,28 +395,108 @@
       <div class="absolute inset-0 bg-grid-pattern-light dark:bg-grid-pattern bg-[length:40px_40px] opacity-40 dark:opacity-20 pointer-events-none"></div>
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div class="relative z-10 max-w-5xl mx-auto px-6 text-center pt-12">
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white mb-6 animate-fade-in-up animate-delay-100">
-          Run your entire business from one operating system.
-        </h1>
-
-        <p class="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 animate-fade-in-up animate-delay-200">
-          Unobits unifies CRM, projects, finance, analytics and marketing into a single server‑style workspace built for teams that actually ship.
-        </p>
-
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 animate-fade-in-up animate-delay-300">
-          <a href="#/pricing" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-full bg-indigo-600 text-white text-sm font-semibold shadow-lg shadow-indigo-500/30 hover:bg-indigo-500 transition">
-            Get started
-            <span class="ml-2 inline-block">&rarr;</span>
-          </a>
-          <a href="#/features" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-full border border-slate-300 dark:border-slate-700 text-sm font-semibold text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-900/40 transition">
-            Explore the platform
-          </a>
+      <div class="relative z-10 max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <!-- Left side -->
+        <div class="text-center md:text-left">
+          <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-900 dark:text-white mb-6 animate-fade-in-up text-glow">
+            Your Business, Unified.
+          </h1>
+          <p class="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto md:mx-0 mb-8 animate-fade-in-up animate-delay-100">
+            Unobits is the single source of truth for your entire operation. CRM, projects, billing, and marketing—all in one place.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mb-8 animate-fade-in-up animate-delay-200">
+            <a href="#/pricing" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-full bg-indigo-600 text-white text-sm font-semibold shadow-lg shadow-indigo-500/30 hover:bg-indigo-500 transition">
+              Get started for free
+              <span class="ml-2 inline-block">&rarr;</span>
+            </a>
+          </div>
+          <p class="text-[11px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 animate-fade-in-up animate-delay-300">
+              No credit card · 14‑day free trial
+            </p>
         </div>
 
-        <p class="text-[11px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-          No credit card · 14‑day free trial · Cancel anytime
-        </p>
+        <!-- Right side (Animation) -->
+        <div class="relative w-full h-96 flex items-center justify-center animate-fade-in-up animate-delay-200">
+          <div class="absolute w-40 h-40 rounded-full bg-indigo-500/20 blur-2xl"></div>
+          <div class="orbiting-circle" style="animation-delay: -1s;"></div>
+          <div class="orbiting-circle" style="animation-delay: -2s; background-color: #00f0ff;"></div>
+          <div class="orbiting-circle" style="animation-delay: -3s; background-color: #f472b6;"></div>
+          <div class="orbiting-circle" style="animation-delay: -4s; background-color: #34d399;"></div>
+          <div class="text-white font-semibold text-lg">Unobits</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">Everything you need, nothing you don’t.</h2>
+        <p class="text-slate-400 mb-12">A complete toolkit to run your business, beautifully integrated.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Communication -->
+          <div class="glass-panel rounded-2xl p-6 text-left">
+            <h3 class="text-lg font-semibold text-white mb-2">Communication</h3>
+            <p class="text-sm text-slate-300">Inbox, Chat, and Email all in one place.</p>
+          </div>
+          <!-- Workspace -->
+          <div class="glass-panel rounded-2xl p-6 text-left">
+            <h3 class="text-lg font-semibold text-white mb-2">Workspace</h3>
+            <p class="text-sm text-slate-300">Projects, Boards, Office, and Time Tracking.</p>
+          </div>
+          <!-- Productivity -->
+          <div class="glass-panel rounded-2xl p-6 text-left">
+            <h3 class="text-lg font-semibold text-white mb-2">Productivity</h3>
+            <p class="text-sm text-slate-300">Calendar, Notes, Files, and Automations.</p>
+          </div>
+          <!-- Clients & Business -->
+          <div class="glass-panel rounded-2xl p-6 text-left">
+            <h3 class="text-lg font-semibold text-white mb-2">Clients & Business</h3>
+            <p class="text-sm text-slate-300">CRM, Onboarding, Sequences, Builder, and Billing.</p>
+          </div>
+          <!-- Add-Ons -->
+          <div class="glass-panel rounded-2xl p-6 text-left">
+            <h3 class="text-lg font-semibold text-white mb-2">Add-Ons</h3>
+            <p class="text-sm text-slate-300">Digital Twin, Web Elements, and Reports.</p>
+          </div>
+          <!-- Integrations -->
+          <div class="glass-panel rounded-2xl p-6 text-left">
+            <h3 class="text-lg font-semibold text-white mb-2">Integrations</h3>
+            <p class="text-sm text-slate-300">Client Portal, Team Portal, and Help Center.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Section -->
+    <section class="py-16">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">Explore Unobits</h2>
+        <p class="text-slate-400 mb-12">Learn more about the platform and how it can help your business.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <a href="#/features" class="glass-panel rounded-2xl p-6 text-left hover:bg-slate-900/50 transition-colors">
+            <h3 class="text-lg font-semibold text-white mb-2">Features</h3>
+            <p class="text-sm text-slate-300">Discover the full range of Unobits' capabilities.</p>
+          </a>
+          <a href="#/pricing" class="glass-panel rounded-2xl p-6 text-left hover:bg-slate-900/50 transition-colors">
+            <h3 class="text-lg font-semibold text-white mb-2">Pricing</h3>
+            <p class="text-sm text-slate-300">Find the perfect plan for your business.</p>
+          </a>
+          <a href="#/about" class="glass-panel rounded-2xl p-6 text-left hover:bg-slate-900/50 transition-colors">
+            <h3 class="text-lg font-semibold text-white mb-2">About Us</h3>
+            <p class="text-sm text-slate-300">Learn about our mission and our team.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Block Section -->
+    <section class="py-16 bg-slate-900/50">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">See Unobits in Action</h2>
+        <p class="text-slate-400 mb-8">Click around on the interactive demo to get a feel for the platform.</p>
+        <div class="relative w-full h-[600px] rounded-2xl bg-slate-900 border border-slate-800 p-8">
+          <p class="text-slate-500">[Interactive Demo Placeholder]</p>
+        </div>
       </div>
     </section>
 
