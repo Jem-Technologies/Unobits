@@ -62,3 +62,9 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* Add a subtle hover effect to the glass panels */
+.glass-panel:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+}
