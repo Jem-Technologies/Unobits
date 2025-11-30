@@ -141,6 +141,39 @@
         box-shadow: 0 18px 50px rgba(148, 163, 184, 0.45);
         border-bottom-color: rgba(148, 163, 184, 0.6);
       }
+
+      /* Animation for the hero section */
+      @keyframes orbit {
+        0% {
+          transform: rotate(0deg) translateX(100px) rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg) translateX(100px) rotate(-360deg);
+        }
+      }
+
+      .orbiting-circle {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #4f46e5;
+        animation: orbit 10s linear infinite;
+      }
+
+      /* Text animation for the hero title */
+      .text-glow {
+        animation: text-glow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes text-glow {
+        from {
+          text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #4f46e5, 0 0 40px #4f46e5, 0 0 50px #4f46e5, 0 0 60px #4f46e5, 0 0 70px #4f46e5;
+        }
+        to {
+          text-shadow: 0 0 20px #fff, 0 0 30px #00f0ff, 0 0 40px #00f0ff, 0 0 50px #00f0ff, 0 0 60px #00f0ff, 0 0 70px #00f0ff, 0 0 80px #00f0ff;
+        }
+      }
     </style>
     <style id="unb-auth-backdrop">
 /* Auth modal backdrop */
@@ -478,132 +511,56 @@ dialog.unb-modal::backdrop {
       <main id="app-main" class="flex-1 pt-16 pb-16"></main>
 
       <!-- FOOTER -->
-      <footer
-        class="border-t border-slate-900/10 dark:border-slate-50/[0.06] bg-white/80 dark:bg-black/60 backdrop-blur"
-      >
-        <div
-          class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-xs text-slate-500 dark:text-slate-400"
-        >
-          <div class="grid gap-8 md:grid-cols-4 mb-8">
-            <div class="space-y-3">
-              <div class="flex items-center gap-2">
-                <div
-                  class="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-sky-500 flex items-center justify-center"
-                >
-                  <span class="text-[11px] font-mono text-white">U</span>
+      <footer class="border-t border-slate-900/10 dark:border-slate-50/[0.06] bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 text-sm">
+            <div class="col-span-2">
+              <a href="#/" class="flex items-center gap-3 mb-4">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-sky-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/40">
+                  <span class="text-xs font-mono text-white">U</span>
                 </div>
-                <span class="font-semibold text-slate-900 dark:text-white"
-                  >Unobits</span
-                >
-              </div>
-              <p>
-                The enterprise operating system for agencies, studios and modern
-                operators.
-              </p>
+                <div class="flex flex-col leading-tight">
+                  <span class="text-sm font-semibold tracking-tight text-white">Unobits</span>
+                  <span class="text-[10px] uppercase tracking-[0.22em] text-slate-400">Enterprise OS</span>
+                </div>
+              </a>
+              <p class="text-slate-400 text-xs max-w-xs">The single source of truth for your entire operation.</p>
             </div>
 
-            <div class="space-y-2">
-              <p
-                class="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.16em]"
-              >
-                Product
-              </p>
-              <ul class="space-y-1">
-                <li>
-                  <a
-                    href="#/features"
-                    class="hover:text-slate-900 dark:hover:text-slate-200"
-                    >Features</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#/pricing"
-                    class="hover:text-slate-900 dark:hover:text-slate-200"
-                    >Pricing</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#/crm"
-                    class="hover:text-slate-900 dark:hover:text-slate-200"
-                    >CRM Suite</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#/wordpress"
-                    class="hover:text-slate-900 dark:hover:text-slate-200"
-                    >WordPress Sync</a
-                  >
-                </li>
+            <div>
+              <h3 class="font-semibold text-white mb-4">Product</h3>
+              <ul class="space-y-2">
+                <li><a href="#/features" class="text-slate-400 hover:text-white">Features</a></li>
+                <li><a href="#/pricing" class="text-slate-400 hover:text-white">Pricing</a></li>
+                <li><a href="#/integrations" class="text-slate-400 hover:text-white">Integrations</a></li>
               </ul>
             </div>
-
-            <div class="space-y-2">
-              <p
-                class="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.16em]"
-              >
-                Company
-              </p>
-              <ul class="space-y-1">
-                <li>
-                  <a
-                    href="#/about"
-                    class="hover:text-slate-900 dark:hover:text-slate-200"
-                    >About</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#/contact"
-                    class="hover:text-slate-900 dark:hover:text-slate-200"
-                    >Contact</a
-                  >
-                </li>
+            <div>
+              <h3 class="font-semibold text-white mb-4">Company</h3>
+              <ul class="space-y-2">
+                <li><a href="#/about" class="text-slate-400 hover:text-white">About</a></li>
+                <li><a href="#/blog" class="text-slate-400 hover:text-white">Blog</a></li>
+                <li><a href="#/careers" class="text-slate-400 hover:text-white">Careers</a></li>
               </ul>
             </div>
-
-            <div class="space-y-2">
-              <p
-                class="text-[11px] font-semibold text-slate-500 uppercase tracking-[0.16em]"
-              >
-                Contact
-              </p>
-              <ul class="space-y-1">
-                <li>
-                  Email:
-                  <a
-                    href="mailto:support@unobits.com"
-                    class="hover:text-slate-900 dark:hover:text-slate-200"
-                    >support@unobits.com</a
-                  >
-                </li>
+            <div>
+              <h3 class="font-semibold text-white mb-4">Resources</h3>
+              <ul class="space-y-2">
+                <li><a href="#/docs" class="text-slate-400 hover:text-white">Docs</a></li>
+                <li><a href="#/support" class="text-slate-400 hover:text-white">Support</a></li>
+                <li><a href="#/contact" class="text-slate-400 hover:text-white">Contact</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="font-semibold text-white mb-4">Legal</h3>
+              <ul class="space-y-2">
+                <li><a href="#" class="text-slate-400 hover:text-white">Privacy Policy</a></li>
+                <li><a href="#" class="text-slate-400 hover:text-white">Terms of Service</a></li>
               </ul>
             </div>
           </div>
-
-          <div
-            class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px]"
-          >
-            <p>&copy; 2024 Unobits Systems Inc. All rights reserved.</p>
-            <div class="flex flex-wrap gap-4">
-              <a
-                href="#"
-                class="hover:text-slate-900 dark:hover:text-slate-300"
-                >Privacy Policy</a
-              >
-              <a
-                href="#"
-                class="hover:text-slate-900 dark:hover:text-slate-300"
-                >Terms of Service</a
-              >
-              <a
-                href="#"
-                class="hover:text-slate-900 dark:hover:text-slate-300"
-                >Security Status</a
-              >
-            </div>
+          <div class="mt-12 pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
+            <p>&copy; 2024 Unobits. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -611,7 +568,7 @@ dialog.unb-modal::backdrop {
 
     <!-- Vanilla JS app -->
     <script src="./app.js"></script>
-  
+
 <!-- ===== Auth Modals (injected) ===== -->
 <dialog id="loginModal" class="unb-modal rounded-lg p-0 w-full max-w-md bg-transparent">
   <form id="loginForm" method="dialog" class="mx-auto w-full">
