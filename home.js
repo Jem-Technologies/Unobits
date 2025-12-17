@@ -27,7 +27,7 @@
   // ---------- Theme ----------
   // [YOUR CODE] - Keep this entire section. It's perfect.
   const THEME_KEY = 'pref-theme';
-  const APP_ORIGIN = 'https://unobits.app';
+  const APP_ORIGIN = document.querySelector('meta[name="unobits:app-origin"]')?.content?.trim() || 'https://unobits.app';
   const API_BASE   = `${APP_ORIGIN}/api`;
   const prefersDark = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   function applyTheme(theme){
@@ -318,6 +318,11 @@
     }
   });
 
+  // Expose helpers for other scripts
+  function openLogin(){ document.querySelector('#loginModal')?.showModal(); }
+  function openSignup(){ document.querySelector('#signupModal')?.showModal(); }
+  window.auth = Object.freeze({ openLogin, openSignup });
+
   // ---------- AUTH Forms ----------
   const loginForm = $('#loginForm');
   const loginBtn  = $('#loginSubmit');
@@ -336,7 +341,7 @@
     });
   }
   async function doLogin(pathOrg){
-    const email = $('#loginId')?.value.trim();
+    const email = $('#loginEmail')?.value.trim();
     const password = $('#loginPwd')?.value.trim();
 
     let org_slug = pathOrg;
@@ -349,7 +354,7 @@
     try {
       setBusy(btn, true);
       await apiPost('/api/login', { email, password, org_slug });
-      location.href = 'https://unobits.app/';
+      location.href = APP_ORIGIN + '/';
     } catch (err) {
       toast(`Login failed: ${err.message}`);
     } finally {
@@ -400,7 +405,7 @@
     try {
       setBusy(btn, true);
       await apiPost('/api/signup', { name, email, password: pass1, org_name: company });
-      location.href = 'https://unobits.app/';
+      location.href = APP_ORIGIN + '/';
     } catch (err) {
       toast(`Signup failed: ${err.message}`);
     } finally {

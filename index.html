@@ -3,6 +3,42 @@
   <head>
     <meta charset="utf-8" />
     <title>Unobits | The Enterprise Operating System</title>
+    <link rel="preconnect" href="https://unobits.app" crossorigin>
+
+    <link rel="canonical" href="https://unobits.com/" />
+    <meta name="description" content="Unobits is the enterprise operating system that unifies CRM, projects, tasks, email, chat, calendar, billing, reporting, automations, and client portals into one workspace." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Unobits" />
+    <meta property="og:title" content="Unobits — The Enterprise Operating System" />
+    <meta property="og:description" content="Replace dozens of tabs with a single, integrated workspace for your business." />
+    <meta property="og:url" content="https://unobits.com/" />
+    <meta property="og:image" content="https://unobits.com/assets/opengraph.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Unobits — The Enterprise Operating System" />
+    <meta name="twitter:description" content="Run CRM, projects, email, chat, calendar, billing and more—together." />
+    <meta name="twitter:image" content="https://unobits.com/assets/opengraph.jpg" />
+
+    <!-- App origin for cross-origin auth handoff -->
+    <meta name="unobits:app-origin" content="https://unobits.app" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Unobits",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "url": "https://unobits.com/",
+      "image": "https://unobits.com/assets/opengraph.jpg",
+      "offers": { "@type":"Offer", "price":"0", "priceCurrency":"USD" },
+      "creator": { "@type":"Organization", "name":"Unobits" }
+    }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Tailwind (CDN) -->
@@ -142,25 +178,6 @@
         border-bottom-color: rgba(148, 163, 184, 0.6);
       }
 
-      /* Animation for the hero section */
-      @keyframes orbit {
-        0% {
-          transform: rotate(0deg) translateX(100px) rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg) translateX(100px) rotate(-360deg);
-        }
-      }
-
-      .orbiting-circle {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: #4f46e5;
-        animation: orbit 10s linear infinite;
-      }
-
       /* Text animation for the hero title */
       .text-glow {
         animation: text-glow 2s ease-in-out infinite alternate;
@@ -168,10 +185,10 @@
 
       @keyframes text-glow {
         from {
-          text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #4f46e5, 0 0 40px #4f46e5, 0 0 50px #4f46e5, 0 0 60px #4f46e5, 0 0 70px #4f46e5;
+          text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 3px #4f46e5, 0 0 40px #4f46e5, 0 0 5px #4f46e5, 0 0 6px #4f46e5, 0 0 7px #4f46e5;
         }
         to {
-          text-shadow: 0 0 20px #fff, 0 0 30px #00f0ff, 0 0 40px #00f0ff, 0 0 50px #00f0ff, 0 0 60px #00f0ff, 0 0 70px #00f0ff, 0 0 80px #00f0ff;
+          text-shadow: 0 0 2px #fff, 0 0 3px #00f0ff, 0 0 4px #00f0ff, 0 0 5px #00f0ff, 0 0 6px #00f0ff, 0 0 7px #00f0ff, 0 0 8px #00f0ff;
         }
       }
     </style>
@@ -567,7 +584,8 @@ dialog.unb-modal::backdrop {
     </div>
 
     <!-- Vanilla JS app -->
-    <script src="./app.js"></script>
+    <script src="./app.js" defer></script>
+    <script src="./home.js" defer></script>
 
 <!-- ===== Auth Modals (injected) ===== -->
 <dialog id="loginModal" class="unb-modal rounded-lg p-0 w-full max-w-md bg-transparent">
