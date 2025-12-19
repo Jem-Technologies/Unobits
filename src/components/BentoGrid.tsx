@@ -1,9 +1,14 @@
 'use client';
 import React from 'react';
-import { motion } from 'framer-motion';
-import { LayoutDashboard, FileText, Smartphone, Zap } from 'lucide-react'; // Changed Trello to LayoutDashboard
+import { motion, MotionProps } from 'framer-motion';
+import { LayoutDashboard, FileText, Smartphone, Zap } from 'lucide-react';
 
-const BentoCard = ({ className, children, ...props }) => (
+interface BentoCardProps extends MotionProps {
+  className?: string;
+  children: React.ReactNode;
+}
+
+const BentoCard: React.FC<BentoCardProps> = ({ className, children, ...props }) => (
   <motion.div
     className={`bg-slate-50 dark:bg-slate-800/50 rounded-3xl p-6 flex flex-col justify-between transition-transform duration-300 ease-in-out hover:-translate-y-2 ${className}`}
     whileHover={{
@@ -26,7 +31,6 @@ const BentoGrid = () => {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-8">
-          {/* Card 1 (Large - Project Management) */}
           <BentoCard className="md:col-span-2 row-span-1">
             <LayoutDashboard className="w-12 h-12 mb-4 text-neon-teal" />
             <h3 className="text-2xl font-bold text-headings dark:text-white">Project Management</h3>
@@ -46,14 +50,12 @@ const BentoGrid = () => {
             </div>
           </BentoCard>
 
-          {/* Card 2 (Small - Docs) */}
           <BentoCard className="md:col-span-1 row-span-1">
             <FileText className="w-12 h-12 mb-4 text-neon-teal" />
             <h3 className="text-2xl font-bold text-headings dark:text-white">Docs</h3>
             <p className="mt-2 text-body-copy dark:text-slate-400">Real-time collaboration. Create, edit, and share documents with your team, all in one place.</p>
           </BentoCard>
 
-          {/* Card 3 (Tall - Mobile App) */}
           <BentoCard className="md:col-span-1 row-span-2">
              <Smartphone className="w-12 h-12 mb-4 text-neon-teal" />
             <h3 className="text-2xl font-bold text-headings dark:text-white">Mobile App</h3>
@@ -65,7 +67,6 @@ const BentoGrid = () => {
              </div>
           </BentoCard>
 
-          {/* Card 4 (Medium - Automations) */}
           <BentoCard className="md:col-span-2 row-span-1">
             <Zap className="w-12 h-12 mb-4 text-neon-teal" />
             <h3 className="text-2xl font-bold text-headings dark:text-white">Automations</h3>
