@@ -3,13 +3,18 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
-const LoginModal = ({ onSwitchToSignup, onClose }) => {
+interface LoginModalProps {
+  onSwitchToSignup: () => void;
+  onClose: () => void;
+}
+
+const LoginModal = ({ onSwitchToSignup, onClose }: LoginModalProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setLoading(true);
