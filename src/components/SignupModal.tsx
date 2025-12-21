@@ -1,11 +1,23 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
+import { apiPost, getAppOrigin, slugifyOrg } from '../lib/clientAuth';
 
 interface SignupModalProps {
   onSwitchToLogin: () => void;
   onClose: () => void;
+}
+
+type MsgType = 'error' | 'notice' | '';
+
+function pwdScore(p: string): number {
+  let s = 0;
+  if (p.length >= 8) s++;
+  if (/[A-Z]/.test(p)) s++;
+  if (/[a-z]/.test(p)) s++;
+  if (/[0-9\W]/.test(p)) s++;
+  return s; // 0..4
 }
 
 const SignupModal = ({ onSwitchToLogin, onClose }: SignupModalProps) => {
@@ -14,146 +26,187 @@ const SignupModal = ({ onSwitchToLogin, onClose }: SignupModalProps) => {
   const [company, setCompany] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [tosOk, setTosOk] = useState(false);
+
+  const [msg, setMsg] = useState<string>('');
+  const [msgType, setMsgType] = useState<MsgType>('');
   const [loading, setLoading] = useState(false);
+
+  const strength = useMemo(() => pwdScore(password), [password]);
+
+  const showMsg = (type: MsgType, text: string) => {
+    setMsg(text);
+    setMsgType(type);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // Validation: Check passwords match before sending request
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
-    
-    setError('');
+    setMsg('');
+    setMsgType('');
     setLoading(true);
 
     try {
-      const response = await fetch('https://unobits.app/api/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, company, password }),
-      });
-
-      if (!response.ok) {
-        // Safe error parsing
-        let errorMessage = 'Signup failed';
-        try {
-            const errorData = await response.json();
-            errorMessage = errorData.message || errorMessage;
-        } catch {
-            errorMessage = `Error: ${response.status} ${response.statusText}`;
-        }
-        throw new Error(errorMessage);
+      if (!name || !email || !company) {
+        showMsg('error', 'Please complete all required fields.');
+        return;
+      }
+      if ((password || '').length < 8) {
+        showMsg('error', 'Password must be at least 8 characters.');
+        return;
+      }
+      if (password !== confirmPassword) {
+        showMsg('error', 'Passwords do not match.');
+        return;
+      }
+      if (!tosOk) {
+        showMsg('error', 'Please accept Terms & Privacy.');
+        return;
       }
 
-      console.log('Signup successful for:', email);
-      // Success! Close the modal.
-      // Do NOT set loading false here, as component unmounts immediately.
-      onClose();
-      
-    } catch (err) {
-      // TypeScript Fix: Safe error access
-      const message = err instanceof Error ? err.message : 'Failed to sign up. Please try again.';
-      setError(message);
-      // Only stop loading if we are staying on this screen (error state)
+      await apiPost('/signup', {
+        name,
+        email,
+        password,
+        org_name: company,
+      });
+
+      showMsg('notice', 'Account created. Redirecting…');
+      setTimeout(() => {
+        window.location.href = getAppOrigin() + '/';
+      }, 300);
+    } catch (err: any) {
+      showMsg('error', err?.message || 'Unable to sign up.');
+    } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" role="dialog" aria-modal="true">
       <motion.div
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 50, opacity: 0 }}
-        className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl w-full max-w-md relative border border-slate-200 dark:border-slate-800"
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 8 }}
+        className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900"
       >
-        <button 
-          onClick={onClose} 
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-          aria-label="Close modal"
+        <button
+          aria-label="Close"
+          onClick={onClose}
+          className="absolute right-3 top-3 rounded p-2 text-body-copy hover:text-headings dark:text-slate-300"
         >
-          <X size={24} />
+          <X size={20} />
         </button>
 
-        <h2 className="text-3xl font-bold text-headings dark:text-white mb-2 text-center">Create Your Account</h2>
-        <p className="text-body-copy dark:text-slate-400 mb-6 text-center">Start your 14-day free trial today.</p>
+        <h2 className="mb-1 text-center text-2xl font-bold text-headings dark:text-white">Create your account</h2>
+        <p className="mb-6 text-center text-sm text-body-copy dark:text-slate-400">
+          Start your 14‑day free trial. No credit card required.
+        </p>
 
-        <form onSubmit={handleSubmit}>
-          {error && <p className="text-red-500 mb-4 text-sm text-center" role="alert">{error}</p>}
-          
-          <div className="grid grid-cols-2 gap-4">
-            <input 
-              value={name} 
-              onChange={(e) => setName(e.target.value)} 
-              placeholder="Full Name" 
-              aria-label="Full Name"
-              autoComplete="name"
-              type="text" 
-              className="w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" 
-              required 
-            />
-            <input 
-              value={company} 
-              onChange={(e) => setCompany(e.target.value)} 
-              placeholder="Company Name" 
-              aria-label="Company Name"
-              autoComplete="organization"
-              type="text" 
-              className="w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" 
-              required 
+        {/* Message box */}
+        <div id="signupFormMsg" role="alert" aria-live="polite" hidden={!msg}
+             className={`mt-2 text-sm ${msgType === 'error' ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
+          {msg}
+        </div>
+
+        <form id="signupForm" onSubmit={handleSubmit} className="mt-4 space-y-4">
+          {/* Name */}
+          <div>
+            <label htmlFor="suName" className="block text-sm font-medium text-headings dark:text-slate-200">
+              Full name
+            </label>
+            <input
+              id="suName"
+              type="text"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm text-headings placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-neon-teal dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
             />
           </div>
-          
-          <input 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            placeholder="Email" 
-            aria-label="Email Address"
-            autoComplete="email"
-            type="email" 
-            className="mt-4 w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" 
-            required 
-          />
-          
-          <input 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            placeholder="Password" 
-            aria-label="Password"
-            autoComplete="new-password"
-            type="password" 
-            className="mt-4 w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" 
-            required 
-          />
-          
-          <input 
-            value={confirmPassword} 
-            onChange={(e) => setConfirmPassword(e.target.value)} 
-            placeholder="Confirm Password" 
-            aria-label="Confirm Password"
-            autoComplete="new-password"
-            type="password" 
-            className="mt-4 w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" 
-            required 
-          />
-          
+
+          {/* Email */}
+          <div>
+            <label htmlFor="suEmail" className="block text-sm font-medium text-headings dark:text-slate-200">
+              Work email
+            </label>
+            <input
+              id="suEmail"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm text-headings placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-neon-teal dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+            />
+          </div>
+
+          {/* Company / Organization */}
+          <div>
+            <label htmlFor="suCompany" className="block text-sm font-medium text-headings dark:text-slate-200">
+              Organization
+            </label>
+            <input
+              id="suCompany"
+              type="text"
+              required
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+              placeholder="Your company"
+              className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm text-headings placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-neon-teal dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label htmlFor="suPwd" className="block text-sm font-medium text-headings dark:text-slate-200">
+              Password
+            </label>
+            <input
+              id="suPwd"
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm text-headings placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-neon-teal dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+            />
+            <meter id="pwdStrength" min={0} max={4} value={strength} className="mt-2 w-full"></meter>
+          </div>
+
+          {/* Confirm password */}
+          <div>
+            <label htmlFor="suPwd2" className="block text-sm font-medium text-headings dark:text-slate-200">
+              Confirm password
+            </label>
+            <input
+              id="suPwd2"
+              type="password"
+              required
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm text-headings placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-neon-teal dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+            />
+          </div>
+
+          {/* TOS */}
+          <label className="mt-2 flex items-start gap-2 text-sm text-body-copy dark:text-slate-300">
+            <input id="suTos" type="checkbox" checked={tosOk} onChange={(e) => setTosOk(e.target.checked)} />
+            <span>I agree to the <a href="/legal/terms" target="_blank" className="underline">Terms</a> and <a href="/legal/privacy" target="_blank" className="underline">Privacy Policy</a>.</span>
+          </label>
+
           <button
+            id="signupSubmit"
             type="submit"
-            className="w-full mt-6 bg-neon-teal text-black py-3 rounded-lg font-semibold hover:bg-opacity-80 transition-colors disabled:opacity-50"
             disabled={loading}
+            className="group relative inline-flex w-full items-center justify-center rounded-lg bg-headings px-4 py-2.5 text-sm font-semibold text-white outline-none ring-0 transition hover:bg-black disabled:opacity-60 dark:bg-white dark:text-black dark:hover:bg-slate-200"
           >
-            {loading ? 'Creating Account...' : 'Sign Up'}
+            <span className="unb-btn-text" data-loading={loading ? '1' : '0'}>
+              {loading ? 'Please wait…' : 'Create account'}
+            </span>
           </button>
         </form>
 
         <p className="mt-6 text-center text-sm text-body-copy dark:text-slate-400">
           Already have an account?{' '}
-          <button onClick={onSwitchToLogin} className="text-neon-teal hover:underline font-semibold">
+          <button onClick={onSwitchToLogin} className="font-semibold text-neon-teal hover:underline">
             Login
           </button>
         </p>
