@@ -19,10 +19,13 @@ const SignupModal = ({ onSwitchToLogin, onClose }: SignupModalProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Validation: Check passwords match before sending request
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
+    
     setError('');
     setLoading(true);
 
@@ -36,15 +39,27 @@ const SignupModal = ({ onSwitchToLogin, onClose }: SignupModalProps) => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Signup failed');
+        // Safe error parsing
+        let errorMessage = 'Signup failed';
+        try {
+            const errorData = await response.json();
+            errorMessage = errorData.message || errorMessage;
+        } catch {
+            errorMessage = `Error: ${response.status} ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
       }
 
       console.log('Signup successful for:', email);
+      // Success! Close the modal.
+      // Do NOT set loading false here, as component unmounts immediately.
       onClose();
+      
     } catch (err) {
-      setError(err.message || 'Failed to sign up. Please try again.');
-    } finally {
+      // TypeScript Fix: Safe error access
+      const message = err instanceof Error ? err.message : 'Failed to sign up. Please try again.';
+      setError(message);
+      // Only stop loading if we are staying on this screen (error state)
       setLoading(false);
     }
   };
@@ -57,7 +72,11 @@ const SignupModal = ({ onSwitchToLogin, onClose }: SignupModalProps) => {
         exit={{ y: 50, opacity: 0 }}
         className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl w-full max-w-md relative border border-slate-200 dark:border-slate-800"
       >
-        <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+        <button 
+          onClick={onClose} 
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+          aria-label="Close modal"
+        >
           <X size={24} />
         </button>
 
@@ -65,14 +84,64 @@ const SignupModal = ({ onSwitchToLogin, onClose }: SignupModalProps) => {
         <p className="text-body-copy dark:text-slate-400 mb-6 text-center">Start your 14-day free trial today.</p>
 
         <form onSubmit={handleSubmit}>
-          {error && <p className="text-red-500 mb-4 text-sm text-center">{error}</p>}
+          {error && <p className="text-red-500 mb-4 text-sm text-center" role="alert">{error}</p>}
+          
           <div className="grid grid-cols-2 gap-4">
-            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Full Name" type="text" className="w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" required />
-            <input value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Company Name" type="text" className="w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" required />
+            <input 
+              value={name} 
+              onChange={(e) => setName(e.target.value)} 
+              placeholder="Full Name" 
+              aria-label="Full Name"
+              autoComplete="name"
+              type="text" 
+              className="w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" 
+              required 
+            />
+            <input 
+              value={company} 
+              onChange={(e) => setCompany(e.target.value)} 
+              placeholder="Company Name" 
+              aria-label="Company Name"
+              autoComplete="organization"
+              type="text" 
+              className="w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" 
+              required 
+            />
           </div>
-          <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" type="email" className="mt-4 w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" required />
-          <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="mt-4 w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" required />
-          <input value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" type="password" className="mt-4 w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" required />
+          
+          <input 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            placeholder="Email" 
+            aria-label="Email Address"
+            autoComplete="email"
+            type="email" 
+            className="mt-4 w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" 
+            required 
+          />
+          
+          <input 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            placeholder="Password" 
+            aria-label="Password"
+            autoComplete="new-password"
+            type="password" 
+            className="mt-4 w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" 
+            required 
+          />
+          
+          <input 
+            value={confirmPassword} 
+            onChange={(e) => setConfirmPassword(e.target.value)} 
+            placeholder="Confirm Password" 
+            aria-label="Confirm Password"
+            autoComplete="new-password"
+            type="password" 
+            className="mt-4 w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none" 
+            required 
+          />
+          
           <button
             type="submit"
             className="w-full mt-6 bg-neon-teal text-black py-3 rounded-lg font-semibold hover:bg-opacity-80 transition-colors disabled:opacity-50"
