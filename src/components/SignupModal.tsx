@@ -3,7 +3,12 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
-const SignupModal = ({ onSwitchToLogin, onClose }) => {
+interface SignupModalProps {
+  onSwitchToLogin: () => void;
+  onClose: () => void;
+}
+
+const SignupModal = ({ onSwitchToLogin, onClose }: SignupModalProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
@@ -12,7 +17,7 @@ const SignupModal = ({ onSwitchToLogin, onClose }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setError('Passwords do not match');
