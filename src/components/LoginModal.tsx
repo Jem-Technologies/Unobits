@@ -14,7 +14,7 @@ const LoginModal = ({ onSwitchToSignup, onClose }: LoginModalProps) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -29,16 +29,26 @@ const LoginModal = ({ onSwitchToSignup, onClose }: LoginModalProps) => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
+        // Safe JSON parsing
+        let errorMessage = 'Login failed';
+        try {
+            const errorData = await response.json();
+            errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+            // Fallback if response wasn't JSON
+            errorMessage = `Error: ${response.status} ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
       }
 
       console.log('Login successful');
-      onClose();
+      onClose(); // Component unmounts, we stop here.
+      
     } catch (err) {
-      setError(err.message || 'Failed to log in. Please check your credentials.');
-    } finally {
-      setLoading(false);
+      // TypeScript fix: Cast 'err' to Error
+      const message = err instanceof Error ? err.message : 'An unknown error occurred';
+      setError(message);
+      setLoading(false); // We only revert loading state if the modal remains open
     }
   };
 
