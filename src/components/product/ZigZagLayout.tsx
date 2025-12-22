@@ -1,8 +1,7 @@
-// src/components/product/ZigZagLayout.tsx
 'use client';
 
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { LucideIcon } from 'lucide-react';
 import { CheckCircle } from 'lucide-react';
 
@@ -18,7 +17,7 @@ type ZigZagLayoutProps = {
   features: Feature[];
 };
 
-const sectionVariants = {
+const sectionVariants: Variants = {
   hidden: { opacity: 0, y: 50 },
   visible: {
     opacity: 1,
