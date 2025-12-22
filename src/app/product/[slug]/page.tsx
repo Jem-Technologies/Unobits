@@ -31,7 +31,7 @@ const sampleFeatures = [
       'Integrates with Zapier for external connections.',
     ],
   },
-    {
+  {
     name: 'Integrated CRM',
     title: 'A single source of truth for your customers',
     description:
@@ -45,9 +45,18 @@ const sampleFeatures = [
   },
 ];
 
+// Required for static export with dynamic routes
+export async function generateStaticParams() {
+  return [
+    { slug: 'workspace' },
+    { slug: 'crm' },
+    { slug: 'automations' },
+  ];
+}
 
-export default function ProductPage({ params }: { params: { slug: string } }) {
-  const productName = capitalize(params.slug.replace(/-/g, ' '));
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const productName = capitalize(slug.replace(/-/g, ' '));
 
   return (
     <div className="bg-white dark:bg-slate-900">
@@ -57,7 +66,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           subtitle={`Learn everything about the ${productName} feature and how it can supercharge your workflow.`}
           breadcrumbs={[
             { name: 'Product', href: '#' }, // A generic product landing page might exist
-            { name: productName, href: `/product/${params.slug}` },
+            { name: productName, href: `/product/${slug}` },
           ]}
         />
 
