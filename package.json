@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx opennext build",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "@heroicons/react": "^2",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.562.0",
     "next": "16.1.0",

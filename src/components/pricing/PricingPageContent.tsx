@@ -1,7 +1,7 @@
 // src/components/pricing/PricingPageContent.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/20/solid';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -211,27 +211,48 @@ export default function PricingPageContent() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-slate-800 bg-white dark:bg-slate-900">
-                  {sections.map(section => (
-                    <tr key={section.name} className="bg-gray-50 dark:bg-slate-800/50">
-                      <th scope="colgroup" colSpan={4} className="py-2 pl-6 pr-3 text-left text-sm font-semibold text-headings dark:text-white">
+                {sections.map((section) => (
+                  <Fragment key={section.name}>
+                    <tr className="bg-gray-50 dark:bg-slate-800/50">
+                      <th
+                        scope="colgroup"
+                        /* If you ever change tier count, use 1 + tiers.length */
+                        colSpan={4}
+                        className="py-3.5 pl-6 pr-3 text-left text-sm font-semibold text-headings dark:text-white"
+                      >
                         {section.name}
                       </th>
                     </tr>
-                    {section.features.map(feature => (
+
+                    {section.features.map((feature) => (
                       <tr key={feature.name}>
-                        <td className="whitespace-nowrap py-4 pl-6 pr-3 text-sm font-medium text-headings dark:text-white">{feature.name}</td>
-                        {tiers.map(tier => (
-                          <td key={`${tier.id}-${feature.name}`} className="whitespace-nowrap px-3 py-4 text-center text-sm text-body-copy dark:text-slate-400">
-                            {typeof feature.tiers[tier.name as keyof typeof feature.tiers] === 'boolean' ? (
-                              feature.tiers[tier.name as keyof typeof feature.tiers] ? <CheckIcon className="mx-auto h-5 w-5 text-neon-teal" /> : <XMarkIcon className="mx-auto h-5 w-5 text-gray-400" />
-                            ) : (
-                              <span>{feature.tiers[tier.name as keyof typeof feature.tiers]}</span>
-                            )}
-                          </td>
-                        ))}
+                        <td className="whitespace-nowrap py-4 pl-6 pr-3 text-sm font-medium text-headings dark:text-white">
+                          {feature.name}
+                        </td>
+
+                        {tiers.map((tier) => {
+                          const v = feature.tiers[tier.name as keyof typeof feature.tiers];
+                          return (
+                            <td
+                              key={`${tier.id}-${feature.name}`}
+                              className="whitespace-nowrap px-3 py-4 text-center text-sm text-body-copy dark:text-slate-400"
+                            >
+                              {typeof v === 'boolean' ? (
+                                v ? (
+                                  <CheckIcon className="mx-auto h-5 w-5 text-neon-teal" aria-hidden="true" />
+                                ) : (
+                                  <XMarkIcon className="mx-auto h-5 w-5 text-gray-400" aria-hidden="true" />
+                                )
+                              ) : (
+                                <span>{v}</span>
+                              )}
+                            </td>
+                          );
+                        })}
                       </tr>
                     ))}
-                  ))}
+                  </Fragment>
+                ))}
                 </tbody>
               </table>
             </div>
