@@ -19,9 +19,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <meta name="unobits:app-origin" content={process.env.NEXT_PUBLIC_APP_ORIGIN ?? 'https://unobits.app'} />
-      </head>
       <body className={`${poppins.className} bg-white dark:bg-black text-body-copy`}>
         {children}
       </body>

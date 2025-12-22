@@ -1,155 +1,93 @@
 'use client';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
-import { apiPost, getAppOrigin, getOrgFromPath, slugifyOrg } from '../lib/clientAuth';
-import { usePathname } from 'next/navigation';
 
-interface LoginModalProps {
-  onSwitchToSignup: () => void;
-  onClose: () => void;
-}
-
-type MsgType = 'error' | 'notice' | '';
-
-const LoginModal = ({ onSwitchToSignup, onClose }: LoginModalProps) => {
-  const pathname = usePathname();
-  const orgFromPath = useMemo(() => getOrgFromPath(pathname || undefined), [pathname]);
-
+const LoginModal = ({ onSwitchToSignup, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [orgInput, setOrgInput] = useState('');
-  const [msg, setMsg] = useState<string>('');
-  const [msgType, setMsgType] = useState<MsgType>('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Autofill/hide org field if present in /o/[slug]
-  useEffect(() => {
-    if (orgFromPath) {
-      setOrgInput(orgFromPath);
-    }
-  }, [orgFromPath]);
-
-  const showMsg = (type: MsgType, text: string) => {
-    setMsg(text);
-    setMsgType(type);
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setMsg('');
-    setMsgType('');
+    setError('');
     setLoading(true);
 
     try {
-      const org_slug = orgFromPath || slugifyOrg(orgInput);
-      if (!org_slug) {
-        showMsg('error', 'Please enter your Organization.');
-        return;
+      const response = await fetch('https://unobits.app/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
       }
-      await apiPost('/login', { email, password, org_slug });
-      showMsg('notice', 'Signed in. Redirecting…');
-      // Small delay to let the message render before redirect
-      setTimeout(() => {
-        window.location.href = getAppOrigin() + '/';
-      }, 300);
-    } catch (err: any) {
-      showMsg('error', err?.message || 'Unable to sign in.');
+
+      console.log('Login successful');
+      onClose();
+    } catch (err) {
+      setError(err.message || 'Failed to log in. Please check your credentials.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" role="dialog" aria-modal="true">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 8 }}
-        className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900"
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 50, opacity: 0 }}
+        className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl w-full max-w-md relative border border-slate-200 dark:border-slate-800"
       >
-        <button
-          aria-label="Close"
-          onClick={onClose}
-          className="absolute right-3 top-3 rounded p-2 text-body-copy hover:text-headings dark:text-slate-300"
-        >
-          <X size={20} />
+        <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+          <X size={24} />
         </button>
 
-        <h2 className="mb-1 text-center text-2xl font-bold text-headings dark:text-white">Welcome back</h2>
-        <p className="mb-6 text-center text-sm text-body-copy dark:text-slate-400">
-          Sign in to continue to UNOBITS.
-        </p>
+        <h2 className="text-3xl font-bold text-headings dark:text-white mb-2 text-center">Welcome Back</h2>
+        <p className="text-body-copy dark:text-slate-400 mb-6 text-center">Log in to access your dashboard.</p>
 
-        {/* Message box */}
-        <div id="loginFormMsg" role="alert" aria-live="polite" hidden={!msg}
-             className={`mt-2 text-sm ${msgType === 'error' ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
-          {msg}
-        </div>
-
-        <form id="loginForm" onSubmit={handleSubmit} className="mt-4 space-y-4">
-          {/* Email */}
-          <div>
-            <label htmlFor="loginEmail" className="block text-sm font-medium text-headings dark:text-slate-200">
-              Email
-            </label>
+        <form onSubmit={handleSubmit}>
+          {error && <p className="text-red-500 mb-4 text-sm text-center">{error}</p>}
+          <div className="mb-4">
+            <label className="block text-body-copy dark:text-slate-300 mb-2 font-semibold" htmlFor="email">Email</label>
             <input
-              id="loginEmail"
               type="email"
-              required
+              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm text-headings placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-neon-teal dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+              className="w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none"
+              required
             />
           </div>
-
-          {/* Password */}
-          <div>
-            <label htmlFor="loginPwd" className="block text-sm font-medium text-headings dark:text-slate-200">
-              Password
-            </label>
+          <div className="mb-6">
+            <label className="block text-body-copy dark:text-slate-300 mb-2 font-semibold" htmlFor="password">Password</label>
             <input
-              id="loginPwd"
               type="password"
-              required
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm text-headings placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-neon-teal dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+              className="w-full p-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-neon-teal outline-none"
+              required
             />
           </div>
-
-          {/* Organization (required if not in path) */}
-          {!orgFromPath && (
-            <div>
-              <label htmlFor="loginOrg" className="block text-sm font-medium text-headings dark:text-slate-200">
-                Organization
-              </label>
-              <input
-                id="loginOrg"
-                required={!orgFromPath}
-                value={orgInput}
-                onChange={(e) => setOrgInput(e.target.value)}
-                placeholder="your-company"
-                className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2.5 text-sm text-headings placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-neon-teal dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
-              />
-            </div>
-          )}
-
           <button
-            id="loginSubmit"
             type="submit"
+            className="w-full bg-neon-teal text-black py-3 rounded-lg font-semibold hover:bg-opacity-80 transition-colors disabled:opacity-50"
             disabled={loading}
-            className="group relative inline-flex w-full items-center justify-center rounded-lg bg-headings px-4 py-2.5 text-sm font-semibold text-white outline-none ring-0 transition hover:bg-black disabled:opacity-60 dark:bg-white dark:text-black dark:hover:bg-slate-200"
           >
-            <span className="unb-btn-text" data-loading={loading ? '1' : '0'}>
-              {loading ? 'Please wait…' : 'Sign in'}
-            </span>
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
         <p className="mt-6 text-center text-sm text-body-copy dark:text-slate-400">
           Don't have an account?{' '}
-          <button onClick={onSwitchToSignup} className="font-semibold text-neon-teal hover:underline">
+          <button onClick={onSwitchToSignup} className="text-neon-teal hover:underline font-semibold">
             Sign up
           </button>
         </p>

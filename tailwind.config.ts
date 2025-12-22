@@ -12,6 +12,7 @@ const config: Config = {
       colors: {
         'black': '#000000',
         'neon-teal': '#00D4FF',
+        'obsidian': '#050507',
         'headings': '#111827',
         'body-copy': '#4B5563',
         'borders': '#E5E7EB',

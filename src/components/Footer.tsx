@@ -24,17 +24,17 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-headings dark:text-white">Product</h3>
             <ul className="mt-4 space-y-3">
-              <li><a href="#" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Features</a></li>
-              <li><a href="#" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Pricing</a></li>
-              <li><a href="#" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Mobile App</a></li>
-              <li><a href="#" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Desktop App</a></li>
+              <li><a href="/product/features" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Features</a></li>
+              <li><a href="/pricing" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Pricing</a></li>
+              <li><a href="/product/mobile-app" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Mobile App</a></li>
+              <li><a href="/product/desktop-app" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Desktop App</a></li>
             </ul>
           </div>
 
           <div>
             <h3 className="font-semibold text-headings dark:text-white">Resources</h3>
             <ul className="mt-4 space-y-3">
-              <li><a href="#" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Blog</a></li>
+              <li><a href="/resources" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Blog</a></li>
               <li><a href="#" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Community</a></li>
               <li><a href="#" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Developers (API)</a></li>
               <li><a href="#" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Help Center</a></li>
