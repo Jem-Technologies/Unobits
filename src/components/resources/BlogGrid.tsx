@@ -1,9 +1,8 @@
-// src/components/resources/BlogGrid.tsx
 'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 
 type Post = {
@@ -27,7 +26,7 @@ type BlogGridProps = {
   posts: Post[];
 };
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
