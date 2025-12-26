@@ -1,0 +1,46 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        'black': '#000000',
+        'neon-teal': '#00D4FF',
+        'electric-indigo': '#4f46e5',
+        'obsidian': '#050507',
+        'headings': '#111827',
+        'body-copy': '#4B5563',
+        'borders': '#E5E7EB',
+        'slate': {
+           50: '#f8fafc',
+           100: '#f1f5f9',
+           200: '#e2e8f0',
+           300: '#cbd5e1',
+           400: '#94a3b8',
+           500: '#64748b',
+           600: '#475569',
+           700: '#334155',
+           800: '#1e293b',
+           900: '#0f172a',
+        },
+      },
+      fontFamily: {
+        sans: ["Poppins", "sans-serif"],
+      },
+      letterSpacing: {
+        tight: "-0.02em",
+      },
+      lineHeight: {
+        "body": "1.6",
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;
