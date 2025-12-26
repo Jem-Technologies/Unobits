@@ -32,3 +32,4 @@ The main application code is located in the `src` directory.
 -   `src/app`: Contains the main page (`page.tsx`), layout (`layout.tsx`), and global styles (`globals.css`).
 -   `src/components`: Contains all the reusable React components that make up the different sections of the website (e.g., `Hero.tsx`, `Navbar.tsx`, `Pricing.tsx`).
 -   `public`: Contains static assets like images and SVGs (e.g., `logo.svg`).
+-   `Author`: Evans James
