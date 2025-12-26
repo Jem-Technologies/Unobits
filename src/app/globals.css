@@ -1,5 +1,79 @@
 @import "tailwindcss";
 
+@layer base {
+  /*
+    Dark-first safety net
+    --------------------
+    Prevent any visible "white flash" while the theme class is being initialized.
+    The real theme colors are still controlled by Tailwind + the early theme-init script.
+  */
+  html {
+    background: #000;
+  }
+
+  body {
+    background: #000;
+  }
+
+  /* Shared UI tokens (used for consistent glass/blur surfaces). */
+  :root {
+    --u-glass-bg: rgba(255, 255, 255, 0.72);
+    --u-glass-border: rgba(15, 23, 42, 0.12);
+    --u-glass-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
+  }
+
+  .dark {
+    --u-glass-bg: rgba(0, 0, 0, 0.72);
+    --u-glass-border: rgba(255, 255, 255, 0.10);
+    --u-glass-shadow: 0 20px 70px rgba(0, 0, 0, 0.65);
+  }
+}
+
+@layer components {
+  /* Full-page wrapper for marketing pages. */
+  .u-page {
+    min-height: 100vh;
+    @apply bg-white text-body-copy;
+  }
+
+  .dark .u-page {
+    @apply bg-black text-slate-200;
+
+    /* Subtle depth so inner pages don't feel empty. */
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(0, 212, 255, 0.10), transparent 45%),
+      radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.06), transparent 40%);
+    background-attachment: fixed;
+  }
+
+  /* Primary surface / card panel. */
+  .u-surface {
+    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+  }
+
+  .dark .u-surface {
+    @apply border-white/10 bg-obsidian;
+  }
+
+  /* Softer nested surface (used for inset callouts). */
+  .u-surface-soft {
+    @apply rounded-2xl bg-slate-50;
+  }
+
+  .dark .u-surface-soft {
+    @apply bg-white/5;
+  }
+
+  /* Glass/blur surface (navbar + flyouts). */
+  .u-glass {
+    background: var(--u-glass-bg);
+    border-color: var(--u-glass-border);
+    box-shadow: var(--u-glass-shadow);
+    -webkit-backdrop-filter: blur(22px);
+    backdrop-filter: blur(22px);
+  }
+}
+
 @layer utilities {
   /* Tailwind v4 doesn't ship with the line-clamp plugin by default.
      Provide the one utility class we use across the marketing site. */
@@ -10,5 +84,6 @@
     -webkit-line-clamp: 3;
   }
 }
+
 /* Load our Tailwind v3-style config for v4 using the @config compatibility directive. */
 @config "../../tailwind.config.ts";

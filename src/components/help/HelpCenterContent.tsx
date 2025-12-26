@@ -114,7 +114,7 @@ export default function HelpCenterContent() {
   return (
     <div className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <div className="u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <h2 className="text-xl font-bold text-headings dark:text-white">Search help articles</h2>
@@ -127,7 +127,7 @@ export default function HelpCenterContent() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search…"
-                className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-headings placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-neon-teal dark:border-slate-800 dark:bg-slate-900 dark:text-white"
+                className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-headings placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-neon-teal dark:border-white/10 dark:bg-obsidian dark:text-white"
               />
             </div>
           </div>
@@ -137,7 +137,7 @@ export default function HelpCenterContent() {
           {results.map((cat) => (
             <div
               key={cat.title}
-              className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+              className="u-surface p-8 shadow-sm dark:border-white/10 dark:bg-obsidian"
             >
               <h3 className="text-xl font-bold text-headings dark:text-white">{cat.title}</h3>
               <p className="mt-2 text-body-copy dark:text-slate-400">{cat.description}</p>
@@ -154,7 +154,7 @@ export default function HelpCenterContent() {
                         className="flex w-full items-start justify-between gap-6 text-left"
                       >
                         <span className="text-sm font-semibold text-headings dark:text-white">{faq.question}</span>
-                        <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full border border-slate-200 text-slate-500 dark:border-slate-800 dark:text-slate-400">
+                        <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full border border-slate-200 text-slate-500 dark:border-white/10 dark:text-slate-400">
                           {isOpen ? '−' : '+'}
                         </span>
                       </button>

@@ -22,7 +22,7 @@ const points = [
 
 export default function ClientPortalPage() {
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="u-page">
       <Navbar />
       <main className="isolate">
         <InnerPageHero
@@ -32,10 +32,10 @@ export default function ClientPortalPage() {
         />
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10">
-          <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="u-surface p-8 shadow-sm dark:border-white/10 dark:bg-obsidian">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {points.map((p) => (
-                <div key={p.title} className="rounded-2xl bg-slate-50 p-6 dark:bg-slate-800/50">
+                <div key={p.title} className="u-surface-soft p-6">
                   <h3 className="text-lg font-bold text-headings dark:text-white">{p.title}</h3>
                   <p className="mt-2 text-body-copy dark:text-slate-400">{p.description}</p>
                 </div>
@@ -48,13 +48,13 @@ export default function ClientPortalPage() {
               </OpenSignupButton>
               <Link
                 href="/product/client-portal"
-                className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-white/10 dark:bg-obsidian dark:text-white dark:hover:bg-white/5"
               >
                 Portal feature details
               </Link>
               <Link
                 href="/pricing"
-                className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-white/10 dark:bg-obsidian dark:text-white dark:hover:bg-white/5"
               >
                 View pricing
               </Link>

@@ -20,7 +20,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
   if (!page) notFound();
 
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="u-page">
       <Navbar />
       <main className="isolate">
         <InnerPageHero
@@ -33,7 +33,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
         />
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <p className="text-body-copy dark:text-slate-400 max-w-3xl">{page.summary}</p>
               <div className="flex flex-col sm:flex-row gap-3">
@@ -42,7 +42,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
                 </OpenSignupButton>
                 <Link
                   href="/product"
-                  className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                  className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-white/10 dark:bg-obsidian dark:text-white dark:hover:bg-white/5"
                 >
                   Explore modules
                 </Link>
@@ -57,7 +57,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
               {page.sections.map((s) => (
                 <div
                   key={s.title}
-                  className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+                  className="u-surface p-8 shadow-sm dark:border-white/10 dark:bg-obsidian"
                 >
                   <h2 className="text-xl font-bold text-headings dark:text-white">{s.title}</h2>
                   <p className="mt-3 text-body-copy dark:text-slate-400">{s.description}</p>
@@ -84,7 +84,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
               </div>
               <Link
                 href="/product"
-                className="hidden sm:inline-flex rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                className="hidden sm:inline-flex rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-white/10 dark:bg-obsidian dark:text-white dark:hover:bg-white/5"
               >
                 View all modules
               </Link>
@@ -95,7 +95,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
                 <Link
                   key={m.href}
                   href={m.href}
-                  className="group rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-neon-teal dark:border-slate-800 dark:bg-slate-900"
+                  className="group rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-neon-teal dark:border-white/10 dark:bg-obsidian"
                 >
                   <h3 className="text-lg font-bold text-headings group-hover:text-neon-teal dark:text-white">
                     {m.title}

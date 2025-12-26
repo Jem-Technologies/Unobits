@@ -41,7 +41,7 @@ const Pricing = () => {
             <div
               key={tier.id}
               className={`bg-white dark:bg-slate-800/50 rounded-2xl p-8 border ${
-                tier.highlight ? 'border-neon-teal scale-[1.02]' : 'border-slate-200 dark:border-slate-800'
+                tier.highlight ? 'border-neon-teal scale-[1.02]' : 'border-slate-200 dark:border-white/10'
               } relative flex flex-col`}
             >
               {tier.highlight && (

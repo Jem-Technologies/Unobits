@@ -5,7 +5,7 @@ import HelpCenterContent from '@/components/help/HelpCenterContent';
 
 export default function HelpCenterPage() {
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="u-page">
       <Navbar />
       <main className="isolate">
         <InnerPageHero

@@ -13,7 +13,7 @@ const ChaosVsOrder = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Left Side (The Old Way) */}
-          <div className="bg-white dark:bg-slate-800/20 border border-slate-200 dark:border-slate-800 p-8 rounded-xl text-center">
+          <div className="bg-white dark:bg-slate-800/20 border border-slate-200 dark:border-white/10 p-8 rounded-xl text-center">
              <div className="relative h-48 flex justify-center items-center">
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
@@ -66,7 +66,7 @@ const ChaosVsOrder = () => {
           </div>
 
           {/* Right Side (The UNOBITS Way) */}
-           <div className="bg-white dark:bg-slate-800/20 border border-slate-200 dark:border-slate-800 p-8 rounded-xl text-center">
+           <div className="bg-white dark:bg-slate-800/20 border border-slate-200 dark:border-white/10 p-8 rounded-xl text-center">
              <div className="relative h-48 flex justify-center items-center">
                 <motion.div
                   initial={{ scale: 0.5, opacity: 0 }}

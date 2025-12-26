@@ -7,7 +7,7 @@ import { COMPANY, SITE_NAME, SUPPORT_EMAIL, SUPPORT_PHONE, SOCIAL } from '@/lib/
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-50 dark:bg-black border-t border-slate-200 dark:border-slate-800">
+    <footer className="bg-slate-50 dark:bg-black border-t border-slate-200 dark:border-white/10">
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           <div className="col-span-2 md:col-span-1">
@@ -87,7 +87,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-slate-200 dark:border-slate-800 pt-8 text-center">
+        <div className="mt-12 border-t border-slate-200 dark:border-white/10 pt-8 text-center">
           <p className="text-sm text-body-copy dark:text-slate-500">&copy; {new Date().getFullYear()} {COMPANY.legalName}. All rights reserved.</p>
         </div>
       </div>

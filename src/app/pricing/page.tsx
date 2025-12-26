@@ -5,7 +5,7 @@ import PricingPageContent from '@/components/pricing/PricingPageContent';
 
 export default function PricingPage() {
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="u-page">
       <Navbar />
       <main className="isolate">
         <InnerPageHero

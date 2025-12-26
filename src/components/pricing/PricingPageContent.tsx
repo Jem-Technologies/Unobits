@@ -79,7 +79,7 @@ export default function PricingPageContent() {
   const tiers = useMemo(() => PRICING_TIERS, []);
 
   return (
-    <div className="bg-white dark:bg-slate-900 py-24 sm:py-32">
+    <div className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
           <p className="text-base font-semibold leading-7 text-neon-teal">Save 20% with yearly billing</p>
@@ -105,7 +105,7 @@ export default function PricingPageContent() {
 
         {/* Billing toggle */}
         <div className="mt-16 flex justify-center">
-          <div className="relative grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-sm font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-slate-700">
+          <div className="relative grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-sm font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-white/10">
             <span
               className="absolute bg-neon-teal/50 dark:bg-neon-teal/30 rounded-full transition-transform duration-300 ease-in-out"
               style={{
@@ -137,8 +137,8 @@ export default function PricingPageContent() {
             <div
               key={tier.id}
               className={classNames(
-                tier.highlight ? 'ring-2 ring-neon-teal' : 'ring-1 ring-gray-200 dark:ring-slate-800',
-                tier.name === 'Custom' ? 'bg-obsidian text-white' : 'bg-white dark:bg-slate-800/50',
+                tier.highlight ? 'ring-2 ring-neon-teal' : 'ring-1 ring-gray-200 dark:ring-white/10',
+                tier.name === 'Custom' ? 'bg-obsidian text-white' : 'bg-white dark:bg-white/5',
                 'rounded-3xl p-8 xl:p-10 transform hover:scale-[1.02] transition-transform duration-300'
               )}
             >
@@ -224,9 +224,9 @@ export default function PricingPageContent() {
             </p>
           </div>
 
-          <div className="mt-12 overflow-x-auto rounded-xl ring-1 ring-gray-200 dark:ring-slate-800">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-800">
-              <thead className="bg-gray-50 dark:bg-slate-800/50">
+          <div className="mt-12 overflow-x-auto rounded-xl ring-1 ring-gray-200 dark:ring-white/10">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-white/10">
+              <thead className="bg-gray-50 dark:bg-white/5">
                 <tr>
                   <th scope="col" className="py-3.5 pl-6 pr-3 text-left text-sm font-semibold text-headings dark:text-white lg:w-1/3">
                     Feature
@@ -239,10 +239,10 @@ export default function PricingPageContent() {
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-gray-200 dark:divide-slate-800 bg-white dark:bg-slate-900">
+              <tbody className="divide-y divide-gray-200 dark:divide-white/10 bg-white dark:bg-obsidian">
                 {comparisonSections.map((section) => (
                   <Fragment key={section.name}>
-                    <tr className="bg-gray-50 dark:bg-slate-800/50">
+                    <tr className="bg-gray-50 dark:bg-white/5">
                       <th
                         scope="colgroup"
                         colSpan={1 + tiers.length}

@@ -29,7 +29,7 @@ export default function BlogGrid({ posts }: BlogGridProps) {
   const categoryHref = (category: string) => `/resources/category/${slugify(category)}`;
 
   return (
-    <div className="bg-white dark:bg-slate-900 py-24 sm:py-32">
+    <div className="py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-headings dark:text-white sm:text-4xl">From the blog</h2>
@@ -69,7 +69,7 @@ export default function BlogGrid({ posts }: BlogGridProps) {
                   </time>
                   <Link
                     href={categoryHref(post.category)}
-                    className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                    className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100 dark:bg-white/5 dark:text-slate-200 dark:hover:bg-white/10"
                   >
                     {post.category}
                   </Link>

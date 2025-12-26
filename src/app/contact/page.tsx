@@ -7,7 +7,7 @@ import ContactForm from '@/components/contact/ContactForm';
 
 export default function ContactPage() {
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="u-page">
       <Navbar />
       <main className="isolate">
         <InnerPageHero

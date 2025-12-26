@@ -8,7 +8,7 @@ import { PRODUCT_CATEGORIES } from '@/lib/productData';
 
 export default function ProductLandingPage() {
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="u-page">
       <Navbar />
       <main className="isolate">
         <InnerPageHero
@@ -18,7 +18,7 @@ export default function ProductLandingPage() {
         />
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <h2 className="text-xl font-bold text-headings dark:text-white">One tab. One data model. One workflow.</h2>
@@ -32,7 +32,7 @@ export default function ProductLandingPage() {
                 </OpenSignupButton>
                 <Link
                   href="/pricing"
-                  className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                  className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-white/10 dark:bg-obsidian dark:text-white dark:hover:bg-white/5"
                 >
                   View pricing
                 </Link>
@@ -52,7 +52,7 @@ export default function ProductLandingPage() {
               </div>
               <Link
                 href="/solutions"
-                className="hidden sm:inline-flex rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                className="hidden sm:inline-flex rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-white/10 dark:bg-obsidian dark:text-white dark:hover:bg-white/5"
               >
                 See solutions
               </Link>
@@ -71,7 +71,7 @@ export default function ProductLandingPage() {
                       <Link
                         key={p.slug}
                         href={`/product/${p.slug}`}
-                        className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-neon-teal dark:border-slate-800 dark:bg-slate-900"
+                        className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-neon-teal dark:border-white/10 dark:bg-obsidian"
                       >
                         <div className="flex items-start justify-between gap-4">
                           <div>

@@ -22,7 +22,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   if (!page) notFound();
 
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="u-page">
       <Navbar />
       <main className="isolate">
         <InnerPageHero
@@ -35,7 +35,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         />
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
             <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
               <div>
                 <p className="text-sm font-semibold text-neon-teal">{page.category}</p>
@@ -63,7 +63,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 </div>
                 <Link
                   href="/product"
-                  className="hidden sm:inline-flex rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                  className="hidden sm:inline-flex rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-white/10 dark:bg-obsidian dark:text-white dark:hover:bg-white/5"
                 >
                   View all modules
                 </Link>
@@ -77,7 +77,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                     <Link
                       key={s}
                       href={`/product/${s}`}
-                      className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-neon-teal dark:border-slate-800 dark:bg-slate-900"
+                      className="group rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-neon-teal dark:border-white/10 dark:bg-obsidian"
                     >
                       <p className="text-xs font-semibold text-neon-teal">{rel.category}</p>
                       <h3 className="mt-2 text-lg font-bold text-headings group-hover:text-neon-teal dark:text-white">

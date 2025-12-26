@@ -87,7 +87,7 @@ const SignupModal = ({ onSwitchToLogin, onClose }: SignupModalProps) => {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 8 }}
-        className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900"
+        className="relative w-full max-w-md u-surface p-6 shadow-xl"
       >
         <button
           aria-label="Close"

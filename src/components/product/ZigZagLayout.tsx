@@ -30,7 +30,7 @@ const sectionVariants: Variants = {
 
 export default function ZigZagLayout({ features }: ZigZagLayoutProps) {
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div>
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
         <div className="mx-auto max-w-2xl lg:max-w-none">
           <div className="text-center">
@@ -67,7 +67,7 @@ export default function ZigZagLayout({ features }: ZigZagLayoutProps) {
                     ))}
                   </ul>
                 </div>
-                <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100 dark:bg-slate-800">
+                <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100 dark:bg-white/5">
                   <Image
                     src={feature.imageUrl}
                     alt={feature.title}

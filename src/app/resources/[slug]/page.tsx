@@ -23,7 +23,7 @@ export default async function ResourcePostPage({ params }: { params: Promise<{ s
   const categorySlug = slugify(post.category);
 
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="u-page">
       <Navbar />
       <main className="isolate">
         <InnerPageHero
@@ -37,7 +37,7 @@ export default async function ResourcePostPage({ params }: { params: Promise<{ s
         />
 
         <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10">
-          <div className="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden dark:border-slate-800 dark:bg-slate-900">
+          <div className="u-surface shadow-sm overflow-hidden dark:border-white/10 dark:bg-obsidian">
             <div className="relative aspect-[16/9] bg-slate-100 dark:bg-slate-800">
               <Image
                 src={post.image}
@@ -81,7 +81,7 @@ export default async function ResourcePostPage({ params }: { params: Promise<{ s
                 </Link>
                 <Link
                   href="/resources"
-                  className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                  className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-white/10 dark:bg-obsidian dark:text-white dark:hover:bg-white/5"
                 >
                   Back to resources
                 </Link>

@@ -18,7 +18,7 @@ const badgeClass = (s: string) =>
 
 export default function StatusPage() {
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="u-page">
       <Navbar />
       <main className="isolate">
         <InnerPageHero
@@ -28,7 +28,7 @@ export default function StatusPage() {
         />
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <h2 className="text-xl font-bold text-headings dark:text-white">Platform components</h2>
@@ -48,8 +48,8 @@ export default function StatusPage() {
 
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
-              <div className="divide-y divide-slate-200 dark:divide-slate-800">
+            <div className="overflow-hidden u-surface shadow-sm dark:border-white/10 dark:bg-obsidian">
+              <div className="divide-y divide-slate-200 dark:divide-white/10">
                 {components.map((c) => (
                   <div key={c.name} className="flex flex-col gap-2 p-6 sm:flex-row sm:items-center sm:justify-between">
                     <div>

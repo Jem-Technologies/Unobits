@@ -24,7 +24,7 @@ export default async function ResourceCategoryPage({ params }: { params: Promise
   const posts = RESOURCE_POSTS.filter((p) => p.category === category);
 
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="u-page">
       <Navbar />
       <main className="isolate">
         <InnerPageHero
@@ -37,14 +37,14 @@ export default async function ResourceCategoryPage({ params }: { params: Promise
         />
 
         <section className="max-w-7xl mx-auto px-6 lg:px-8 -mt-10">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <p className="text-body-copy dark:text-slate-400">
                 Showing <span className="font-semibold text-headings dark:text-white">{posts.length}</span> post{posts.length === 1 ? '' : 's'}.
               </p>
               <Link
                 href="/resources"
-                className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-white/10 dark:bg-obsidian dark:text-white dark:hover:bg-white/5"
               >
                 Back to resources
               </Link>

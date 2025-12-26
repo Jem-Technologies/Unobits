@@ -11,7 +11,7 @@ const categoryHref = (category: string) => `/resources/category/${slugify(catego
 
 export default function ResourcesPage() {
   return (
-    <div className="bg-white dark:bg-slate-900">
+    <div className="u-page">
       <Navbar />
       <main className="isolate">
         <InnerPageHero
@@ -21,7 +21,7 @@ export default function ResourcesPage() {
         />
 
         <section className="max-w-7xl mx-auto px-6 lg:px-8 -mt-10">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div>
                 <h2 className="text-xl font-bold text-headings dark:text-white">Browse by category</h2>
@@ -34,7 +34,7 @@ export default function ResourcesPage() {
                   <Link
                     key={c}
                     href={categoryHref(c)}
-                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-headings hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
+                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-headings hover:bg-slate-50 dark:border-white/10 dark:bg-obsidian dark:text-white dark:hover:bg-white/5"
                   >
                     {c}
                   </Link>
