@@ -18,8 +18,8 @@ type InnerPageHeroProps = {
 export default function InnerPageHero({ title, subtitle, breadcrumbs }: InnerPageHeroProps) {
   return (
     <div className="relative isolate overflow-hidden bg-obsidian">
-      <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
+      <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-4">
+        <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-3xl lg:flex-shrink-0 lg:pt-8">
           {/* Breadcrumbs */}
           <nav className="flex" aria-label="Breadcrumb">
             <ol role="list" className="flex items-center space-x-2">
@@ -57,7 +57,7 @@ export default function InnerPageHero({ title, subtitle, breadcrumbs }: InnerPag
       </div>
       {/* Subtle Gradient */}
       <div
-        className="absolute inset-x-0 top-0 -z-10 transform-gpu overflow-hidden blur-3xl"
+        className="absolute inset-x-0 top-0 -z-10 transform-gpu blur-3xl"
         aria-hidden="true"
       >
         <div
