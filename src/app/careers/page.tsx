@@ -38,7 +38,7 @@ export default function CareersPage() {
           breadcrumbs={[{ name: 'Careers', href: '/careers' }]}
         />
 
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
           <div className="u-surface p-8 shadow-sm dark:border-white/10 dark:bg-obsidian">
             <h2 className="text-2xl font-bold text-headings dark:text-white">Open roles</h2>
             <p className="mt-3 text-body-copy dark:text-slate-400">

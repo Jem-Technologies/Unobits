@@ -36,7 +36,7 @@ export default async function ResourceCategoryPage({ params }: { params: Promise
           ]}
         />
 
-        <section className="max-w-7xl mx-auto px-6 lg:px-8 -mt-10">
+        <section className="max-w-7xl mx-auto px-6 lg:px-8 mt-10">
           <div className="u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <p className="text-body-copy dark:text-slate-400">

@@ -36,7 +36,7 @@ export default async function ResourcePostPage({ params }: { params: Promise<{ s
           ]}
         />
 
-        <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10">
+        <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
           <div className="u-surface shadow-sm overflow-hidden dark:border-white/10 dark:bg-obsidian">
             <div className="relative aspect-[16/9] bg-slate-100 dark:bg-slate-800">
               <Image
