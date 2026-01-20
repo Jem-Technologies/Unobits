@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 
@@ -17,17 +16,30 @@ export const metadata: Metadata = {
 const THEME_INIT_SCRIPT = `
 (() => {
   try {
-    const saved = localStorage.getItem('theme');
-    const theme = saved === 'light' ? 'light' : 'dark';
+    const storageKey = 'theme';
+    const root = document.documentElement;
+    const saved = localStorage.getItem(storageKey);
+    const prefersDark =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    document.documentElement.style.colorScheme = theme;
+    const theme = saved === 'light' || saved === 'dark' ? saved : (prefersDark ? 'dark' : 'light');
 
-    // Default to dark for first-time visitors.
-    if (!saved) localStorage.setItem('theme', theme);
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+
+    root.style.colorScheme = theme;
+    root.style.backgroundColor = theme === 'dark' ? '#000' : '#fff';
+    if (!saved) localStorage.setItem(storageKey, theme);
   } catch (e) {
+    // Dark-first fallback.
     document.documentElement.classList.add('dark');
     document.documentElement.style.colorScheme = 'dark';
+    document.documentElement.style.backgroundColor = '#000';
   }
 })();
 `;
@@ -41,11 +53,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="unobits:app-origin" content={process.env.NEXT_PUBLIC_APP_ORIGIN ?? 'https://unobits.app'} />
-        <Script id="unobits-theme-init" strategy="beforeInteractive">
-          {THEME_INIT_SCRIPT}
-        </Script>
+        {/* Render-blocking theme init to prevent FOUC and hydration mismatches. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
-      <body className={`${poppins.className} bg-black text-slate-200 antialiased`}>
+      <body className={`${poppins.className} bg-white text-slate-900 dark:bg-black dark:text-slate-200 antialiased`}>
         {children}
       </body>
     </html>

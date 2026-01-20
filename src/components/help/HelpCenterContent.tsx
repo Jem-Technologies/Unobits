@@ -32,12 +32,12 @@ const CATEGORIES: Category[] = [
   },
   {
     title: 'Plans & billing',
-    description: 'Free, Basic, Pro, and Custom.',
+    description: 'Basic, Pro, Enterprise, and Custom.',
     faqs: [
       {
         question: 'What plans do you offer?',
         answer:
-          'UNOBITS offers Free, Basic, Pro, and Custom plans. Custom is designed for larger teams that need dedicated rollout support and bespoke workflows.',
+          'UNOBITS offers Basic, Pro, Enterprise, and Custom plans — and every plan starts with a free trial. Custom is designed for teams that need dedicated rollout support and bespoke workflows.',
       },
       {
         question: 'How do I talk to someone about Custom?',

@@ -21,7 +21,7 @@ const Pricing = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-extrabold text-headings dark:text-white">Find the perfect plan for your business</h2>
           <p className="mt-4 text-lg text-body-copy dark:text-slate-400 max-w-2xl mx-auto">
-            Start free, consolidate your tools, and scale when you’re ready. Upgrade anytime.
+            Every plan starts with a free trial. Consolidate your tools, then scale when you’re ready.
           </p>
         </div>
 
@@ -49,7 +49,7 @@ const Pricing = () => {
                   Recommended
                 </div>
               )}
-              <h3 className="text-2xl font-bold text-headings dark:text-white">{tier.name}</h3>
+              <h3 className="text-2xl font-bold text-headings dark:text-white">{tier.planName}</h3>
               <p className="mt-2 text-body-copy dark:text-slate-400 flex-grow">{tier.description}</p>
 
               <div className="my-8">
@@ -57,11 +57,11 @@ const Pricing = () => {
                   <span className="text-5xl font-extrabold text-headings dark:text-white">
                     {formatTierPrice(tier, billing)}
                   </span>
-                  {!tier.price.label && (
+                  {!tier.priceLabel && (
                     <span className="text-body-copy dark:text-slate-400">{billingSuffix(billing)}</span>
                   )}
                 </div>
-                {billing === 'yearly' && !tier.price.label && tier.price.yearly && (
+                {billing === 'yearly' && !tier.priceLabel && tier.annualPrice && (
                   <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">Billed annually.</p>
                 )}
               </div>

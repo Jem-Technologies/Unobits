@@ -109,11 +109,11 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
               <div className="max-w-3xl">
                 <h2 className="text-3xl font-bold text-white">Replace the stack. Keep the momentum.</h2>
                 <p className="mt-4 text-gray-300">
-                  UNOBITS is designed to reduce tool sprawl. You don’t need more tabs — you need one OS that keeps everything connected.
+                  UNOBITS is designed to reduce tool sprawl. Start with a free trial, then standardize workflows across communication, delivery, and growth.
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-3">
                   <OpenSignupButton className="inline-flex items-center justify-center rounded-lg bg-neon-teal px-6 py-3 text-sm font-semibold text-black hover:bg-opacity-80">
-                    Start Free
+                    Start free trial
                   </OpenSignupButton>
                   <Link
                     href="/contact"

@@ -7,7 +7,7 @@ import { CheckIcon, XMarkIcon } from '@heroicons/react/20/solid';
 import { PRICING_TIERS, billingSuffix, formatTierPrice, type BillingCycle } from '@/lib/pricingData';
 import { SUPPORT_EMAIL, SUPPORT_PHONE } from '@/lib/siteConfig';
 
-type TierName = 'Free' | 'Basic' | 'Pro' | 'Custom';
+type TierName = 'Basic' | 'Pro' | 'Enterprise' | 'Custom';
 
 const frequencies: { value: BillingCycle; label: string; suffix: string }[] = [
   { value: 'monthly', label: 'Monthly', suffix: '/month' },
@@ -21,46 +21,47 @@ const comparisonSections: Array<{
   {
     name: 'Core Platform',
     features: [
-      { name: 'Unified dashboard + global search', tiers: { Free: true, Basic: true, Pro: true, Custom: true } },
-      { name: 'Workspace (projects, boards, office)', tiers: { Free: 'Basic', Basic: true, Pro: true, Custom: true } },
-      { name: 'Files + notes', tiers: { Free: 'Limited', Basic: true, Pro: true, Custom: true } },
-      { name: 'Calendar + time tracking', tiers: { Free: false, Basic: true, Pro: true, Custom: true } },
+      { name: 'Unified dashboard + global search', tiers: { Basic: true, Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Workspace (projects, boards, office)', tiers: { Basic: true, Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Files, docs, and notes', tiers: { Basic: true, Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Calendar + time tracking', tiers: { Basic: true, Pro: true, Enterprise: true, Custom: true } },
     ],
   },
   {
     name: 'Communication',
     features: [
-      { name: 'Chat', tiers: { Free: true, Basic: true, Pro: true, Custom: true } },
-      { name: 'Inbox', tiers: { Free: 'Limited', Basic: true, Pro: true, Custom: true } },
-      { name: 'Email (connected accounts)', tiers: { Free: false, Basic: true, Pro: true, Custom: true } },
-      { name: 'Real‑time boards & collaboration (external app)', tiers: { Free: 'Viewer', Basic: true, Pro: true, Custom: true } },
+      { name: 'Chat', tiers: { Basic: true, Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Shared Inbox workflows', tiers: { Basic: true, Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Email (connected accounts)', tiers: { Basic: true, Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Video calls + meeting notes in context', tiers: { Basic: true, Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Social media inbox integrations', tiers: { Basic: 'Coming soon', Pro: 'Coming soon', Enterprise: 'Coming soon', Custom: 'Coming soon' } },
     ],
   },
   {
     name: 'Clients & Business',
     features: [
-      { name: 'CRM', tiers: { Free: 'Basic', Basic: true, Pro: true, Custom: true } },
-      { name: 'Onboarding', tiers: { Free: false, Basic: true, Pro: true, Custom: true } },
-      { name: 'Sequences', tiers: { Free: false, Basic: 'Starter', Pro: true, Custom: true } },
-      { name: 'Builder + web elements', tiers: { Free: false, Basic: false, Pro: true, Custom: true } },
-      { name: 'Finance + inventory + add‑ons', tiers: { Free: false, Basic: false, Pro: true, Custom: true } },
+      { name: 'CRM', tiers: { Basic: 'Core', Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Onboarding', tiers: { Basic: true, Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Sequences + email marketing', tiers: { Basic: 'Starter', Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Builder + web elements', tiers: { Basic: false, Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Finance + inventory + add‑ons', tiers: { Basic: false, Pro: true, Enterprise: true, Custom: true } },
     ],
   },
   {
     name: 'Digital Twin',
     features: [
-      { name: 'Reports', tiers: { Free: 'Basic', Basic: true, Pro: true, Custom: true } },
-      { name: 'Integrations + API access', tiers: { Free: 'Limited', Basic: true, Pro: true, Custom: 'Advanced' } },
-      { name: 'Social media integrations', tiers: { Free: 'Coming soon', Basic: 'Coming soon', Pro: 'Coming soon', Custom: 'Coming soon' } },
+      { name: 'Reports', tiers: { Basic: true, Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Integrations + API access', tiers: { Basic: true, Pro: true, Enterprise: 'Advanced', Custom: 'Advanced + custom' } },
     ],
   },
   {
     name: 'Support & Security',
     features: [
-      { name: 'Support', tiers: { Free: 'Community', Basic: 'Standard', Pro: 'Priority', Custom: 'Dedicated' } },
-      { name: 'Roles + permissions', tiers: { Free: 'Basic', Basic: true, Pro: true, Custom: 'Custom' } },
-      { name: 'SSO / provisioning options', tiers: { Free: false, Basic: false, Pro: 'Optional', Custom: true } },
-      { name: 'Client portal + team portal', tiers: { Free: false, Basic: 'Limited', Pro: true, Custom: true } },
+      { name: 'Support', tiers: { Basic: 'Standard', Pro: 'Priority', Enterprise: 'Enterprise', Custom: 'Dedicated' } },
+      { name: 'Roles + permissions', tiers: { Basic: true, Pro: true, Enterprise: 'Advanced', Custom: 'Custom' } },
+      { name: 'SSO / provisioning options', tiers: { Basic: false, Pro: 'Optional', Enterprise: true, Custom: true } },
+      { name: 'Client portal + team portal', tiers: { Basic: 'Limited', Pro: true, Enterprise: true, Custom: true } },
+      { name: 'Audit logs + governance controls', tiers: { Basic: false, Pro: 'Optional', Enterprise: true, Custom: true } },
     ],
   },
 ];
@@ -87,7 +88,7 @@ export default function PricingPageContent() {
             Plans that scale from "single tab" to "entire company OS"
           </h1>
           <p className="mt-6 text-lg leading-8 text-body-copy dark:text-slate-400">
-            Start Free. Upgrade when you want deeper CRM, automations, portals, reporting, and Digital Twin capabilities.
+            Start with a free trial on any plan, then scale into deeper CRM, automations, portals, reporting, and Digital Twin capabilities.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 text-sm">
             <a className="font-semibold text-headings dark:text-white hover:text-neon-teal" href={`mailto:${SUPPORT_EMAIL}`}>
@@ -138,13 +139,13 @@ export default function PricingPageContent() {
               key={tier.id}
               className={classNames(
                 tier.highlight ? 'ring-2 ring-neon-teal' : 'ring-1 ring-gray-200 dark:ring-white/10',
-                tier.name === 'Custom' ? 'bg-obsidian text-white' : 'bg-white dark:bg-white/5',
+                tier.planName === 'Custom' ? 'bg-obsidian text-white' : 'bg-white dark:bg-white/5',
                 'rounded-3xl p-8 xl:p-10 transform hover:scale-[1.02] transition-transform duration-300'
               )}
             >
               <div className="flex items-center justify-between gap-x-4">
                 <h2 id={tier.id} className="text-lg font-semibold leading-8">
-                  {tier.name}
+                  {tier.planName}
                 </h2>
                 {tier.highlight && (
                   <p className="rounded-full bg-neon-teal/10 px-2.5 py-1 text-xs font-semibold leading-5 text-neon-teal">
@@ -153,7 +154,7 @@ export default function PricingPageContent() {
                 )}
               </div>
 
-              <p className={classNames('mt-4 text-sm leading-6', tier.name === 'Custom' ? 'text-gray-300' : 'text-body-copy dark:text-slate-400')}>
+              <p className={classNames('mt-4 text-sm leading-6', tier.planName === 'Custom' ? 'text-gray-300' : 'text-body-copy dark:text-slate-400')}>
                 {tier.description}
               </p>
 
@@ -161,8 +162,8 @@ export default function PricingPageContent() {
                 <span className="text-4xl font-bold tracking-tight">
                   {formatTierPrice(tier, frequency.value)}
                 </span>
-                {!tier.price.label && (
-                  <span className={classNames('text-sm font-semibold leading-6', tier.name === 'Custom' ? 'text-gray-300' : 'text-body-copy dark:text-slate-400')}>
+                {!tier.priceLabel && (
+                  <span className={classNames('text-sm font-semibold leading-6', tier.planName === 'Custom' ? 'text-gray-300' : 'text-body-copy dark:text-slate-400')}>
                     {billingSuffix(frequency.value)}
                   </span>
                 )}
@@ -200,7 +201,7 @@ export default function PricingPageContent() {
 
               <ul
                 role="list"
-                className={classNames('mt-8 space-y-3 text-sm leading-6', tier.name === 'Custom' ? 'text-gray-300' : 'text-body-copy dark:text-slate-400')}
+                className={classNames('mt-8 space-y-3 text-sm leading-6', tier.planName === 'Custom' ? 'text-gray-300' : 'text-body-copy dark:text-slate-400')}
               >
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex gap-x-3">
@@ -233,7 +234,7 @@ export default function PricingPageContent() {
                   </th>
                   {tiers.map((tier) => (
                     <th key={tier.id} scope="col" className="px-3 py-3.5 text-center text-sm font-semibold text-headings dark:text-white">
-                      {tier.name}
+                      {tier.planName}
                     </th>
                   ))}
                 </tr>
@@ -259,7 +260,7 @@ export default function PricingPageContent() {
                         </td>
 
                         {tiers.map((tier) => {
-                          const v = feature.tiers[tier.name as TierName];
+                          const v = feature.tiers[tier.planName as TierName];
                           return (
                             <td
                               key={`${tier.id}-${feature.name}`}

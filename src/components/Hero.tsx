@@ -29,7 +29,7 @@ const Hero = () => {
             onClick={openSignup}
             className="w-full md:w-auto bg-neon-teal hover:bg-opacity-80 text-black px-6 py-3 rounded-lg font-semibold flex items-center justify-center space-x-2 transition-transform duration-200 hover:scale-105"
           >
-            <span>Start Using UNOBITS Free</span>
+            <span>Start your free trial</span>
             <ArrowRight size={20} />
           </button>
           <Link

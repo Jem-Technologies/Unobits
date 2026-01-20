@@ -123,7 +123,7 @@ export const SOLUTIONS_PAGES: SolutionPageDefinition[] = [
         title: 'Solo & small teams',
         description:
           'One place for notes, projects, and communication — without setup overhead.',
-        bullets: ['Free plan to get started', 'Simple projects + chat', 'Upgrade when you need CRM or portals'],
+        bullets: ['Start with a free trial on any plan', 'Simple projects + chat + inbox workflows', 'Scale into CRM, portals, and automation when you’re ready'],
       },
       {
         title: 'Growing teams',

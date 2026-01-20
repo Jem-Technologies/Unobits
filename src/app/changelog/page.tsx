@@ -12,7 +12,7 @@ const entries = [
     highlights: [
       'Unified platform marketing site launch.',
       'Product modules: dashboard, communication, workspace, automations, productivity, CRM, portals, and Digital Twin.',
-      'Pricing with Free, Basic, Pro, and Custom plans.',
+      'Pricing with Basic, Pro, Enterprise, and Custom plans (all with free trials).',
     ],
   },
   {

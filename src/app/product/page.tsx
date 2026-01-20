@@ -28,7 +28,7 @@ export default function ProductLandingPage() {
               </div>
               <div className="flex flex-col sm:flex-row gap-3">
                 <OpenSignupButton className="inline-flex items-center justify-center rounded-lg bg-neon-teal px-5 py-3 text-sm font-semibold text-black hover:bg-opacity-80">
-                  Get started free
+                  Start free trial
                 </OpenSignupButton>
                 <Link
                   href="/pricing"
@@ -103,11 +103,11 @@ export default function ProductLandingPage() {
               <div className="max-w-3xl">
                 <h2 className="text-3xl font-bold text-white">Done juggling tools?</h2>
                 <p className="mt-4 text-gray-300">
-                  Replace tab overload with one connected OS. Start free, then scale into CRM, portals, automation, and Digital Twin features when you’re ready.
+                  Replace tab overload with one connected OS. Start with a free trial, then scale into CRM, portals, automation, and Digital Twin features when you’re ready.
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-3">
                   <OpenSignupButton className="inline-flex items-center justify-center rounded-lg bg-neon-teal px-6 py-3 text-sm font-semibold text-black hover:bg-opacity-80">
-                    Start Free
+                    Start free trial
                   </OpenSignupButton>
                   <Link
                     href="/contact"
