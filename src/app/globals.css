@@ -17,33 +17,17 @@
 
   /* Shared UI tokens (used for consistent glass/blur surfaces). */
   :root {
-    /* Light mode glass: semi-transparent white with subtle depth */
-    --u-glass-bg: rgba(255, 255, 255, 0.80);
-    --u-glass-border: rgba(15, 23, 42, 0.08);
-    --u-glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-    --u-accent: #00D4FF;
-    --u-accent-rgb: 0, 212, 255;
+    /* Matches spec: bg-white/70 + subtle border */
+    --u-glass-bg: rgba(255, 255, 255, 0.70);
+    --u-glass-border: rgba(15, 23, 42, 0.10);
+    --u-glass-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
   }
 
   .dark {
-    /* Dark mode glass: semi-transparent black with glow */
-    --u-glass-bg: rgba(5, 5, 7, 0.80);
-    --u-glass-border: rgba(255, 255, 255, 0.10);
-    --u-glass-shadow: 0 8px 40px rgba(0, 212, 255, 0.08);
-  }
-
-  /* Smooth transitions for theme toggle */
-  html {
-    transition: background-color 0.3s ease;
-  }
-
-  body {
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  /* Light mode body */
-  html:not(.dark) body {
-    background: #ffffff;
+    /* Matches spec: bg-black/70 + border-white/20 */
+    --u-glass-bg: rgba(0, 0, 0, 0.70);
+    --u-glass-border: rgba(255, 255, 255, 0.20);
+    --u-glass-shadow: 0 20px 70px rgba(0, 0, 0, 0.65);
   }
 }
 
@@ -87,21 +71,8 @@
     background: var(--u-glass-bg);
     border-color: var(--u-glass-border);
     box-shadow: var(--u-glass-shadow);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    backdrop-filter: blur(16px) saturate(180%);
-  }
-
-  /* Glow effect for highlighted elements */
-  .u-glow {
-    box-shadow: 0 0 20px rgba(var(--u-accent-rgb), 0.4),
-                0 0 40px rgba(var(--u-accent-rgb), 0.2),
-                0 0 60px rgba(var(--u-accent-rgb), 0.1);
-  }
-
-  /* Subtle glow for cards */
-  .u-glow-soft {
-    box-shadow: 0 0 15px rgba(var(--u-accent-rgb), 0.15),
-                inset 0 0 30px rgba(var(--u-accent-rgb), 0.05);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
   }
 }
 
@@ -114,44 +85,7 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }
-
-  /* Smooth text gradient utility */
-  .text-gradient {
-    background: linear-gradient(135deg, var(--u-accent) 0%, #0099CC 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Pulse glow animation */
-  .animate-glow-pulse {
-    animation: glowPulse 2s ease-in-out infinite;
-  }
-
-  @keyframes glowPulse {
-    0%, 100% {
-      box-shadow: 0 0 10px rgba(var(--u-accent-rgb), 0.3);
-    }
-    50% {
-      box-shadow: 0 0 25px rgba(var(--u-accent-rgb), 0.5);
-    }
-  }
-
-  /* Float animation for elements */
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
 }
 
 /* Load our Tailwind v3-style config for v4 using the @config compatibility directive. */
 @config "../../tailwind.config.ts";
-
