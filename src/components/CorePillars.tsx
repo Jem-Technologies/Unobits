@@ -279,8 +279,8 @@ const CorePillars = () => {
                         <div className="absolute bottom-8 left-8 right-8">
                           <div className="inline-flex items-center gap-3 rounded-full bg-white/10 px-5 py-2.5 backdrop-blur-md border border-white/20 shadow-lg">
                             <span className="flex items-center justify-center bg-neon-teal/20 rounded-full p-1">
-                                {React.cloneElement(pillars[activeTab].icon as React.ReactElement, { size: 14, className: "text-neon-teal" })}
-                            </span>
+                                {React.cloneElement(pillars[activeTab].icon as React.ReactElement<{ size: number; className: string }>, { size: 14, className: "text-neon-teal" })}
+                                </span>
                             <span className="text-sm font-semibold text-white tracking-wide">
                               {pillars[activeTab].title}
                             </span>
