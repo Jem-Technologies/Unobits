@@ -12,7 +12,13 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           <div className="col-span-2 md:col-span-1">
              <div className="flex items-center space-x-2">
-              <Image src="/logo.svg" alt={`${SITE_NAME} Logo`} width={32} height={32} />
+              <Image
+                src="/brand/unobits-mark-64.png"
+                alt={`${SITE_NAME} Logo`}
+                width={32}
+                height={32}
+                loading="lazy"
+              />
               <span className="font-bold text-xl text-headings dark:text-white">{SITE_NAME}</span>
             </div>
             <p className="mt-4 text-body-copy dark:text-slate-400 text-sm">The One Operating System for Your Entire Business.</p>

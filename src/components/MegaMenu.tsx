@@ -39,7 +39,7 @@ export default function MegaMenu({ menu, onClose }: MegaMenuProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
-      className="absolute left-0 top-full w-full u-glass border border-t"
+      className="absolute left-0 top-full w-full u-glass overflow-hidden"
       onMouseLeave={onClose}
     >
       <div className="mx-auto max-w-7xl px-8">

@@ -102,18 +102,26 @@ const Navbar = () => {
 
   // Make the header + flyout feel like a single, consistent "glass" surface.
   const showGlass = isScrolled || activeMenu !== null;
-  const navClass = showGlass ? 'u-glass border-b' : 'bg-transparent';
+  // When a dropdown is open we remove the bottom border so the menu and navbar feel like one surface.
+  const navClass = showGlass ? 'u-glass' : 'bg-transparent';
+  const navBorderClass = isScrolled && activeMenu === null ? 'border-b' : '';
 
   return (
     <>
       <nav
-        className={`sticky top-0 z-50 transition-all duration-300 ${navClass}`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${navClass} ${navBorderClass}`}
         onMouseLeave={() => setActiveMenu(null)}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <Link href="/" className="flex items-center space-x-2">
-              <Image src="/logo.svg" alt="UNOBITS Logo" width={32} height={32} />
+              <Image
+                src="/brand/unobits-mark-64.png"
+                alt="UNOBITS Logo"
+                width={32}
+                height={32}
+                priority
+              />
               <span className="font-bold text-xl text-headings dark:text-white">UNOBITS</span>
             </Link>
 
@@ -183,9 +191,14 @@ const Navbar = () => {
           </div>
         </div>
 
-        <AnimatePresence>
-          {activeMenu === 'product' && <MegaMenu menu={productMenu} onClose={() => setActiveMenu(null)} />}
-          {activeMenu === 'solutions' && <MegaMenu menu={solutionsMenu} onClose={() => setActiveMenu(null)} />}
+        <AnimatePresence mode="wait" initial={false}>
+          {activeMenu !== null ? (
+            <MegaMenu
+              key={activeMenu}
+              menu={activeMenu === 'product' ? productMenu : solutionsMenu}
+              onClose={() => setActiveMenu(null)}
+            />
+          ) : null}
         </AnimatePresence>
       </nav>
 

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" fill="none">
+  <defs>
+    <linearGradient id="g" x1="180" y1="170" x2="1040" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00D4FF" stop-opacity="0.32"/>
+      <stop offset="0.50" stop-color="#4F46E5" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#00D4FF" stop-opacity="0.18"/>
+    </linearGradient>
+    <radialGradient id="blob" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(340 310) rotate(25) scale(560 460)">
+      <stop stop-color="#00D4FF" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#00D4FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blob2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(900 520) rotate(-18) scale(560 460)">
+      <stop stop-color="#4F46E5" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#4F46E5" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.34 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Ambient blobs -->
+  <circle cx="340" cy="310" r="380" fill="url(#blob)"/>
+  <circle cx="900" cy="520" r="380" fill="url(#blob2)"/>
+
+  <g filter="url(#softGlow)">
+    <!-- Main card -->
+    <rect x="170" y="170" width="860" height="480" rx="36" fill="url(#g)" fill-opacity="0.16"/>
+    <rect x="170" y="170" width="860" height="480" rx="36" stroke="#94A3B8" stroke-opacity="0.18"/>
+
+    <!-- Header -->
+    <rect x="170" y="170" width="860" height="72" rx="36" fill="#00D4FF" fill-opacity="0.08"/>
+    <circle cx="222" cy="206" r="10" fill="#00D4FF" fill-opacity="0.55"/>
+    <rect x="246" y="198" width="180" height="16" rx="8" fill="#94A3B8" fill-opacity="0.22"/>
+
+    <!-- Funnel (left) -->
+    <g>
+      <rect x="220" y="280" width="320" height="320" rx="28" fill="#FFFFFF" fill-opacity="0.04" stroke="#94A3B8" stroke-opacity="0.18"/>
+      <path d="M254 312h252l-70 86H324l-70-86Z" fill="#00D4FF" fill-opacity="0.10"/>
+      <path d="M324 398h112l-38 58H362l-38-58Z" fill="#00D4FF" fill-opacity="0.12"/>
+      <path d="M362 456h36l-12 44h-12l-12-44Z" fill="#00D4FF" fill-opacity="0.16"/>
+
+      <rect x="254" y="520" width="252" height="16" rx="8" fill="#94A3B8" fill-opacity="0.18"/>
+      <rect x="254" y="548" width="196" height="14" rx="7" fill="#94A3B8" fill-opacity="0.14"/>
+
+      <!-- Stage badges -->
+      <g>
+        <rect x="258" y="324" width="88" height="26" rx="13" fill="#FFFFFF" fill-opacity="0.06" stroke="#94A3B8" stroke-opacity="0.18"/>
+        <circle cx="274" cy="337" r="5" fill="#00D4FF" fill-opacity="0.85"/>
+        <rect x="286" y="333" width="48" height="8" rx="4" fill="#94A3B8" fill-opacity="0.24"/>
+
+        <rect x="388" y="414" width="96" height="26" rx="13" fill="#FFFFFF" fill-opacity="0.06" stroke="#94A3B8" stroke-opacity="0.18"/>
+        <circle cx="404" cy="427" r="5" fill="#4F46E5" fill-opacity="0.75"/>
+        <rect x="416" y="423" width="54" height="8" rx="4" fill="#94A3B8" fill-opacity="0.22"/>
+      </g>
+    </g>
+
+    <!-- Pipeline + chart (right) -->
+    <g>
+      <rect x="580" y="280" width="420" height="320" rx="28" fill="#FFFFFF" fill-opacity="0.04" stroke="#94A3B8" stroke-opacity="0.18"/>
+
+      <!-- Mini pipeline columns -->
+      <rect x="610" y="312" width="110" height="240" rx="20" fill="#94A3B8" fill-opacity="0.06"/>
+      <rect x="740" y="312" width="110" height="240" rx="20" fill="#94A3B8" fill-opacity="0.06"/>
+      <rect x="870" y="312" width="110" height="240" rx="20" fill="#94A3B8" fill-opacity="0.06"/>
+
+      <rect x="626" y="340" width="78" height="36" rx="14" fill="#00D4FF" fill-opacity="0.12"/>
+      <rect x="626" y="388" width="78" height="46" rx="14" fill="#94A3B8" fill-opacity="0.10"/>
+
+      <rect x="756" y="340" width="78" height="52" rx="14" fill="#4F46E5" fill-opacity="0.10"/>
+      <rect x="756" y="404" width="78" height="34" rx="14" fill="#94A3B8" fill-opacity="0.10"/>
+
+      <rect x="886" y="340" width="78" height="42" rx="14" fill="#00D4FF" fill-opacity="0.12"/>
+      <rect x="886" y="394" width="78" height="54" rx="14" fill="#94A3B8" fill-opacity="0.10"/>
+
+      <!-- Growth chart overlay -->
+      <path d="M610 560C680 520 720 540 770 500C820 460 860 480 920 440C960 412 980 424 1000 404" stroke="#00D4FF" stroke-opacity="0.75" stroke-width="3" stroke-linecap="round"/>
+      <path d="M610 568C680 530 720 548 770 512C820 474 860 492 920 458C960 432 980 440 1000 422" stroke="#4F46E5" stroke-opacity="0.35" stroke-width="3" stroke-linecap="round"/>
+
+      <circle cx="770" cy="500" r="5" fill="#00D4FF"/>
+      <circle cx="920" cy="440" r="5" fill="#00D4FF"/>
+      <circle cx="1000" cy="404" r="5" fill="#00D4FF"/>
+    </g>
+
+    <!-- Footer stat chips -->
+    <g>
+      <rect x="170" y="666" width="860" height="16" rx="8" fill="#94A3B8" fill-opacity="0.08"/>
+      <rect x="220" y="654" width="140" height="40" rx="20" fill="#00D4FF" fill-opacity="0.12" stroke="#00D4FF" stroke-opacity="0.28"/>
+      <circle cx="244" cy="674" r="6" fill="#00D4FF" fill-opacity="0.85"/>
+      <rect x="258" y="670" width="84" height="10" rx="5" fill="#00D4FF" fill-opacity="0.38"/>
+
+      <rect x="382" y="654" width="160" height="40" rx="20" fill="#FFFFFF" fill-opacity="0.06" stroke="#94A3B8" stroke-opacity="0.20"/>
+      <circle cx="406" cy="674" r="6" fill="#4F46E5" fill-opacity="0.75"/>
+      <rect x="420" y="670" width="104" height="10" rx="5" fill="#94A3B8" fill-opacity="0.22"/>
+    </g>
+  </g>
+</svg>

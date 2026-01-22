@@ -64,31 +64,31 @@ const Hero = () => {
             animate={{ translateY: ["-2%", "2%", "-2%"] }}
             transition={{ duration: 4, ease: "easeInOut", repeat: Infinity }}
           >
-             <div className="w-full h-8 bg-white/10 rounded-md" />
+             <div className="w-full h-8 bg-slate-900/5 dark:bg-white/10 rounded-md" />
              <div className="flex space-x-4 h-full">
-                <div className="w-1/4 h-full bg-white/10 rounded-md" />
-                <div className="w-3/4 h-full bg-white/10 rounded-md" />
+                <div className="w-1/4 h-full bg-slate-900/5 dark:bg-white/10 rounded-md" />
+                <div className="w-3/4 h-full bg-slate-900/5 dark:bg-white/10 rounded-md" />
              </div>
           </motion.div>
 
           <motion.div
-            className="absolute -top-8 -left-12 w-48 h-24 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 p-3 text-left"
+            className="absolute -top-8 -left-12 w-48 h-24 rounded-xl u-glass border border-slate-200/70 dark:border-white/20 p-3 text-left"
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <p className="text-sm font-semibold text-white">New Lead (CRM)</p>
-            <p className="text-xs text-slate-300">John Doe from Acme Inc.</p>
+            <p className="text-sm font-semibold text-headings dark:text-white">New Lead (CRM)</p>
+            <p className="text-xs text-body-copy dark:text-slate-300">John Doe from Acme Inc.</p>
           </motion.div>
 
           <motion.div
-            className="absolute -bottom-10 -right-16 w-56 h-28 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 p-3 text-left"
+            className="absolute -bottom-10 -right-16 w-56 h-28 rounded-xl u-glass border border-slate-200/70 dark:border-white/20 p-3 text-left"
              initial={{ opacity: 0, scale: 0.8, y: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
           >
-             <p className="text-sm font-semibold text-white">Project Updated</p>
-            <p className="text-xs text-slate-300">'Q4 Launch Plan' moved to 'Done'</p>
+             <p className="text-sm font-semibold text-headings dark:text-white">Project Updated</p>
+            <p className="text-xs text-body-copy dark:text-slate-300">'Q4 Launch Plan' moved to 'Done'</p>
           </motion.div>
         </motion.div>
       </div>
