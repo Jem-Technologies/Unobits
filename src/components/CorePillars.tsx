@@ -28,7 +28,7 @@ const PILLARS: ThemePillar[] = [
       'Video calls that live with notes, files, and action items',
       'Social inbox integrations (coming soon)',
     ],
-    image: '/placeholder.svg',
+    image: '/communication-preview.png',
   },
   {
     key: 'productivity',
@@ -43,7 +43,7 @@ const PILLARS: ThemePillar[] = [
       'Whiteboards for planning, wireframes, mindmaps, and workshops',
       'Files with permissions, comments, and versioning',
     ],
-    image: '/placeholder.svg',
+    image: '/productivity-preview.png',
   },
   {
     key: 'growth',
@@ -58,7 +58,7 @@ const PILLARS: ThemePillar[] = [
       'Funnels and onboarding flows that trigger hand-offs automatically',
       'Reporting that connects growth to delivery outcomes',
     ],
-    image: '/placeholder.svg',
+    image: '/growth-preview.png',
   },
   {
     key: 'operations',
@@ -73,7 +73,7 @@ const PILLARS: ThemePillar[] = [
       'HR onboarding + internal workflows (requests, approvals, SOPs)',
       'Role-based access so teams see what they need',
     ],
-    image: '/placeholder.svg',
+    image: '/operations-preview.png',
   },
 ];
 
@@ -186,10 +186,10 @@ const CorePillars = () => {
             aria-label="Platform pillars"
             ref={storyRef}
           >
-            <div className="sticky top-0 h-screen flex items-center">
-              <div className="grid grid-cols-12 gap-10 w-full">
+            <div className="sticky top-0 h-screen flex items-center justify-center">
+              <div className="grid grid-cols-12 gap-10 w-full max-w-7xl mx-auto">
                 {/* Left: tabs + scroll-through details */}
-                <div className="col-span-5 flex flex-col">
+                <div className="col-span-5 flex flex-col justify-center">
                   <div className="space-y-2">
                     {pillars.map((tab, idx) => {
                       const isActive = idx === activeTab;
@@ -197,11 +197,10 @@ const CorePillars = () => {
                         <button
                           key={tab.key}
                           onClick={() => scrollToTab(idx)}
-                          className={`w-full text-left rounded-xl border px-4 py-4 transition-all duration-200 ${
-                            isActive
+                          className={`w-full text-left rounded-xl border px-4 py-4 transition-all duration-200 ${isActive
                               ? 'u-glass border-neon-teal/40 shadow-[0_0_0_1px_rgba(0,212,255,0.25)]'
                               : 'border-slate-200 dark:border-white/10 hover:u-glass'
-                          }`}
+                            }`}
                         >
                           <div className="flex items-start gap-3">
                             <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 dark:bg-white/5">
@@ -248,8 +247,8 @@ const CorePillars = () => {
                 </div>
 
                 {/* Right: sticky visual */}
-                <div className="col-span-7">
-                  <div className="relative h-[520px] rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5">
+                <div className="col-span-7 flex items-center justify-center">
+                  <div className="relative h-[520px] w-full rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5">
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={pillars[activeTab].key}
