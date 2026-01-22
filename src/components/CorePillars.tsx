@@ -162,7 +162,7 @@ const CorePillars = () => {
     []
   );
 
-  const PANEL_HEIGHT_CLASS = 'h-[56vh] min-h-[420px] max-h-[560px]';
+  const PANEL_HEIGHT_CLASS = 'min-h-[420px] max-h-[560px]';
   const detailsY = useTransform(scrollProgress, (p) => {
     if (!detailViewportHeight) return 0;
     return -p * (pillars.length - 1) * detailViewportHeight;
@@ -171,7 +171,7 @@ const CorePillars = () => {
   return (
     <section className="py-24 bg-white dark:bg-black" style={{ minHeight: '1px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-4xl font-extrabold text-headings dark:text-white">Everything you need. Nothing you don't.</h2>
           <p className="mt-4 text-lg text-body-copy dark:text-slate-400 max-w-2xl mx-auto">
             A fully integrated suite of tools to run your entire business.
@@ -182,7 +182,7 @@ const CorePillars = () => {
         <div className="hidden lg:block">
           <div
             className="relative"
-            style={{ height: `${pillars.length * 100}vh` }}
+            style={{ height: `${pillars.length * 113}vh` }}
             aria-label="Platform pillars"
             ref={storyRef}
           >
