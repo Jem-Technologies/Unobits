@@ -192,7 +192,7 @@ const CorePillars = () => {
                 <div className="col-span-5 flex flex-col">
                   <div ref={detailViewportRef} className={`relative mt-8 overflow-hidden rounded-2xl ${PANEL_HEIGHT_CLASS}`}>
                     <motion.div
-                      className="absolute inset-0 will-change-transform flex flex-col"
+                      className="absolute gap-10 inset-0 will-change-transform flex flex-col"
                       style={{ y: detailsY }}
                     >
                       {pillars.map((tab) => (
