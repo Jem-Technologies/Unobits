@@ -174,7 +174,7 @@ const CorePillars = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-extrabold text-headings dark:text-white">Everything you need. Nothing you don't.</h2>
           <p className="mt-4 text-lg text-body-copy dark:text-slate-400 max-w-2xl mx-auto">
-            A fully integrated suite of tools to run your entire business from a single, unified platform.
+            A fully integrated suite of tools to run your entire business.
           </p>
         </div>
 
@@ -189,37 +189,6 @@ const CorePillars = () => {
             <div className="sticky top-0 h-screen flex items-center">
               <div className="grid grid-cols-12 gap-10 w-full">
                 {/* Left: tabs + scroll-through details */}
-                <div className="col-span-5 flex flex-col">
-                  <div className="space-y-2">
-                    {pillars.map((tab, idx) => {
-                      const isActive = idx === activeTab;
-                      return (
-                        <button
-                          key={tab.key}
-                          onClick={() => scrollToTab(idx)}
-                          className={`w-full text-left rounded-xl border px-4 py-4 transition-all duration-200 ${
-                            isActive
-                              ? 'u-glass border-neon-teal/40 shadow-[0_0_0_1px_rgba(0,212,255,0.25)]'
-                              : 'border-slate-200 dark:border-white/10 hover:u-glass'
-                          }`}
-                        >
-                          <div className="flex items-start gap-3">
-                            <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-100 dark:bg-white/5">
-                              {tab.icon}
-                            </div>
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <h3 className="font-bold text-headings dark:text-white">{tab.title}</h3>
-                                <span className="text-xs font-semibold text-neon-teal">{idx + 1}/{pillars.length}</span>
-                              </div>
-                              <p className="mt-1 text-sm text-body-copy dark:text-slate-400">{tab.subtitle}</p>
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-
                   <div ref={detailViewportRef} className={`relative mt-8 overflow-hidden rounded-2xl ${PANEL_HEIGHT_CLASS}`}>
                     <motion.div
                       className="absolute inset-0 will-change-transform flex flex-col"
