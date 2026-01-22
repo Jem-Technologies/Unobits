@@ -189,6 +189,7 @@ const CorePillars = () => {
             <div className="sticky top-0 h-screen flex items-center">
               <div className="grid grid-cols-12 gap-10 w-full">
                 {/* Left: tabs + scroll-through details */}
+                <div className="col-span-5 flex flex-col">
                   <div ref={detailViewportRef} className={`relative mt-8 overflow-hidden rounded-2xl ${PANEL_HEIGHT_CLASS}`}>
                     <motion.div
                       className="absolute inset-0 will-change-transform flex flex-col"
