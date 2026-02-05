@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <AnimatedSection className="-mt-[80px]">
+      <AnimatedSection style={{ marginTop: "-80px" }}>
         <Hero />
       </AnimatedSection>
       <AnimatedSection>
