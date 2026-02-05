@@ -88,7 +88,7 @@ export default function PricingPageContent() {
             Plans that scale from "single tab" to "entire company OS"
           </h1>
           <p className="mt-6 text-lg leading-8 text-body-copy dark:text-slate-400">
-            Start with a free trial on any plan, then scale into deeper CRM, automations, portals, reporting, and Digital Twin capabilities.
+            Start with a free trial on any plan, then scale into deeper CRM, automations, portals, reporting, and Digital Twin capabilities. No per‑seat pricing until you pass 10 users — and Enterprise includes unlimited seats.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 text-sm">
             <a className="font-semibold text-headings dark:text-white hover:text-neon-teal" href={`mailto:${SUPPORT_EMAIL}`}>

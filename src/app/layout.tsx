@@ -1,16 +1,33 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import { SITE_NAME, SITE_URL } from "@/lib/siteConfig";
 
-const poppins = Poppins({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["400", "700", "800"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "UNOBITS | The One Operating System for Your Entire Business.",
+  metadataBase: new URL(SITE_URL),
+  title: `${SITE_NAME} | The All‑in‑One Operating System for Your Entire Business`,
   description:
-    "Replace 15+ disconnected apps. From Email and CRM to Project Management and Docs—UNOBITS is the only tab you need open.",
+    "Run your whole business in one connected OS: email, CRM, projects, docs, chat, automations, finance, portals, reporting—and more. Built to scale for any company size, industry, and data volume.",
+  applicationName: SITE_NAME,
+  keywords: [
+    'business operating system',
+    'all-in-one business software',
+    'CRM',
+    'project management',
+    'shared inbox',
+    'team chat',
+    'docs',
+    'automations',
+    'invoicing',
+    'inventory',
+    'ERP alternative',
+    'SaaS alternative',
+  ],
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -24,6 +41,20 @@ export const metadata: Metadata = {
     { media: '(prefers-color-scheme: light)', color: '#FFFFFF' },
     { media: '(prefers-color-scheme: dark)', color: '#000000' },
   ],
+  openGraph: {
+    type: 'website',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} | The All‑in‑One Operating System for Your Entire Business`,
+    description:
+      'Replace app sprawl with one platform that scales: CRM, email, projects, docs, chat, automations, finance, portals, reporting, and more.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_NAME} | The All‑in‑One Operating System for Your Entire Business`,
+    description:
+      'Run your entire business in one OS—CRM, email, projects, docs, chat, automations, finance, reporting, and more.',
+  },
 };
 
 const THEME_INIT_SCRIPT = `
@@ -69,7 +100,7 @@ export default function RootLayout({
         {/* Render-blocking theme init to prevent FOUC and hydration mismatches. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
-      <body className={`${poppins.className} bg-white text-slate-900 dark:bg-black dark:text-slate-200 antialiased`}>
+      <body className={`${dmSans.className} bg-white text-slate-900 dark:bg-black dark:text-slate-200 antialiased`}>
         {children}
       </body>
     </html>

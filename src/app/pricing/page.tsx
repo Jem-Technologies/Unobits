@@ -10,7 +10,7 @@ export default function PricingPage() {
       <main className="isolate">
         <InnerPageHero
           title="Simple, Transparent Pricing"
-          subtitle="Choose the plan that’s right for your business. No hidden fees, no surprises."
+          subtitle="Choose the plan that’s right for your business. No per‑seat pricing until you pass 10 users (Enterprise includes unlimited seats)."
           breadcrumbs={[{ name: 'Pricing', href: '/pricing' }]}
         />
 

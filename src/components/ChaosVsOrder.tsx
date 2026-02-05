@@ -5,15 +5,17 @@ import { MessageSquare, Database, Palette, Link as LinkIcon, PlaySquare, Unplug 
 
 const ChaosVsOrder = () => {
   return (
-    <section className="py-24 bg-slate-50 dark:bg-black">
+    <section id="stop-digital-chaos" className="scroll-mt-28 py-24 bg-slate-50 dark:bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
            <h2 className="text-4xl font-extrabold text-headings dark:text-white">Stop the Digital Chaos</h2>
-           <p className="mt-4 text-lg text-body-copy dark:text-slate-400 max-w-2xl mx-auto">Tired of juggling a dozen apps that don't talk to each other? There's a smarter way to work.</p>
+           <p className="mt-4 text-lg text-body-copy dark:text-slate-400 max-w-2xl mx-auto">
+             Tired of juggling a dozen apps that don't talk to each other? UNOBITS consolidates CRM, inbox, projects, docs, chat, and reporting into one scalable workspace.
+           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Left Side (The Old Way) */}
-          <div className="bg-white dark:bg-slate-800/20 border border-slate-200 dark:border-white/10 p-8 rounded-xl text-center">
+          <div className="bg-white dark:bg-slate-800/20 border border-slate-200 dark:border-white/10 p-8 rounded-3xl text-center">
              <div className="relative h-48 flex justify-center items-center">
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
@@ -66,7 +68,7 @@ const ChaosVsOrder = () => {
           </div>
 
           {/* Right Side (The UNOBITS Way) */}
-           <div className="bg-white dark:bg-slate-800/20 border border-slate-200 dark:border-white/10 p-8 rounded-xl text-center">
+           <div className="bg-white dark:bg-slate-800/20 border border-slate-200 dark:border-white/10 p-8 rounded-3xl text-center">
              <div className="relative h-48 flex justify-center items-center">
                 <motion.div
                   initial={{ scale: 0.5, opacity: 0 }}

@@ -31,7 +31,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["Poppins", "sans-serif"],
+        sans: ["DM Sans", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
       },
       letterSpacing: {
         tight: "-0.02em",

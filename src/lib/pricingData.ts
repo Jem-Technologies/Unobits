@@ -32,6 +32,7 @@ export const PRICING_TIERS: PricingTier[] = [
     monthlyPrice: 12,
     annualPrice: 115,
     features: [
+      'Includes up to 10 users (seats billed only after 10)',
       'Unified dashboard + global search',
       'Chat + inbox workflows (assign, tag, SLA)',
       'Projects, boards, and time tracking',
@@ -39,7 +40,7 @@ export const PRICING_TIERS: PricingTier[] = [
       'CRM (core) + basic reporting',
       'Standard support',
     ],
-    cta: { label: 'Start free trial', action: 'signup', href: '/pricing' },
+    cta: { label: 'Get started', action: 'signup', href: '/pricing' },
   },
   {
     planName: 'Pro',
@@ -49,6 +50,7 @@ export const PRICING_TIERS: PricingTier[] = [
     monthlyPrice: 25,
     annualPrice: 240,
     features: [
+      'Includes up to 10 users (seats billed only after 10)',
       'Everything in Basic, plus:',
       'Advanced CRM + sequences & email marketing',
       'Funnels, onboarding flows, and automation triggers',
@@ -57,7 +59,7 @@ export const PRICING_TIERS: PricingTier[] = [
       'Digital Twin reporting + integrations',
       'Priority support',
     ],
-    cta: { label: 'Start free trial', action: 'signup', href: '/pricing' },
+    cta: { label: 'Get started', action: 'signup', href: '/pricing' },
   },
   {
     planName: 'Enterprise',
@@ -66,6 +68,7 @@ export const PRICING_TIERS: PricingTier[] = [
     monthlyPrice: 49,
     annualPrice: 470,
     features: [
+      'Unlimited users included',
       'Everything in Pro, plus:',
       'Advanced roles, permissions, and audit visibility',
       'SAML/SSO options and provisioning support',
@@ -73,7 +76,7 @@ export const PRICING_TIERS: PricingTier[] = [
       'Higher limits for automation, storage, and reporting',
       'Priority onboarding and solution design',
     ],
-    cta: { label: 'Start free trial', action: 'signup', href: '/pricing' },
+    cta: { label: 'Get started', action: 'signup', href: '/pricing' },
   },
   {
     planName: 'Custom',
@@ -83,6 +86,7 @@ export const PRICING_TIERS: PricingTier[] = [
     annualPrice: 0,
     priceLabel: 'Let’s talk',
     features: [
+      'Unlimited users included',
       'Custom onboarding, migration, and training',
       'Dedicated account team + rollout milestones',
       'SLA options + security review support',

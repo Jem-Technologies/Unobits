@@ -39,10 +39,10 @@ export default function MegaMenu({ menu, onClose }: MegaMenuProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
-      className="absolute left-0 top-full w-full u-glass overflow-hidden"
+      className="absolute left-0 top-full z-50 w-full -mt-px u-glass-strong border border-slate-200/70 dark:border-white/15 border-t-0 rounded-b-3xl rounded-t-none overflow-hidden"
       onMouseLeave={onClose}
     >
-      <div className="mx-auto max-w-7xl px-8">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <div className="grid grid-cols-12 gap-x-8 py-10">
           {/* Featured Section */}
           <div className="col-span-4">
@@ -52,10 +52,10 @@ export default function MegaMenu({ menu, onClose }: MegaMenuProps) {
                 <motion.div key={item.name} custom={i} variants={itemVariants} initial="hidden" animate="visible">
                   <Link
                     href={item.href}
-                    className="group flex items-start gap-x-4 rounded-lg p-3 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+                    className="group flex items-start gap-x-4 rounded-2xl p-3 hover:bg-slate-100/80 dark:hover:bg-white/10 transition-colors"
                     onClick={onClose}
                   >
-                    <div className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-slate-100 dark:bg-white/5 group-hover:bg-white dark:group-hover:bg-white/10">
+                    <div className="flex h-10 w-10 flex-none items-center justify-center rounded-2xl bg-slate-100 dark:bg-white/5 group-hover:bg-white dark:group-hover:bg-white/10">
                       <item.icon className="h-6 w-6 text-neon-teal" aria-hidden="true" />
                     </div>
                     <div>
@@ -76,10 +76,10 @@ export default function MegaMenu({ menu, onClose }: MegaMenuProps) {
                 <motion.div key={item.name} custom={i + menu.featured.length} variants={itemVariants} initial="hidden" animate="visible">
                   <Link
                     href={item.href}
-                    className="group flex items-center gap-x-4 rounded-lg p-3 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
+                    className="group flex items-center gap-x-4 rounded-2xl p-3 hover:bg-slate-100/80 dark:hover:bg-white/10 transition-colors"
                     onClick={onClose}
                   >
-                     <div className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-slate-100 dark:bg-white/5 group-hover:bg-white dark:group-hover:bg-white/10">
+                    <div className="flex h-10 w-10 flex-none items-center justify-center rounded-2xl bg-slate-100 dark:bg-white/5 group-hover:bg-white dark:group-hover:bg-white/10">
                       <item.icon className="h-6 w-6 text-neon-teal" aria-hidden="true" />
                     </div>
                     <div>

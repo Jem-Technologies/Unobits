@@ -8,6 +8,7 @@ import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import MegaMenu from './MegaMenu';
 import { productMenu, solutionsMenu } from '@/lib/megaMenuData';
+import { SITE_NAME } from '@/lib/siteConfig';
 
 type ActiveMenu = 'product' | 'solutions' | null;
 type Theme = 'dark' | 'light';
@@ -18,6 +19,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
+  const [isGetStartedOpen, setIsGetStartedOpen] = useState(false);
   const [theme, setTheme] = useState<Theme>('dark');
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
 
@@ -62,12 +64,14 @@ const Navbar = () => {
 
   const handleShowLogin = useCallback(() => {
     setIsMobileMenuOpen(false);
+    setIsGetStartedOpen(false);
     setShowSignup(false);
     setShowLogin(true);
   }, []);
 
   const handleShowSignup = useCallback(() => {
     setIsMobileMenuOpen(false);
+    setIsGetStartedOpen(false);
     setShowLogin(false);
     setShowSignup(true);
   }, []);
@@ -76,6 +80,7 @@ const Navbar = () => {
     setShowLogin(false);
     setShowSignup(false);
     setIsMobileMenuOpen(false);
+    setIsGetStartedOpen(false);
     setActiveMenu(null);
   }, []);
 
@@ -100,106 +105,154 @@ const Navbar = () => {
     };
   }, [handleShowLogin, handleShowSignup, closeAllModals]);
 
-  // Make the header + flyout feel like a single, consistent "glass" surface.
-  const showGlass = isScrolled || activeMenu !== null;
-  // When a dropdown is open we remove the bottom border so the menu and navbar feel like one surface.
-  const navClass = showGlass ? 'u-glass' : 'bg-transparent';
-  const navBorderClass = isScrolled && activeMenu === null ? 'border-b' : '';
+  const isDropdownOpen = activeMenu !== null;
+  // Make the header + flyouts feel like a single, consistent "glass" surface.
+  const showGlass = isScrolled || isDropdownOpen || isGetStartedOpen;
+  const surfaceClass = showGlass ? (isDropdownOpen ? 'u-glass-strong' : 'u-glass') : 'bg-transparent';
+  const surfaceBorder = showGlass ? 'border border-slate-200/70 dark:border-white/15' : '';
+  const surfaceRounded = isDropdownOpen ? 'rounded-t-full rounded-b-none' : 'rounded-full';
+  const surfaceBottomBorder = isDropdownOpen ? 'border-b-0' : '';
+  const surfaceHeight = isScrolled ? 'h-14' : 'h-16';
+  const outerPadding = isScrolled ? 'pt-2 pb-2' : 'pt-4 pb-3';
 
   return (
     <>
-      <nav
-        className={`sticky top-0 z-50 transition-all duration-300 ${navClass} ${navBorderClass}`}
-        onMouseLeave={() => setActiveMenu(null)}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <Link href="/" className="flex items-center space-x-2">
-              <Image
-                src="/brand/unobits-mark-64.png"
-                alt="UNOBITS Logo"
-                width={32}
-                height={32}
-                priority
-              />
-              <span className="font-bold text-xl text-headings dark:text-white">UNOBITS</span>
-            </Link>
+      <nav className="sticky top-0 z-50">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300 ${outerPadding}`}>
+          <div
+            className="relative"
+            onMouseLeave={() => {
+              setActiveMenu(null);
+              setIsGetStartedOpen(false);
+            }}
+          >
+            <div
+              className={`transition-all duration-300 ${surfaceClass} ${surfaceBorder} ${surfaceBottomBorder} ${surfaceRounded} ${surfaceHeight}`}
+            >
+              <div className="h-full flex items-center justify-between px-4 sm:px-5">
+                <Link href="/" className="flex items-center">
+                  <span className="sr-only">{SITE_NAME}</span>
+                  <Image
+                    src="/brand/unobits-mark-64.png"
+                    alt="UNOBITS Logo"
+                    width={34}
+                    height={34}
+                    priority
+                  />
+                </Link>
 
-            <div className="hidden md:flex items-center space-x-8">
-              <div onMouseEnter={() => setActiveMenu('product')}>
-                <button className="flex items-center text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
-                  Product <ChevronDown size={16} className="ml-1" />
-                </button>
+                <div className="hidden md:flex items-center gap-7">
+                  <div onMouseEnter={() => {
+                    setActiveMenu('product');
+                    setIsGetStartedOpen(false);
+                  }}>
+                    <button className="flex items-center text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
+                      Product <ChevronDown size={16} className="ml-1" />
+                    </button>
+                  </div>
+                  <div onMouseEnter={() => {
+                    setActiveMenu('solutions');
+                    setIsGetStartedOpen(false);
+                  }}>
+                    <button className="flex items-center text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
+                      Solutions <ChevronDown size={16} className="ml-1" />
+                    </button>
+                  </div>
+                  <Link href="/integrations" className="text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
+                    Integrations
+                  </Link>
+                  <Link href="/resources" className="text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
+                    Resources
+                  </Link>
+                  <Link href="/pricing" className="text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
+                    Pricing
+                  </Link>
+                  <Link href="/help-center" className="text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
+                    Help
+                  </Link>
+                </div>
+
+                <div className="hidden md:flex items-center gap-3">
+                  <div
+                    className="relative"
+                    onMouseEnter={() => {
+                      setIsGetStartedOpen(true);
+                      setActiveMenu(null);
+                    }}
+                    onMouseLeave={() => setIsGetStartedOpen(false)}
+                  >
+                    <button
+                      onClick={handleShowSignup}
+                      className="bg-neon-teal text-black px-5 py-2 rounded-full font-semibold hover:bg-opacity-80 transition-colors"
+                    >
+                      Get started
+                    </button>
+
+                    <AnimatePresence>
+                      {isGetStartedOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                          transition={{ duration: 0.18, ease: 'easeOut' }}
+                          className="absolute right-0 top-full mt-2 w-56 u-glass-strong border border-slate-200/70 dark:border-white/20 rounded-3xl overflow-hidden p-2"
+                        >
+                          <button
+                            onClick={handleShowLogin}
+                            className="w-full text-left px-4 py-3 rounded-2xl font-semibold text-headings dark:text-white hover:bg-slate-100/80 dark:hover:bg-white/10 transition-colors"
+                          >
+                            Log in
+                          </button>
+                          <button
+                            onClick={handleShowSignup}
+                            className="w-full text-left mt-1 px-4 py-3 rounded-2xl font-semibold bg-neon-teal text-black hover:bg-opacity-80 transition-colors"
+                          >
+                            Sign up
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  <button
+                    onClick={toggleTheme}
+                    className="p-2 rounded-full text-headings dark:text-white hover:bg-slate-100 dark:hover:bg-white/10"
+                    aria-label="Toggle theme"
+                    suppressHydrationWarning
+                  >
+                    {!mounted ? (
+                      <span className="block h-5 w-5" aria-hidden="true" />
+                    ) : theme === 'dark' ? (
+                      <Sun size={20} />
+                    ) : (
+                      <Moon size={20} />
+                    )}
+                  </button>
+                </div>
+
+                <div className="md:hidden">
+                  <button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    aria-label="Open menu"
+                    className="p-2 rounded-full text-headings dark:text-white hover:bg-slate-100 dark:hover:bg-white/10"
+                  >
+                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                  </button>
+                </div>
               </div>
-              <div onMouseEnter={() => setActiveMenu('solutions')}>
-                <button className="flex items-center text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
-                  Solutions <ChevronDown size={16} className="ml-1" />
-                </button>
-              </div>
-              <Link href="/integrations" className="text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
-                Integrations
-              </Link>
-              <Link href="/resources" className="text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
-                Resources
-              </Link>
-              <Link href="/pricing" className="text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
-                Pricing
-              </Link>
-              <Link href="/help-center" className="text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
-                Help
-              </Link>
             </div>
 
-            <div className="hidden md:flex items-center space-x-4">
-              <button
-                onClick={handleShowLogin}
-                className="text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors font-semibold"
-              >
-                Login
-              </button>
-              <button
-                onClick={handleShowSignup}
-                className="bg-neon-teal text-black px-4 py-2 rounded-lg font-semibold hover:bg-opacity-80 transition-colors"
-              >
-                Start free trial
-              </button>
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full text-headings dark:text-white hover:bg-slate-100 dark:hover:bg-white/10"
-                aria-label="Toggle theme"
-                suppressHydrationWarning
-              >
-                {!mounted ? (
-                  <span className="block h-5 w-5" aria-hidden="true" />
-                ) : theme === 'dark' ? (
-                  <Sun size={20} />
-                ) : (
-                  <Moon size={20} />
-                )}
-              </button>
-            </div>
-
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-label="Open menu"
-                className="p-2 rounded-lg text-headings dark:text-white hover:bg-slate-100 dark:hover:bg-white/10"
-              >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
+            <AnimatePresence mode="wait" initial={false}>
+              {activeMenu !== null ? (
+                <MegaMenu
+                  key={activeMenu}
+                  menu={activeMenu === 'product' ? productMenu : solutionsMenu}
+                  onClose={() => setActiveMenu(null)}
+                />
+              ) : null}
+            </AnimatePresence>
           </div>
         </div>
-
-        <AnimatePresence mode="wait" initial={false}>
-          {activeMenu !== null ? (
-            <MegaMenu
-              key={activeMenu}
-              menu={activeMenu === 'product' ? productMenu : solutionsMenu}
-              onClose={() => setActiveMenu(null)}
-            />
-          ) : null}
-        </AnimatePresence>
       </nav>
 
       <AnimatePresence>
@@ -233,7 +286,7 @@ const Navbar = () => {
 
               <button
                 onClick={toggleTheme}
-                className="w-full max-w-sm u-glass border rounded-xl px-4 py-3 flex items-center justify-between"
+                className="w-full max-w-sm u-glass border rounded-3xl px-4 py-3 flex items-center justify-between"
                 aria-label="Toggle theme"
                 suppressHydrationWarning
               >
@@ -246,11 +299,11 @@ const Navbar = () => {
 
               <div className="border-t border-slate-200 dark:border-white/10 w-full max-w-sm my-2" />
 
-              <button onClick={handleShowLogin} className="text-2xl text-headings dark:text-white">
-                Login
-              </button>
-              <button onClick={handleShowSignup} className="bg-neon-teal text-black px-6 py-3 rounded-lg font-semibold text-lg">
-                Start free trial
+              <button
+                onClick={handleShowSignup}
+                className="bg-neon-teal text-black px-6 py-3 rounded-full font-semibold text-lg w-full max-w-sm"
+              >
+                Get started
               </button>
             </div>
           </motion.div>

@@ -21,7 +21,7 @@ const Pricing = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-extrabold text-headings dark:text-white">Find the perfect plan for your business</h2>
           <p className="mt-4 text-lg text-body-copy dark:text-slate-400 max-w-2xl mx-auto">
-            Every plan starts with a free trial. Consolidate your tools, then scale when you’re ready.
+            Every plan starts with a free trial. No per‑seat pricing until you pass 10 users — and Enterprise includes unlimited seats.
           </p>
         </div>
 
@@ -40,7 +40,7 @@ const Pricing = () => {
           {tiers.map((tier) => (
             <div
               key={tier.id}
-              className={`bg-white dark:bg-slate-800/50 rounded-2xl p-8 border ${
+              className={`bg-white dark:bg-slate-800/50 rounded-3xl p-8 border ${
                 tier.highlight ? 'border-neon-teal scale-[1.02]' : 'border-slate-200 dark:border-white/10'
               } relative flex flex-col`}
             >
@@ -78,7 +78,7 @@ const Pricing = () => {
               {tier.cta.external ? (
                 <a
                   href={tier.cta.href}
-                  className={`w-full mt-auto py-3 rounded-lg font-semibold transition-colors text-center ${
+                  className={`w-full mt-auto py-3 rounded-full font-semibold transition-colors text-center ${
                     tier.highlight
                       ? 'bg-neon-teal text-black hover:bg-opacity-80'
                       : 'bg-slate-100 dark:bg-slate-700 text-headings dark:text-white hover:bg-slate-200 dark:hover:bg-slate-600'
@@ -95,7 +95,7 @@ const Pricing = () => {
                       openSignup();
                     }
                   }}
-                  className={`w-full mt-auto py-3 rounded-lg font-semibold transition-colors text-center ${
+                  className={`w-full mt-auto py-3 rounded-full font-semibold transition-colors text-center ${
                     tier.highlight
                       ? 'bg-neon-teal text-black hover:bg-opacity-80'
                       : 'bg-slate-100 dark:bg-slate-700 text-headings dark:text-white hover:bg-slate-200 dark:hover:bg-slate-600'
