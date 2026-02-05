@@ -118,7 +118,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="sticky top-0 z-50">
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300 ${outerPadding}`}>
+        <div className={`max-w-7xl mx-auto px-4 transition-all duration-300 ${outerPadding}`}>
           <div
             className="relative"
             onMouseLeave={() => {

@@ -35,7 +35,7 @@ function useTypewriter(words: string[]): TypewriterState {
     const jitter = Math.floor(Math.random() * 20);
     const speed = baseSpeed + jitter;
 
-    const delay = isDoneTyping ? 900 : isDoneErasing ? 200 : speed;
+    const delay = isDoneTyping ? 1200 : isDoneErasing ? 200 : speed;
 
     const timeout = window.setTimeout(() => {
       if (isDoneTyping) {
@@ -466,7 +466,7 @@ const Hero = () => {
           </Link>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-6">
           <p className="text-sm text-body-copy dark:text-slate-500">
             Built for{' '}
             <span className="inline-flex items-center gap-1 font-semibold text-headings dark:text-white">
