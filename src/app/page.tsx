@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <AnimatedSection className="-mt-[80px]">
+      <AnimatedSection className="-mt-[90px]">
         <Hero />
       </AnimatedSection>
       <AnimatedSection>

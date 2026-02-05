@@ -434,8 +434,7 @@ const Hero = () => {
   }, [scenes.length]);
 
   return (
-    <section className="relative overflow-hidden bg-white dark:bg-black text-center py-20 md:py-32 px-4 flex flex-col items-center">
-      <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] md:w-[100%] md:h-[100%] z-0">
+    <section className="relative overflow-hidden bg-white dark:bg-black text-center pt-32 pb-20 md:pt-52 md:pb-32 px-4 flex flex-col items-center">      <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] md:w-[100%] md:h-[100%] z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-white via-transparent to-white dark:from-black dark:via-transparent dark:to-black" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(0,212,255,0.12)_0%,_rgba(0,212,255,0)_54%)]" />
       </div>
