@@ -38,7 +38,7 @@ export default function DevelopersPage() {
         />
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-          <div className="u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
+          <div className="u-surface p-6 shadow-sm dark:border-white/10">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <h2 className="text-xl font-bold text-headings dark:text-white">Build integrations the right way</h2>

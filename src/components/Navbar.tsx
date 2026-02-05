@@ -110,7 +110,7 @@ const Navbar = () => {
   const showGlass = isScrolled || isDropdownOpen || isGetStartedOpen;
   const surfaceClass = showGlass ? (isDropdownOpen ? 'u-glass-strong' : 'u-glass') : 'bg-transparent';
   const surfaceBorder = showGlass ? 'border border-slate-200/70 dark:border-white/15' : '';
-  const surfaceRounded = isDropdownOpen ? 'rounded-t-full rounded-b-none' : 'rounded-full';
+  const surfaceRounded = isDropdownOpen ? 'rounded-t-2xl rounded-b-none' : 'rounded-full';
   const surfaceBottomBorder = isDropdownOpen ? 'border-b-0' : '';
   const surfaceHeight = isScrolled ? 'h-14' : 'h-16';
   const outerPadding = isScrolled ? 'pt-2 pb-2' : 'pt-4 pb-3';
@@ -135,8 +135,8 @@ const Navbar = () => {
                   <Image
                     src="/brand/unobits-mark-64.png"
                     alt="UNOBITS Logo"
-                    width={34}
-                    height={34}
+                    width={36}
+                    height={36}
                     priority
                   />
                 </Link>

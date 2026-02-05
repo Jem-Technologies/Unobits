@@ -441,11 +441,11 @@ const Hero = () => {
 
       <div className="z-10 flex flex-col items-center">
         <h1 className="text-4xl md:text-6xl font-extrabold text-headings dark:text-white tracking-tight max-w-4xl">
-          The All‑in‑One Operating System for Your Entire Business.
+          The All‑in‑One Operating System for Your Business.
         </h1>
         <p className="max-w-2xl mx-auto mt-6 text-md md:text-lg text-body-copy dark:text-slate-400">
           UNOBITS replaces app sprawl with one connected workspace: CRM, email, shared inbox, projects, docs, chat,
-          automations, finance, portals, and reporting — built to scale for any industry and data size.
+          automations, finance, portals, and reporting built to scale for any industry and data size.
         </p>
 
         <div className="mt-8 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
