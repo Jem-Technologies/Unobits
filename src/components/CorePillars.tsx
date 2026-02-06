@@ -162,6 +162,7 @@ const CorePillars = () => {
     []
   );
 
+  const PANEL_HEIGHT = 'h-[510px]';
   const PANEL_HEIGHT_CLASS = 'min-h-[520px] max-h-[700px]';
   const detailsY = useTransform(scrollProgress, (p) => {
     if (!detailViewportHeight) return 0;
@@ -198,7 +199,7 @@ const CorePillars = () => {
                       {pillars.map((tab) => (
                         <div
                           key={`${tab.key}-panel`}
-                          className={`flex-shrink-0 u-surface p-8 dark:bg-white/5 ${PANEL_HEIGHT_CLASS}`}
+                          className={`flex-shrink-0 u-surface p-8 dark:bg-white/5 ${PANEL_HEIGHT}`}
                         >
                           <p className="text-xs font-semibold tracking-wide text-neon-teal">{tab.subtitle}</p>
                           <h3 className="mt-3 text-3xl font-extrabold tracking-tight text-headings dark:text-white">{tab.title}</h3>
