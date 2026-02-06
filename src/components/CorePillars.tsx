@@ -162,7 +162,7 @@ const CorePillars = () => {
     []
   );
 
-  const PANEL_HEIGHT = 'h-[510px]';
+  const PANEL_HEIGHT = 'h-[508px]';
   const PANEL_HEIGHT_CLASS = 'min-h-[520px] max-h-[700px]';
   const detailsY = useTransform(scrollProgress, (p) => {
     if (!detailViewportHeight) return 0;
