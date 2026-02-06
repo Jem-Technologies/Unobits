@@ -162,7 +162,7 @@ const CorePillars = () => {
     []
   );
 
-  const PANEL_HEIGHT_CLASS = 'min-h-[420px] max-h-[700px]';
+  const PANEL_HEIGHT_CLASS = 'min-h-[520px] max-h-[700px]';
   const detailsY = useTransform(scrollProgress, (p) => {
     if (!detailViewportHeight) return 0;
     return -p * (pillars.length - 1) * detailViewportHeight;
@@ -190,9 +190,9 @@ const CorePillars = () => {
               <div className="grid grid-cols-12 gap-10 w-full">
                 {/* Left: tabs + scroll-through details */}
                 <div className="col-span-5 flex flex-col">
-                  <div ref={detailViewportRef} className={`relative mt-8 overflow-hidden rounded-2xl ${PANEL_HEIGHT_CLASS}`}>
+                  <div ref={detailViewportRef} className={`relative overflow-hidden rounded-2xl ${PANEL_HEIGHT_CLASS}`}>
                     <motion.div
-                      className="absolute gap-10 inset-0 will-change-transform flex flex-col"
+                      className="absolute gap-4 inset-0 will-change-transform flex flex-col"
                       style={{ y: detailsY }}
                     >
                       {pillars.map((tab) => (
