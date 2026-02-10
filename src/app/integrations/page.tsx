@@ -1,9 +1,16 @@
 import Link from 'next/link';
+import Script from 'next/script';
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 import OpenSignupButton from '@/components/common/OpenSignupButton';
+
+import {
+  INTEGRATION_SPHERE_LOGOS,
+  INTEGRATION_SPRITE,
+  getIntegrationSpritePosition,
+} from '@/lib/integrationSphereData';
 
 const integrations = [
   {
@@ -39,6 +46,14 @@ const integrations = [
 ];
 
 export default function IntegrationsPage() {
+  const spherePayload = {
+    logos: INTEGRATION_SPHERE_LOGOS,
+    sprite: INTEGRATION_SPRITE,
+  };
+
+  const tile = 56; // CSS px for fallback grid + directory icons
+  const bgSize = `${INTEGRATION_SPRITE.columns * tile}px ${INTEGRATION_SPRITE.rows * tile}px`;
+
   return (
     <div className="u-page">
       <Navbar />
@@ -47,7 +62,18 @@ export default function IntegrationsPage() {
           title="Integrations"
           subtitle="UNOBITS is the command center — connect what you need, keep execution in one OS, and avoid living in 12 browser tabs."
           breadcrumbs={[{ name: 'Integrations', href: '/integrations' }]}
+          visual="operations"
         />
+
+        {/* Payload first, then the dependency-free canvas module. */}
+        <Script
+          id="integrationSpherePayload"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `window.__UNOBITS_INTEGRATION_SPHERE__=${JSON.stringify(spherePayload)};`,
+          }}
+        />
+        <Script src="/js/integration-sphere.js" strategy="afterInteractive" />
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
           <div className="u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
@@ -69,6 +95,117 @@ export default function IntegrationsPage() {
                 >
                   API & Webhooks
                 </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3D Canvas Sphere (100 logos) */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+          <div className="u-surface p-6 sm:p-8 shadow-sm dark:border-white/10 dark:bg-obsidian">
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
+              <div>
+                <p className="text-sm font-semibold text-neon-teal">Interactive</p>
+                <h2 className="mt-2 text-3xl font-bold tracking-tight text-headings dark:text-white">
+                  100 integrations, one visual map
+                </h2>
+                <p className="mt-4 text-body-copy dark:text-slate-400">
+                  Drag (or swipe) to spin the sphere. Click a logo to jump to its listing below. This runs entirely on a
+                  single HTML5 canvas for smooth FPS on mobile.
+                </p>
+                <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className="u-surface-soft p-4 dark:bg-white/5">
+                    <p className="text-sm font-semibold text-headings dark:text-white">Depth-aware</p>
+                    <p className="mt-1 text-sm text-body-copy dark:text-slate-400">Front logos scale up and brighten automatically.</p>
+                  </div>
+                  <div className="u-surface-soft p-4 dark:bg-white/5">
+                    <p className="text-sm font-semibold text-headings dark:text-white">Physics rotation</p>
+                    <p className="mt-1 text-sm text-body-copy dark:text-slate-400">Swipe → inertia → gentle magnetic follow.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative">
+                <div className="u-glow relative overflow-hidden rounded-3xl border border-slate-200 bg-white/70 dark:border-white/10 dark:bg-black/40">
+                  <canvas
+                    id="integrationSphere"
+                    className="block w-full h-[360px] sm:h-[460px] lg:h-[520px]"
+                  />
+
+                  {/* Fallback grid (used if canvas fails) */}
+                  <div id="integrationSphereFallback" className="hidden p-6">
+                    <div className="grid grid-cols-5 gap-3 sm:grid-cols-8 md:grid-cols-10">
+                      {INTEGRATION_SPHERE_LOGOS.map((it) => {
+                        const pos = getIntegrationSpritePosition(it.spriteIndex, tile);
+                        return (
+                          <a
+                            key={it.id}
+                            href={it.href}
+                            className="group relative aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white/60 shadow-sm transition hover:-translate-y-0.5 hover:border-neon-teal dark:border-white/10 dark:bg-white/5"
+                            aria-label={it.name}
+                          >
+                            <span className="sr-only">{it.name}</span>
+                            <div
+                              className="absolute inset-0"
+                              style={{
+                                backgroundImage: `url(${INTEGRATION_SPRITE.url})`,
+                                backgroundSize: bgSize,
+                                backgroundPosition: `-${pos.x}px -${pos.y}px`,
+                              }}
+                            />
+                          </a>
+                        );
+                      })}
+                    </div>
+                    <p className="mt-5 text-sm text-slate-600 dark:text-slate-400">
+                      Canvas is unavailable — showing a static grid fallback.
+                    </p>
+                  </div>
+
+                  {/* HUD */}
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 px-4 py-3 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                    <div className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 shadow-sm dark:bg-black/60">
+                      <span className="inline-block h-2 w-2 rounded-full bg-neon-teal" />
+                      Drag / swipe to spin
+                    </div>
+                    <div className="hidden sm:inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 shadow-sm dark:bg-black/60">
+                      Click a logo to jump
+                    </div>
+                  </div>
+                </div>
+
+                {/* Noscript fallback */}
+                <noscript>
+                  <div className="mt-6 u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
+                    <h3 className="text-lg font-bold text-headings dark:text-white">Integrations grid</h3>
+                    <p className="mt-2 text-sm text-body-copy dark:text-slate-400">
+                      JavaScript is disabled, so the 3D sphere is unavailable. Here is a static grid instead.
+                    </p>
+                    <div className="mt-5 grid grid-cols-5 gap-3 sm:grid-cols-8 md:grid-cols-10">
+                      {INTEGRATION_SPHERE_LOGOS.map((it) => {
+                        const pos = getIntegrationSpritePosition(it.spriteIndex, tile);
+                        return (
+                          <a
+                            key={it.id}
+                            href={it.href}
+                            className="relative aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white/60 shadow-sm dark:border-white/10 dark:bg-white/5"
+                            aria-label={it.name}
+                          >
+                            <span className="sr-only">{it.name}</span>
+                            <div
+                              className="absolute inset-0"
+                              style={{
+                                backgroundImage: `url(${INTEGRATION_SPRITE.url})`,
+                                backgroundSize: bgSize,
+                                backgroundPosition: `-${pos.x}px -${pos.y}px`,
+                              }}
+                            />
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </noscript>
               </div>
             </div>
           </div>
@@ -128,6 +265,64 @@ export default function IntegrationsPage() {
                     External collaboration app
                   </Link>
                 </div>
+              </div>
+            </div>
+
+            {/* Directory (anchors that sync with the sphere links) */}
+            <div className="mt-16">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-headings dark:text-white">Integration directory</h2>
+                  <p className="mt-2 text-body-copy dark:text-slate-400">
+                    Click any logo in the sphere to jump to its entry. Each entry shows status and category.
+                  </p>
+                </div>
+                <Link
+                  href="/developers"
+                  className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-headings shadow-sm hover:bg-slate-50 dark:border-white/10 dark:bg-obsidian dark:text-white dark:hover:bg-white/5"
+                >
+                  Build your own via API
+                </Link>
+              </div>
+
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {INTEGRATION_SPHERE_LOGOS.map((it) => {
+                  const pos = getIntegrationSpritePosition(it.spriteIndex, 44);
+                  return (
+                    <div
+                      key={it.id}
+                      id={it.id}
+                      className="u-surface p-5 shadow-sm scroll-mt-28 dark:border-white/10 dark:bg-obsidian"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="h-11 w-11 flex-none overflow-hidden rounded-2xl border border-slate-200 bg-white/70 dark:border-white/10 dark:bg-white/5"
+                          style={{
+                            backgroundImage: `url(${INTEGRATION_SPRITE.url})`,
+                            backgroundSize: `${INTEGRATION_SPRITE.columns * 44}px ${INTEGRATION_SPRITE.rows * 44}px`,
+                            backgroundPosition: `-${pos.x}px -${pos.y}px`,
+                          }}
+                          aria-hidden="true"
+                        />
+                        <div className="min-w-0">
+                          <a href={`#${it.id}`} className="font-semibold text-headings hover:text-neon-teal dark:text-white">
+                            {it.name}
+                          </a>
+                          <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-400">{it.category}</p>
+                        </div>
+                        <span
+                          className={
+                            it.status === 'Coming soon'
+                              ? 'ml-auto inline-flex items-center rounded-full bg-neon-teal/10 px-3 py-1 text-xs font-semibold text-neon-teal'
+                              : 'ml-auto inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                          }
+                        >
+                          {it.status}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

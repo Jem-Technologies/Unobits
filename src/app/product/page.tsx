@@ -5,6 +5,7 @@ import OpenSignupButton from '@/components/common/OpenSignupButton';
 import Link from 'next/link';
 
 import { PRODUCT_CATEGORIES } from '@/lib/productData';
+import { makeTitleCardDataUri } from '@/lib/titleCard';
 
 export default function ProductLandingPage() {
   return (
@@ -15,6 +16,12 @@ export default function ProductLandingPage() {
           title="The UNOBITS Platform"
           subtitle="Everything your team needs — communication, projects, CRM, productivity, reporting, portals, and automation — designed as one connected operating system."
           breadcrumbs={[{ name: 'Product', href: '/product' }]}
+          imageUrl={makeTitleCardDataUri({
+            title: 'The UNOBITS Platform',
+            eyebrow: 'Product',
+            subtitle: 'Everything your team needs in one OS.',
+          })}
+          imageAlt="The UNOBITS Platform"
         />
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">

@@ -45,6 +45,13 @@
   .u-page {
     min-height: 100vh;
     @apply bg-white text-body-copy;
+
+    /* Light mode depth (subtle, enterprise-friendly). */
+    background-image:
+      radial-gradient(circle at 12% 10%, rgba(0, 212, 255, 0.08), transparent 46%),
+      radial-gradient(circle at 82% 18%, rgba(79, 70, 229, 0.06), transparent 44%),
+      radial-gradient(circle at 50% 110%, rgba(0, 212, 255, 0.05), transparent 55%);
+    background-attachment: fixed;
   }
 
   .dark .u-page {
@@ -132,6 +139,55 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+  }
+
+  /* Lightweight animation utilities (no JS, safe for static export). */
+  .u-float {
+    animation: u-float 8s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @keyframes u-float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -6px, 0);
+    }
+  }
+
+  /* Subtle scanline shimmer overlay used for hero visuals. */
+  .u-scanline {
+    position: relative;
+  }
+
+  .u-scanline::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(0, 212, 255, 0.10) 45%,
+        rgba(79, 70, 229, 0.08) 55%,
+        transparent 100%
+      );
+    opacity: 0.55;
+    transform: translateY(-120%);
+    animation: u-scan 6s linear infinite;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  @keyframes u-scan {
+    0% {
+      transform: translateY(-120%);
+    }
+    100% {
+      transform: translateY(120%);
+    }
   }
 }
 

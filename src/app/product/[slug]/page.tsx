@@ -7,6 +7,7 @@ import ZigZagLayout from '@/components/product/ZigZagLayout';
 import Link from 'next/link';
 
 import { PRODUCT_SLUGS, getProductPage } from '@/lib/productData';
+import { makeTitleCardDataUri } from '@/lib/titleCard';
 
 export const dynamicParams = false;
 
@@ -32,6 +33,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             { name: 'Product', href: '/product' },
             { name: page.title, href: `/product/${page.slug}` },
           ]}
+          imageUrl={makeTitleCardDataUri({
+            title: page.title,
+            eyebrow: page.category,
+            subtitle: page.subtitle,
+          })}
+          imageAlt={`${page.title} product overview`}
         />
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
