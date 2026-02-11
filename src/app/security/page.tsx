@@ -5,6 +5,21 @@ import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 
 import { SUPPORT_EMAIL } from '@/lib/siteConfig';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Security',
+  description:
+    'Security and trust at UNOBITS: controls, practices, and guidance for protecting your data in a connected business OS.',
+  path: '/security',
+  keywords: [
+    'security',
+    'data protection',
+    'access control',
+    'SaaS security',
+  ],
+});
+
 
 const controls = [
   {

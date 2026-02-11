@@ -4,6 +4,21 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 import OpenSignupButton from '@/components/common/OpenSignupButton';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'About UNOBITS',
+  description:
+    'We’re building a connected business operating system so teams stop context‑switching, reduce tab overload, and execute faster — from desktop or mobile.',
+  path: '/about',
+  keywords: [
+    'about UNOBITS',
+    'business OS',
+    'tab overload',
+    'tool sprawl',
+  ],
+});
+
 
 const values = [
   {

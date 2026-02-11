@@ -104,6 +104,20 @@ export default function PricingPageContent() {
           </div>
         </div>
 
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm">
+          <Link href="/templates" className="font-semibold text-headings dark:text-white hover:text-neon-teal">
+            Browse templates
+          </Link>
+          <span className="text-slate-400">•</span>
+          <Link href="/reviews" className="font-semibold text-headings dark:text-white hover:text-neon-teal">
+            Read reviews
+          </Link>
+          <span className="text-slate-400">•</span>
+          <Link href="/tab-overload" className="font-semibold text-headings dark:text-white hover:text-neon-teal">
+            Tab overload guide
+          </Link>
+        </div>
+
         {/* Billing toggle */}
         <div className="mt-16 flex justify-center">
           <div className="relative grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-sm font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-white/10">

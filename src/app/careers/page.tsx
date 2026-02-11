@@ -5,6 +5,21 @@ import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 
 import { SUPPORT_EMAIL } from '@/lib/siteConfig';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Careers',
+  description:
+    'Join UNOBITS and help build the modern all‑in‑one business OS. Remote‑first, product‑driven, and obsessed with killing tab overload.',
+  path: '/careers',
+  keywords: [
+    'UNOBITS careers',
+    'remote jobs',
+    'startup software',
+    'business OS',
+  ],
+});
+
 
 const roles = [
   {

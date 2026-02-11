@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import Link from 'next/link';
 import { AnimatePresence, motion, useMotionValue, useMotionValueEvent, useTransform } from 'framer-motion';
 import { BarChart2, Briefcase, CheckSquare, MessageSquare } from 'lucide-react';
 
@@ -212,6 +213,12 @@ const CorePillars = () => {
                               </li>
                             ))}
                           </ul>
+                          <Link
+                            href={`/product/${tab.key}`}
+                            className="mt-6 inline-flex items-center text-sm font-semibold text-neon-teal hover:underline"
+                          >
+                            Explore {tab.title} →
+                          </Link>
                         </div>
                       ))}
                     </motion.div>
@@ -283,8 +290,15 @@ const CorePillars = () => {
                     ))}
                   </ul>
 
+                  <Link
+                    href={`/product/${tab.key}`}
+                    className="mt-6 inline-flex items-center text-sm font-semibold text-neon-teal hover:underline"
+                  >
+                    Explore {tab.title} →
+                  </Link>
+
                   <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200/70 dark:border-white/10 bg-slate-100 dark:bg-white/5">
-                    <img src={tab.image} alt="" className="h-44 w-full object-cover" />
+                    <img src={tab.image} alt={`${tab.title} preview`} className="h-44 w-full object-cover" />
                   </div>
                 </div>
               </div>

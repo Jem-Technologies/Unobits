@@ -290,6 +290,60 @@ export const PRODUCT_PAGES: ProductPageDefinition[] = [
 
   // Clients & Business hub
   makeHub(
+    'growth',
+    'Growth',
+    'Scale revenue without scaling tools.',
+    'Growth',
+    'Connect CRM, shared inbox, outreach sequences, onboarding, and reporting — so “lead → customer → delivery” runs in one workflow.',
+    ['CRM pipelines + customer timeline', 'Sequences + follow-ups', 'Reporting that ties to delivery'],
+    [
+      {
+        title: 'Capture and qualify leads',
+        description: 'Centralize inbound conversations and keep context attached to the pipeline.',
+        bullets: ['Shared inbox routing for inbound', 'CRM stages for qualification', 'Tasks created from real conversations'],
+      },
+      {
+        title: 'Turn deals into onboarding automatically',
+        description: 'Standardize what happens after “won” so nothing falls through the cracks.',
+        bullets: ['Onboarding templates and checklists', 'Client portal setup for visibility', 'Automations for reminders and hand-offs'],
+      },
+      {
+        title: 'Measure what matters',
+        description: 'Track pipeline health and delivery outcomes without spreadsheets.',
+        bullets: ['Dashboards by pipeline and client', 'Connected reports across modules', 'Less manual reporting busywork'],
+      },
+    ],
+    ['crm', 'inbox', 'sequences', 'onboarding', 'client-portal', 'reports']
+  ),
+
+  makeHub(
+    'operations',
+    'Operations',
+    'Run daily execution with less chaos.',
+    'Operations',
+    'Standardize how work gets done across projects, approvals, time, portals, and reporting — designed mobile‑first for founders and operators.',
+    ['Repeatable workflows and checklists', 'Approvals + internal ops', 'Visibility across projects and time'],
+    [
+      {
+        title: 'Standardize execution',
+        description: 'Turn recurring work into templates your team can follow.',
+        bullets: ['Project templates and boards', 'Tasks connected to files and decisions', 'Clear ownership and due dates'],
+      },
+      {
+        title: 'Operational clarity',
+        description: 'See what is happening without chasing updates.',
+        bullets: ['Dashboards and reporting', 'Time tracking and utilization', 'Mobile-first leadership visibility'],
+      },
+      {
+        title: 'Approvals and internal workflows',
+        description: 'Requests, approvals, and SOPs live with the work — not scattered across email threads.',
+        bullets: ['Office workflows for approvals', 'Team portal for policies and navigation', 'Automations for routing and reminders'],
+      },
+    ],
+    ['projects', 'boards', 'office', 'time-tracking', 'team-portal', 'dashboard', 'reports', 'mobile-app']
+  ),
+
+  makeHub(
     'clients-business',
     'Clients & Business',
     'CRM, onboarding, sequences, builder, finance, inventory, and add‑ons.',

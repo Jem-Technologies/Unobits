@@ -3,6 +3,19 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Terms of Service',
+  description:
+    'UNOBITS Terms of Service.',
+  path: '/legal/terms',
+  keywords: [
+    'terms of service',
+    'UNOBITS terms',
+  ],
+});
+
 
 const updated = 'December 26, 2025';
 

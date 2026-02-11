@@ -474,7 +474,10 @@ const Hero = () => {
                 {cursor ? '|' : ' '}
               </span>
             </span>{' '}
-            who are done with tab overload.
+            who are done with{' '}
+            <Link href="/tab-overload" className="font-semibold text-neon-teal hover:underline">
+              tab overload
+            </Link>.
           </p>
         </div>
       </div>

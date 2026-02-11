@@ -5,6 +5,21 @@ import OpenSignupButton from '@/components/common/OpenSignupButton';
 import Link from 'next/link';
 
 import { SOLUTIONS_PAGES } from '@/lib/solutionsData';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Solutions',
+  description:
+    'Solutions by team and industry — use UNOBITS to replace tool sprawl with a single operating system for work.',
+  path: '/solutions',
+  keywords: [
+    'solutions',
+    'startups',
+    'agencies',
+    'all-in-one business software',
+  ],
+});
+
 
 export default function SolutionsPage() {
   return (

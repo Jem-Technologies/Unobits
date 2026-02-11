@@ -51,7 +51,7 @@ export default function BlogGrid({ posts }: BlogGridProps) {
               <div className="relative w-full">
                 <Image
                   src={post.image}
-                  alt=""
+                  alt={post.title}
                   width={800}
                   height={600}
                   className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2] transition-transform duration-300 group-hover:scale-105"

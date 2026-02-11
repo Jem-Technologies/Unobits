@@ -5,6 +5,19 @@ import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 
 import { SUPPORT_EMAIL } from '@/lib/siteConfig';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Privacy Policy',
+  description:
+    'UNOBITS Privacy Policy.',
+  path: '/legal/privacy',
+  keywords: [
+    'privacy policy',
+    'UNOBITS privacy',
+  ],
+});
+
 
 const updated = 'December 26, 2025';
 

@@ -4,6 +4,21 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 import OpenSignupButton from '@/components/common/OpenSignupButton';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Developers',
+  description:
+    'Build on UNOBITS: APIs, webhooks, and integrations designed for a unified business OS (not a fragile stack of plugins).',
+  path: '/developers',
+  keywords: [
+    'UNOBITS API',
+    'webhooks',
+    'integrations',
+    'developer docs',
+  ],
+});
+
 
 const sections = [
   {

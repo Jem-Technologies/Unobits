@@ -4,6 +4,21 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 import OpenSignupButton from '@/components/common/OpenSignupButton';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Team Portal',
+  description:
+    'A home base for internal teams: updates, policies, workflows, and navigation — connected to the rest of the OS.',
+  path: '/team-portal',
+  keywords: [
+    'team portal',
+    'internal portal',
+    'company hub',
+    'operations',
+  ],
+});
+
 
 const points = [
   {

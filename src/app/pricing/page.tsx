@@ -2,6 +2,20 @@ import InnerPageHero from '@/components/common/InnerPageHero';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import PricingPageContent from '@/components/pricing/PricingPageContent';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Pricing',
+  description:
+    'Simple, transparent pricing for UNOBITS — replace multiple subscriptions with one connected OS.',
+  path: '/pricing',
+  keywords: [
+    'UNOBITS pricing',
+    'all-in-one business software pricing',
+    'replace subscriptions',
+  ],
+});
+
 
 export default function PricingPage() {
   return (

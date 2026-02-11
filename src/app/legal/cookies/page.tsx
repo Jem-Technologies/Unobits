@@ -3,6 +3,19 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Cookie Policy',
+  description:
+    'UNOBITS Cookie Policy.',
+  path: '/legal/cookies',
+  keywords: [
+    'cookie policy',
+    'UNOBITS cookies',
+  ],
+});
+
 
 const updated = 'December 26, 2025';
 

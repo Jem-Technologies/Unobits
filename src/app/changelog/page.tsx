@@ -4,6 +4,20 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 import OpenSignupButton from '@/components/common/OpenSignupButton';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Changelog',
+  description:
+    'See what’s new in UNOBITS — product updates focused on reducing tool sprawl and helping teams ship faster.',
+  path: '/changelog',
+  keywords: [
+    'UNOBITS changelog',
+    'product updates',
+    'release notes',
+  ],
+});
+
 
 const entries = [
   {

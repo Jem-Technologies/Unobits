@@ -66,6 +66,10 @@ const Footer = () => {
             <h3 className="font-semibold text-headings dark:text-white">Resources</h3>
             <ul className="mt-4 space-y-3">
               <li><Link href="/resources" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Blog</Link></li>
+<li><Link href="/templates" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Templates Library</Link></li>
+<li><Link href="/alternatives" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Alternatives</Link></li>
+<li><Link href="/tab-overload" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Tab Overload Guide</Link></li>
+<li><Link href="/reviews" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Reviews</Link></li>
               <li><Link href="/community" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Community</Link></li>
               <li><Link href="/developers" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Developers (API)</Link></li>
               <li><Link href="/help-center" className="text-body-copy dark:text-slate-400 hover:text-neon-teal transition-colors text-sm">Help Center</Link></li>

@@ -5,12 +5,27 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 import OpenSignupButton from '@/components/common/OpenSignupButton';
-
+import { buildMetadata } from '@/lib/seo';
 import {
   INTEGRATION_SPHERE_LOGOS,
   INTEGRATION_SPRITE,
   getIntegrationSpritePosition,
 } from '@/lib/integrationSphereData';
+
+
+export const metadata = buildMetadata({
+  title: 'Integrations',
+  description:
+    'Connect the tools you must keep — while doing the real work inside UNOBITS. Integrations, webhooks, and automation connectors.',
+  path: '/integrations',
+  keywords: [
+    'integrations',
+    'webhooks',
+    'Zapier alternative',
+    'automation',
+  ],
+});
+
 
 const integrations = [
   {

@@ -4,6 +4,21 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 import OpenSignupButton from '@/components/common/OpenSignupButton';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Client Portal',
+  description:
+    'Give clients a clean, secure portal for files, approvals, requests, and status — without endless email threads.',
+  path: '/client-portal',
+  keywords: [
+    'client portal',
+    'client approvals',
+    'secure file sharing',
+    'agency portal',
+  ],
+});
+
 
 const points = [
   {

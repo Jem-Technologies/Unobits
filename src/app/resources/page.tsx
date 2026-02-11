@@ -6,6 +6,21 @@ import Link from 'next/link';
 
 import { RESOURCE_CATEGORIES, RESOURCE_POSTS } from '@/lib/resourcesData';
 import { slugify } from '@/lib/slugify';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Resources',
+  description:
+    'Articles, guides, and playbooks from the UNOBITS team — focused on reducing tab overload and building a calmer workflow.',
+  path: '/resources',
+  keywords: [
+    'resources',
+    'tab overload',
+    'subscription fatigue',
+    'workflow playbooks',
+  ],
+});
+
 
 const categoryHref = (category: string) => `/resources/category/${slugify(category)}`;
 
@@ -45,6 +60,46 @@ export default function ResourcesPage() {
         </section>
 
         <BlogGrid posts={RESOURCE_POSTS} />
+
+        <section className="py-16">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+              {[
+                {
+                  title: 'Tab Overload Guide',
+                  desc: 'A practical path to reduce tool sprawl and subscription fatigue.',
+                  href: '/tab-overload',
+                },
+                {
+                  title: 'Templates Library',
+                  desc: 'Preview complete workflows before you sign up.',
+                  href: '/templates',
+                },
+                {
+                  title: 'Alternatives to incumbents',
+                  desc: 'Compare UNOBITS to popular suites and tools.',
+                  href: '/alternatives',
+                },
+                {
+                  title: 'Reviews',
+                  desc: 'Help more founders discover UNOBITS.',
+                  href: '/reviews',
+                },
+              ].map((c) => (
+                <Link
+                  key={c.href}
+                  href={c.href}
+                  className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-neon-teal dark:border-white/10 dark:bg-obsidian"
+                >
+                  <h3 className="text-lg font-bold text-headings group-hover:text-neon-teal dark:text-white">{c.title}</h3>
+                  <p className="mt-2 text-sm text-body-copy dark:text-slate-400">{c.desc}</p>
+                  <div className="mt-4 text-sm font-semibold text-neon-teal">Explore →</div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
       </main>
       <Footer />
     </div>

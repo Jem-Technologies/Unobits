@@ -6,6 +6,20 @@ import InnerPageHero from '@/components/common/InnerPageHero';
 import OpenSignupButton from '@/components/common/OpenSignupButton';
 
 import { SUPPORT_EMAIL } from '@/lib/siteConfig';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Community',
+  description:
+    'Join the UNOBITS community: use‑case templates, workflows, and best practices for running a company in one app.',
+  path: '/community',
+  keywords: [
+    'UNOBITS community',
+    'workflow templates',
+    'business OS templates',
+  ],
+});
+
 
 const highlights = [
   {

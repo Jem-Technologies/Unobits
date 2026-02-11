@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import Navbar from '@/components/Navbar';
@@ -8,12 +9,34 @@ import BlogGrid from '@/components/resources/BlogGrid';
 
 import { RESOURCE_CATEGORIES, RESOURCE_POSTS } from '@/lib/resourcesData';
 import { slugify } from '@/lib/slugify';
+import { buildMetadata } from '@/lib/seo';
 
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return RESOURCE_CATEGORIES.map((c) => ({ slug: slugify(c) }));
 }
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const category = RESOURCE_CATEGORIES.find((c) => slugify(c) === params.slug);
+
+  if (!category) {
+    return buildMetadata({
+      title: 'Resources',
+      description: 'Guides and insights from the UNOBITS team — focused on reducing tab overload.',
+      path: `/resources/category/${params.slug}`,
+      noIndex: true,
+    });
+  }
+
+  return buildMetadata({
+    title: `${category} resources`,
+    description: `Posts and guides about ${category.toLowerCase()} inside UNOBITS.`,
+    path: `/resources/category/${params.slug}`,
+    keywords: ['UNOBITS', 'resources', category, 'tab overload'],
+  });
+}
+
 
 export default async function ResourceCategoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

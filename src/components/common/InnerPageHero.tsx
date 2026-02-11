@@ -3,6 +3,7 @@
 
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
+import { absoluteUrl } from '@/lib/seo';
 
 type Breadcrumb = {
   name: string;
@@ -33,15 +34,32 @@ function resolveVisualKey(title: string, breadcrumbs: Breadcrumb[]): NonNullable
   if (t.includes('portal')) return 'productivity';
   return 'productivity';
 }
-
 export default function InnerPageHero({ title, subtitle, breadcrumbs, imageUrl, imageAlt, visual }: InnerPageHeroProps) {
   const visualKey = visual ?? resolveVisualKey(title, breadcrumbs);
   const fallbackImageUrl = `/illustrations/pillars/${visualKey}.svg`;
   const resolvedImageUrl = imageUrl ?? fallbackImageUrl;
   const resolvedImageAlt = imageAlt ?? `${title} illustration`;
+  const allCrumbs: Breadcrumb[] = [{ name: 'Home', href: '/' }, ...breadcrumbs];
+
+  // Breadcrumb structured data helps Google understand page hierarchy.
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: allCrumbs.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: absoluteUrl(c.href),
+    })),
+  };
 
   return (
     <div className="relative isolate overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <div className="mx-auto max-w-7xl px-6 pb-16 pt-10 sm:pb-24 lg:flex lg:items-center lg:gap-x-12 lg:px-8 lg:py-12">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-3xl lg:flex-shrink-0 lg:pt-2">
           {/* Breadcrumbs */}
@@ -56,17 +74,17 @@ export default function InnerPageHero({ title, subtitle, breadcrumbs, imageUrl, 
               </li>
               {breadcrumbs.map((crumb) => (
                 <li key={crumb.name}>
-                  <div className="flex items-center">
-                    <ChevronRightIcon className="h-5 w-5 flex-shrink-0 text-gray-500" aria-hidden="true" />
-                    <Link
-                      href={crumb.href}
-                      className="ml-2 text-sm font-medium text-gray-400 hover:text-gray-200"
+                    <div className="flex items-center">
+                      <ChevronRightIcon className="h-5 w-5 flex-shrink-0 text-gray-500" aria-hidden="true" />
+                      <Link
+                        href={crumb.href}
+                        className="ml-2 text-sm font-medium text-gray-400 hover:text-gray-200"
                       aria-current={crumb.href ? 'page' : undefined}
-                    >
-                      {crumb.name}
-                    </Link>
-                  </div>
-                </li>
+                      >
+                        {crumb.name}
+                      </Link>
+                    </div>
+                  </li>
               ))}
             </ol>
           </nav>
@@ -150,6 +168,7 @@ export default function InnerPageHero({ title, subtitle, breadcrumbs, imageUrl, 
           </div>
         </div>
       </div>
+
       {/* Subtle Gradient */}
       <div
         className="absolute inset-x-0 top-0 -z-10 transform-gpu blur-md"

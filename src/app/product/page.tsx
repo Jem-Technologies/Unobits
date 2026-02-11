@@ -5,7 +5,21 @@ import OpenSignupButton from '@/components/common/OpenSignupButton';
 import Link from 'next/link';
 
 import { PRODUCT_CATEGORIES } from '@/lib/productData';
-import { makeTitleCardDataUri } from '@/lib/titleCard';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Product',
+  description:
+    'Explore every UNOBITS module — communication, CRM, projects, docs, automations, portals, reporting, and more — all connected in one OS.',
+  path: '/product',
+  keywords: [
+    'product',
+    'modules',
+    'business operating system',
+    'all-in-one platform',
+  ],
+});
+
 
 export default function ProductLandingPage() {
   return (

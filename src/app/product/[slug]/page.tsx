@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -8,6 +9,7 @@ import Link from 'next/link';
 
 import { PRODUCT_SLUGS, getProductPage } from '@/lib/productData';
 import { makeTitleCardDataUri } from '@/lib/titleCard';
+import { buildMetadata } from '@/lib/seo';
 
 export const dynamicParams = false;
 
@@ -15,6 +17,27 @@ export const dynamicParams = false;
 export async function generateStaticParams() {
   return PRODUCT_SLUGS.map((slug) => ({ slug }));
 }
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const page = getProductPage(params.slug);
+
+  if (!page) {
+    return buildMetadata({
+      title: 'Product',
+      description: 'Explore UNOBITS modules — a connected OS built to reduce tab overload.',
+      path: `/product/${params.slug}`,
+      noIndex: true,
+    });
+  }
+
+  return buildMetadata({
+    title: page.title,
+    description: page.summary || page.subtitle,
+    path: `/product/${page.slug}`,
+    keywords: ['UNOBITS', 'business operating system', 'tab overload', page.category, page.title],
+  });
+}
+
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

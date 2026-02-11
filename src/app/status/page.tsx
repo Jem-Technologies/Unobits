@@ -3,6 +3,20 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Status',
+  description:
+    'Service status and uptime updates for UNOBITS.',
+  path: '/status',
+  keywords: [
+    'status',
+    'uptime',
+    'service health',
+  ],
+});
+
 
 const components = [
   { name: 'Web app', status: 'Operational', detail: 'UI and dashboards' },

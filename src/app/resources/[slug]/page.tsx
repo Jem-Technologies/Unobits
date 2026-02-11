@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -7,6 +8,7 @@ import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 
 import { RESOURCE_SLUGS, getPost } from '@/lib/resourcesData';
+import { buildMetadata } from '@/lib/seo';
 import { slugify } from '@/lib/slugify';
 
 export const dynamicParams = false;
@@ -14,6 +16,29 @@ export const dynamicParams = false;
 export async function generateStaticParams() {
   return RESOURCE_SLUGS.map((slug) => ({ slug }));
 }
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const post = getPost(params.slug);
+
+  if (!post) {
+    return buildMetadata({
+      title: 'Resources',
+      description: 'Guides and insights from the UNOBITS team — focused on reducing tab overload.',
+      path: `/resources/${params.slug}`,
+      noIndex: true,
+    });
+  }
+
+  return buildMetadata({
+    title: post.title,
+    description: post.excerpt,
+    path: `/resources/${post.slug}`,
+    type: 'article',
+    image: post.image,
+    keywords: ['UNOBITS', 'resources', post.category, 'tab overload', 'subscription fatigue'],
+  });
+}
+
 
 export default async function ResourcePostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -41,7 +66,7 @@ export default async function ResourcePostPage({ params }: { params: Promise<{ s
             <div className="relative aspect-[16/9] bg-slate-100 dark:bg-slate-800">
               <Image
                 src={post.image}
-                alt=""
+                alt={post.title}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 768px"

@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import Navbar from '@/components/Navbar';
@@ -7,12 +8,34 @@ import InnerPageHero from '@/components/common/InnerPageHero';
 import OpenSignupButton from '@/components/common/OpenSignupButton';
 
 import { SOLUTION_SLUGS, getSolutionPage } from '@/lib/solutionsData';
+import { buildMetadata } from '@/lib/seo';
 
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return SOLUTION_SLUGS.map((slug) => ({ slug }));
 }
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const page = getSolutionPage(params.slug);
+
+  if (!page) {
+    return buildMetadata({
+      title: 'Solutions',
+      description: 'Explore how UNOBITS replaces tool sprawl with a single operating system for work.',
+      path: `/solutions/${params.slug}`,
+      noIndex: true,
+    });
+  }
+
+  return buildMetadata({
+    title: page.title,
+    description: page.summary || page.subtitle,
+    path: `/solutions/${page.slug}`,
+    keywords: ['UNOBITS', 'solutions', 'tab overload', 'subscription fatigue', page.title],
+  });
+}
+
 
 export default async function SolutionPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

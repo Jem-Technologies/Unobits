@@ -4,6 +4,21 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 import ContactForm from '@/components/contact/ContactForm';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Contact',
+  description:
+    'Talk to UNOBITS — ask questions, request a demo, or get support. We’ll help you reduce tool sprawl and run everything in one OS.',
+  path: '/contact',
+  keywords: [
+    'contact UNOBITS',
+    'support',
+    'demo',
+    'sales',
+  ],
+});
+
 
 export default function ContactPage() {
   return (

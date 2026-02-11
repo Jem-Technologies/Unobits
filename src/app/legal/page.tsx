@@ -3,6 +3,21 @@ import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
+import { buildMetadata } from '@/lib/seo';
+
+export const metadata = buildMetadata({
+  title: 'Legal',
+  description:
+    'Legal information for UNOBITS: terms, privacy, and cookies.',
+  path: '/legal',
+  keywords: [
+    'UNOBITS legal',
+    'terms',
+    'privacy policy',
+    'cookies',
+  ],
+});
+
 
 const docs = [
   { title: 'Terms of Service', href: '/legal/terms', description: 'Usage terms for the UNOBITS platform.' },
