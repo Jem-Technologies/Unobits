@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import type { MotionProps } from 'framer-motion';
 
 /**
  * Small, lightweight animated illustrations used across the homepage.
@@ -10,11 +11,12 @@ import { motion } from 'framer-motion';
  */
 
 export function MiniKanban() {
-  const pulse = (delay: number) => ({
-    opacity: [0.55, 1, 0.55],
-    y: [0, -2, 0],
-    transition: { duration: 2.2, repeat: Infinity, delay, ease: 'easeInOut' },
-  });
+  const pulse = (delay: number) =>
+    ({
+      opacity: [0.55, 1, 0.55],
+      y: [0, -2, 0],
+      transition: { duration: 2.2, repeat: Infinity, delay, ease: 'easeInOut' },
+    } as unknown as MotionProps['animate']);
 
   return (
     <div className="mt-4 grid grid-cols-3 gap-2">
