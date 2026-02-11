@@ -14,6 +14,8 @@ type MenuItem = {
 
 type MegaMenuProps = {
   menu: {
+    featuredTitle?: string;
+    gridTitle?: string;
     featured: MenuItem[];
     grid: MenuItem[];
   };
@@ -39,14 +41,16 @@ export default function MegaMenu({ menu, onClose }: MegaMenuProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
-      className="absolute left-0 top-full z-50 w-full -mt-px u-glass-strong border border-slate-200/70 dark:border-white/15 border-t-0 rounded-b-3xl rounded-t-none overflow-hidden"
+      className="absolute left-0 top-full z-50 w-full -mt-px u-glass-strong border border-slate-200/70 dark:border-white/15 border-t-0 rounded-b-2xl rounded-t-none overflow-hidden"
       onMouseLeave={onClose}
     >
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <div className="grid grid-cols-12 gap-x-8 py-10">
           {/* Featured Section */}
           <div className="col-span-4">
-            <h3 className="mb-4 text-sm font-semibold text-body-copy dark:text-slate-400">Featured</h3>
+            <h3 className="mb-4 text-sm font-semibold text-body-copy dark:text-slate-400">
+              {menu.featuredTitle ?? 'Featured'}
+            </h3>
             <div className="space-y-4">
               {menu.featured.map((item, i) => (
                 <motion.div key={item.name} custom={i} variants={itemVariants} initial="hidden" animate="visible">
@@ -70,7 +74,9 @@ export default function MegaMenu({ menu, onClose }: MegaMenuProps) {
 
           {/* Grid Section */}
           <div className="col-span-8">
-            <h3 className="mb-4 text-sm font-semibold text-body-copy dark:text-slate-400">Core Tools</h3>
+            <h3 className="mb-4 text-sm font-semibold text-body-copy dark:text-slate-400">
+              {menu.gridTitle ?? 'Core Tools'}
+            </h3>
             <div className="grid grid-cols-2 gap-4">
               {menu.grid.map((item, i) => (
                 <motion.div key={item.name} custom={i + menu.featured.length} variants={itemVariants} initial="hidden" animate="visible">

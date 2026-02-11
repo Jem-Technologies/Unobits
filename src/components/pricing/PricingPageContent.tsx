@@ -154,7 +154,7 @@ export default function PricingPageContent() {
               className={classNames(
                 tier.highlight ? 'ring-2 ring-neon-teal' : 'ring-1 ring-gray-200 dark:ring-white/10',
                 tier.planName === 'Custom' ? 'bg-obsidian text-white' : 'bg-white dark:bg-white/5',
-                'rounded-3xl p-8 xl:p-10 transform hover:scale-[1.02] transition-transform duration-300'
+                'rounded-2xl p-8 xl:p-10 transform hover:scale-[1.02] transition-transform duration-300'
               )}
             >
               <div className="flex items-center justify-between gap-x-4">

@@ -84,7 +84,7 @@ function DemoScreen({ sceneKey }: { sceneKey: DemoScene['key'] }) {
 
   const base = (
     <div className="h-full w-full p-4">
-      <div className={`h-full w-full rounded-[26px] bg-neon-teal/10 border border-slate-300/40 dark:border-white/10 overflow-hidden`}>
+      <div className={`h-full w-full rounded-2xl bg-neon-teal/10 border border-slate-200/70 dark:border-white/10 overflow-hidden`}>
         {topBar}
         <div className="h-[calc(100%-52px)] px-4 pb-4">
           <div className="h-full grid grid-cols-12 gap-4">
@@ -131,7 +131,7 @@ function DemoScreen({ sceneKey }: { sceneKey: DemoScene['key'] }) {
 
   const projects = (
     <div className="h-full w-full p-4">
-      <div className="h-full w-full rounded-[26px] bg-neon-teal/10 border border-slate-300/40 dark:border-white/10 overflow-hidden">
+      <div className="h-full w-full rounded-2xl bg-neon-teal/10 border border-slate-200/70 dark:border-white/10 overflow-hidden">
         {topBar}
         <div className="h-[calc(100%-52px)] px-4 pb-4">
           <div className={`${commonPanel} h-full p-4`}>
@@ -173,7 +173,7 @@ function DemoScreen({ sceneKey }: { sceneKey: DemoScene['key'] }) {
 
   const chat = (
     <div className="h-full w-full p-4">
-      <div className="h-full w-full rounded-[26px] bg-neon-teal/10 border border-slate-300/40 dark:border-white/10 overflow-hidden">
+      <div className="h-full w-full rounded-2xl bg-neon-teal/10 border border-slate-200/70 dark:border-white/10 overflow-hidden">
         {topBar}
         <div className="h-[calc(100%-52px)] px-4 pb-4">
           <div className="h-full grid grid-cols-12 gap-4">
@@ -226,7 +226,7 @@ function DemoScreen({ sceneKey }: { sceneKey: DemoScene['key'] }) {
 
   const crm = (
     <div className="h-full w-full p-4">
-      <div className="h-full w-full rounded-[26px] bg-neon-teal/10 border border-slate-300/40 dark:border-white/10 overflow-hidden">
+      <div className="h-full w-full rounded-2xl bg-neon-teal/10 border border-slate-200/70 dark:border-white/10 overflow-hidden">
         {topBar}
         <div className="h-[calc(100%-52px)] px-4 pb-4">
           <div className={`${commonPanel} h-full p-4`}>
@@ -268,7 +268,7 @@ function DemoScreen({ sceneKey }: { sceneKey: DemoScene['key'] }) {
 
   const finance = (
     <div className="h-full w-full p-4">
-      <div className="h-full w-full rounded-[26px] bg-neon-teal/10 border border-slate-300/40 dark:border-white/10 overflow-hidden">
+      <div className="h-full w-full rounded-2xl bg-neon-teal/10 border border-slate-200/70 dark:border-white/10 overflow-hidden">
         {topBar}
         <div className="h-[calc(100%-52px)] px-4 pb-4">
           <div className="grid grid-cols-12 gap-4 h-full">
@@ -326,7 +326,7 @@ function DemoScreen({ sceneKey }: { sceneKey: DemoScene['key'] }) {
 
   const docs = (
     <div className="h-full w-full p-4">
-      <div className="h-full w-full rounded-[26px] bg-neon-teal/10 border border-slate-300/40 dark:border-white/10 overflow-hidden">
+      <div className="h-full w-full rounded-2xl bg-neon-teal/10 border border-slate-200/70 dark:border-white/10 overflow-hidden">
         {topBar}
         <div className="h-[calc(100%-52px)] px-4 pb-4">
           <div className="grid grid-cols-12 gap-4 h-full">
@@ -485,12 +485,12 @@ const Hero = () => {
       {/* Multiplayer showcase */}
       <div className="relative mt-20 w-full flex justify-center" style={{ perspective: '2000px' }}>
         <motion.div
-          className="relative w-full max-w-5xl h-80 md:h-[480px] bg-slate-200 dark:bg-slate-800/50 rounded-[34px] border border-slate-300/50 dark:border-white/10 shadow-2xl"
+          className="relative w-full max-w-5xl h-80 md:h-[480px] bg-slate-200 dark:bg-slate-800/50 rounded-2xl border border-slate-200/70 dark:border-white/10 shadow-2xl"
           initial={{ opacity: 0, y: 50, rotateX: 18, rotateZ: 4 }}
           animate={{ opacity: 1, y: 0, rotateX: 10, rotateZ: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          <div className="absolute inset-0 rounded-[34px] overflow-hidden">
+          <div className="absolute inset-0 rounded-2xl overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={scene.key}
@@ -521,7 +521,7 @@ const Hero = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={`${scene.key}-top`}
-              className="absolute -top-8 -left-10 md:-left-14 w-56 md:w-60 rounded-3xl u-glass-strong border border-slate-200/70 dark:border-white/20 p-4 text-left"
+              className="absolute -top-8 -left-10 md:-left-14 w-56 md:w-60 rounded-2xl u-glass-strong border border-slate-200/70 dark:border-white/20 p-4 text-left"
               initial={{ opacity: 0, scale: 0.96, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: 16 }}
@@ -535,7 +535,7 @@ const Hero = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={`${scene.key}-bottom`}
-              className="absolute -bottom-10 -right-10 md:-right-14 w-64 md:w-72 rounded-3xl u-glass-strong border border-slate-200/70 dark:border-white/20 p-4 text-left"
+              className="absolute -bottom-10 -right-10 md:-right-14 w-64 md:w-72 rounded-2xl u-glass-strong border border-slate-200/70 dark:border-white/20 p-4 text-left"
               initial={{ opacity: 0, scale: 0.96, y: -16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -16 }}

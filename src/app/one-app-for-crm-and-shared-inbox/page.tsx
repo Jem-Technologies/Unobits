@@ -72,7 +72,7 @@ export default function OneAppCrmInboxPage() {
                 </ul>
               </div>
 
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-white/5">
+              <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-white/10 dark:bg-white/5">
                 <h3 className="text-xl font-bold text-headings dark:text-white">What “connected” looks like</h3>
                 <p className="mt-3 text-body-copy dark:text-slate-400">
                   UNOBITS treats CRM and shared inbox as two views of the same customer lifecycle — then connects onboarding, projects, portals, and reporting.

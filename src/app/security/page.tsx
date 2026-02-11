@@ -105,7 +105,7 @@ export default function SecurityPage() {
               ))}
             </div>
 
-            <div className="mt-12 rounded-3xl bg-obsidian px-6 py-12 sm:px-12">
+            <div className="mt-12 rounded-2xl bg-obsidian px-6 py-12 sm:px-12">
               <div className="max-w-3xl">
                 <h2 className="text-3xl font-bold text-white">Policies & documentation</h2>
                 <p className="mt-4 text-gray-300">

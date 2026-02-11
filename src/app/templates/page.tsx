@@ -66,7 +66,7 @@ export default function TemplatesHubPage() {
                 <Link
                   key={t.slug}
                   href={`/templates/${t.slug}`}
-                  className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-neon-teal dark:border-white/10 dark:bg-obsidian"
+                  className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-neon-teal dark:border-white/10 dark:bg-obsidian"
                 >
                   <div className="relative aspect-[16/9] bg-slate-100 dark:bg-white/5">
                     <Image
@@ -104,7 +104,7 @@ export default function TemplatesHubPage() {
 
         <section className="pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="rounded-3xl bg-obsidian px-6 py-12 sm:px-12">
+            <div className="rounded-2xl bg-obsidian px-6 py-12 sm:px-12">
               <div className="max-w-3xl">
                 <h2 className="text-3xl font-bold text-white">Want a template added?</h2>
                 <p className="mt-4 text-gray-300">

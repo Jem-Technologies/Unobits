@@ -131,7 +131,7 @@ export default function InnerPageHero({ title, subtitle, breadcrumbs, imageUrl, 
               />
             </svg>
 
-            <div className="u-glow u-float u-scanline relative overflow-hidden rounded-3xl border border-slate-200 bg-white/80 p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+            <div className="u-glow u-float u-scanline relative overflow-hidden rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm dark:border-white/10 dark:bg-white/5">
               {/* Soft gradient wash */}
               <div
                 className="pointer-events-none absolute inset-0 opacity-80"

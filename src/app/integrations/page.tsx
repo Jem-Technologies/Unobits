@@ -141,7 +141,7 @@ export default function IntegrationsPage() {
               </div>
 
               <div className="relative">
-                <div className="u-glow relative overflow-hidden rounded-3xl border border-slate-200 bg-white/70 dark:border-white/10 dark:bg-black/40">
+                <div className="u-glow relative overflow-hidden rounded-2xl border border-slate-200 bg-white/70 dark:border-white/10 dark:bg-black/40">
                   <canvas
                     id="integrationSphere"
                     className="block w-full h-[360px] sm:h-[460px] lg:h-[520px]"
@@ -259,7 +259,7 @@ export default function IntegrationsPage() {
               ))}
             </div>
 
-            <div className="mt-12 rounded-3xl bg-obsidian px-6 py-12 sm:px-12">
+            <div className="mt-12 rounded-2xl bg-obsidian px-6 py-12 sm:px-12">
               <div className="max-w-3xl">
                 <h2 className="text-3xl font-bold text-white">Need a custom integration?</h2>
                 <p className="mt-4 text-gray-300">

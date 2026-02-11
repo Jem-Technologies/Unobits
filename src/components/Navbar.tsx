@@ -7,10 +7,10 @@ import Link from 'next/link';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import MegaMenu from './MegaMenu';
-import { productMenu, solutionsMenu } from '@/lib/megaMenuData';
+import { companyMenu, productMenu, resourcesMenu, solutionsMenu } from '@/lib/megaMenuData';
 import { SITE_NAME } from '@/lib/siteConfig';
 
-type ActiveMenu = 'product' | 'solutions' | null;
+type ActiveMenu = 'product' | 'solutions' | 'resources' | 'company' | null;
 type Theme = 'dark' | 'light';
 
 const Navbar = () => {
@@ -22,6 +22,7 @@ const Navbar = () => {
   const [isGetStartedOpen, setIsGetStartedOpen] = useState(false);
   const [theme, setTheme] = useState<Theme>('dark');
   const [activeMenu, setActiveMenu] = useState<ActiveMenu>(null);
+  const [mobileSection, setMobileSection] = useState<ActiveMenu>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -62,6 +63,13 @@ const Navbar = () => {
 
   const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
 
+  const toggleMobileSection = useCallback(
+    (section: Exclude<ActiveMenu, null>) => {
+      setMobileSection((current) => (current === section ? null : section));
+    },
+    []
+  );
+
   const handleShowLogin = useCallback(() => {
     setIsMobileMenuOpen(false);
     setIsGetStartedOpen(false);
@@ -82,6 +90,7 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
     setIsGetStartedOpen(false);
     setActiveMenu(null);
+    setMobileSection(null);
   }, []);
 
   // Allow other components (Hero/CTA buttons) to open these modals.
@@ -110,7 +119,7 @@ const Navbar = () => {
   const showGlass = isScrolled || isDropdownOpen || isGetStartedOpen;
   const surfaceClass = showGlass ? (isDropdownOpen ? 'u-glass-strong' : 'u-glass') : 'bg-transparent';
   const surfaceBorder = showGlass ? 'border border-slate-200/70 dark:border-white/15' : '';
-  const surfaceRounded = isDropdownOpen ? 'rounded-t-2xl rounded-b-none' : 'rounded-full';
+  const surfaceRounded = isDropdownOpen ? 'rounded-t-2xl rounded-b-none' : 'rounded-2xl';
   const surfaceBottomBorder = isDropdownOpen ? 'border-b-0' : '';
   const surfaceHeight = isScrolled ? 'h-14' : 'h-16';
   const outerPadding = isScrolled ? 'pt-2 pb-2' : 'pt-4 pb-3';
@@ -158,11 +167,26 @@ const Navbar = () => {
                       Solutions <ChevronDown size={16} className="ml-1" />
                     </button>
                   </div>
+                  <div onMouseEnter={() => {
+                    setActiveMenu('resources');
+                    setIsGetStartedOpen(false);
+                  }}>
+                    <button className="flex items-center text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
+                      Resources <ChevronDown size={16} className="ml-1" />
+                    </button>
+                  </div>
+
+                  <div onMouseEnter={() => {
+                    setActiveMenu('company');
+                    setIsGetStartedOpen(false);
+                  }}>
+                    <button className="flex items-center text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
+                      Company <ChevronDown size={16} className="ml-1" />
+                    </button>
+                  </div>
+
                   <Link href="/integrations" className="text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
                     Integrations
-                  </Link>
-                  <Link href="/resources" className="text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
-                    Resources
                   </Link>
                   <Link href="/pricing" className="text-body-copy dark:text-slate-300 hover:text-neon-teal transition-colors">
                     Pricing
@@ -195,7 +219,7 @@ const Navbar = () => {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 8, scale: 0.98 }}
                           transition={{ duration: 0.18, ease: 'easeOut' }}
-                          className="absolute right-0 top-full mt-2 w-56 u-glass-strong border border-slate-200/70 dark:border-white/20 rounded-3xl overflow-hidden p-2"
+                          className="absolute right-0 top-full mt-2 w-56 u-glass-strong border border-slate-200/70 dark:border-white/20 rounded-2xl overflow-hidden p-2"
                         >
                           <button
                             onClick={handleShowLogin}
@@ -246,7 +270,15 @@ const Navbar = () => {
               {activeMenu !== null ? (
                 <MegaMenu
                   key={activeMenu}
-                  menu={activeMenu === 'product' ? productMenu : solutionsMenu}
+                  menu={
+                    activeMenu === 'product'
+                      ? productMenu
+                      : activeMenu === 'solutions'
+                        ? solutionsMenu
+                        : activeMenu === 'resources'
+                          ? resourcesMenu
+                          : companyMenu
+                  }
                   onClose={() => setActiveMenu(null)}
                 />
               ) : null}
@@ -263,48 +295,304 @@ const Navbar = () => {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-40 md:hidden bg-white/90 dark:bg-black/90 backdrop-blur-xl"
           >
-            <div className="flex flex-col items-center justify-center h-full space-y-8 px-6">
-              <Link href="/product" onClick={closeAllModals} className="text-2xl text-headings dark:text-white">
-                Product
-              </Link>
-              <Link href="/solutions" onClick={closeAllModals} className="text-2xl text-headings dark:text-white">
-                Solutions
-              </Link>
-              <Link href="/integrations" onClick={closeAllModals} className="text-2xl text-headings dark:text-white">
-                Integrations
-              </Link>
-              <Link href="/resources" onClick={closeAllModals} className="text-2xl text-headings dark:text-white">
-                Resources
-              </Link>
-              <Link href="/pricing" onClick={closeAllModals} className="text-2xl text-headings dark:text-white">
-                Pricing
-              </Link>
-              <Link href="/help-center" onClick={closeAllModals} className="text-2xl text-headings dark:text-white">
-                Help
-              </Link>
-              <div className="border-t border-slate-200 dark:border-white/10 w-full max-w-sm my-2" />
+            <div className="flex h-full w-full flex-col items-center justify-center px-6 py-10">
+              <div className="w-full max-w-md space-y-4 overflow-y-auto">
+                {/* Product */}
+                <div>
+                  <button
+                    onClick={() => toggleMobileSection('product')}
+                    className="w-full u-glass border border-slate-200/70 dark:border-white/15 rounded-2xl px-4 py-3 flex items-center justify-between"
+                    aria-expanded={mobileSection === 'product'}
+                  >
+                    <span className="font-semibold text-headings dark:text-white">Product</span>
+                    <ChevronDown
+                      size={18}
+                      className={`text-body-copy dark:text-slate-300 transition-transform ${
+                        mobileSection === 'product' ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {mobileSection === 'product' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.18, ease: 'easeOut' }}
+                        className="mt-2 u-glass border border-slate-200/70 dark:border-white/15 rounded-2xl p-2"
+                      >
+                        <Link
+                          href="/product"
+                          onClick={closeAllModals}
+                          className="block rounded-xl px-3 py-2 font-semibold text-headings dark:text-white hover:bg-slate-100/80 dark:hover:bg-white/10"
+                        >
+                          Overview
+                        </Link>
+                        <div className="mt-2 grid grid-cols-1 gap-1">
+                          {productMenu.featured.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={closeAllModals}
+                              className="block rounded-xl px-3 py-2 hover:bg-slate-100/80 dark:hover:bg-white/10"
+                            >
+                              <p className="font-semibold text-headings dark:text-white">{item.name}</p>
+                              <p className="text-sm text-body-copy dark:text-slate-400">{item.description}</p>
+                            </Link>
+                          ))}
+                          {productMenu.grid.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={closeAllModals}
+                              className="block rounded-xl px-3 py-2 hover:bg-slate-100/80 dark:hover:bg-white/10"
+                            >
+                              <p className="font-semibold text-headings dark:text-white">{item.name}</p>
+                              <p className="text-sm text-body-copy dark:text-slate-400">{item.description}</p>
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
-              <button
-                onClick={toggleTheme}
-                className="w-full max-w-sm u-glass border rounded-3xl px-4 py-3 flex items-center justify-between"
-                aria-label="Toggle theme"
-                suppressHydrationWarning
-              >
-                <span className="font-semibold text-headings dark:text-white">Theme</span>
-                <span className="flex items-center gap-2 text-body-copy dark:text-slate-300">
-                  {!mounted ? null : theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                  <span className="text-sm">{mounted ? (theme === 'dark' ? 'Dark' : 'Light') : ''}</span>
-                </span>
-              </button>
+                {/* Solutions */}
+                <div>
+                  <button
+                    onClick={() => toggleMobileSection('solutions')}
+                    className="w-full u-glass border border-slate-200/70 dark:border-white/15 rounded-2xl px-4 py-3 flex items-center justify-between"
+                    aria-expanded={mobileSection === 'solutions'}
+                  >
+                    <span className="font-semibold text-headings dark:text-white">Solutions</span>
+                    <ChevronDown
+                      size={18}
+                      className={`text-body-copy dark:text-slate-300 transition-transform ${
+                        mobileSection === 'solutions' ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {mobileSection === 'solutions' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.18, ease: 'easeOut' }}
+                        className="mt-2 u-glass border border-slate-200/70 dark:border-white/15 rounded-2xl p-2"
+                      >
+                        <Link
+                          href="/solutions"
+                          onClick={closeAllModals}
+                          className="block rounded-xl px-3 py-2 font-semibold text-headings dark:text-white hover:bg-slate-100/80 dark:hover:bg-white/10"
+                        >
+                          Overview
+                        </Link>
+                        <div className="mt-2 grid grid-cols-1 gap-1">
+                          {solutionsMenu.featured.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={closeAllModals}
+                              className="block rounded-xl px-3 py-2 hover:bg-slate-100/80 dark:hover:bg-white/10"
+                            >
+                              <p className="font-semibold text-headings dark:text-white">{item.name}</p>
+                              <p className="text-sm text-body-copy dark:text-slate-400">{item.description}</p>
+                            </Link>
+                          ))}
+                          {solutionsMenu.grid.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={closeAllModals}
+                              className="block rounded-xl px-3 py-2 hover:bg-slate-100/80 dark:hover:bg-white/10"
+                            >
+                              <p className="font-semibold text-headings dark:text-white">{item.name}</p>
+                              <p className="text-sm text-body-copy dark:text-slate-400">{item.description}</p>
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
-              <div className="border-t border-slate-200 dark:border-white/10 w-full max-w-sm my-2" />
+                {/* Resources */}
+                <div>
+                  <button
+                    onClick={() => toggleMobileSection('resources')}
+                    className="w-full u-glass border border-slate-200/70 dark:border-white/15 rounded-2xl px-4 py-3 flex items-center justify-between"
+                    aria-expanded={mobileSection === 'resources'}
+                  >
+                    <span className="font-semibold text-headings dark:text-white">Resources</span>
+                    <ChevronDown
+                      size={18}
+                      className={`text-body-copy dark:text-slate-300 transition-transform ${
+                        mobileSection === 'resources' ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {mobileSection === 'resources' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.18, ease: 'easeOut' }}
+                        className="mt-2 u-glass border border-slate-200/70 dark:border-white/15 rounded-2xl p-2"
+                      >
+                        <Link
+                          href="/resources"
+                          onClick={closeAllModals}
+                          className="block rounded-xl px-3 py-2 font-semibold text-headings dark:text-white hover:bg-slate-100/80 dark:hover:bg-white/10"
+                        >
+                          Blog overview
+                        </Link>
+                        <div className="mt-2 grid grid-cols-1 gap-1">
+                          {resourcesMenu.featured.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={closeAllModals}
+                              className="block rounded-xl px-3 py-2 hover:bg-slate-100/80 dark:hover:bg-white/10"
+                            >
+                              <p className="font-semibold text-headings dark:text-white">{item.name}</p>
+                              <p className="text-sm text-body-copy dark:text-slate-400">{item.description}</p>
+                            </Link>
+                          ))}
+                          {resourcesMenu.grid.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={closeAllModals}
+                              className="block rounded-xl px-3 py-2 hover:bg-slate-100/80 dark:hover:bg-white/10"
+                            >
+                              <p className="font-semibold text-headings dark:text-white">{item.name}</p>
+                              <p className="text-sm text-body-copy dark:text-slate-400">{item.description}</p>
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
-              <button
-                onClick={handleShowSignup}
-                className="bg-neon-teal text-black px-6 py-3 rounded-full font-semibold text-lg w-full max-w-sm"
-              >
-                Get started
-              </button>
+                {/* Company */}
+                <div>
+                  <button
+                    onClick={() => toggleMobileSection('company')}
+                    className="w-full u-glass border border-slate-200/70 dark:border-white/15 rounded-2xl px-4 py-3 flex items-center justify-between"
+                    aria-expanded={mobileSection === 'company'}
+                  >
+                    <span className="font-semibold text-headings dark:text-white">Company</span>
+                    <ChevronDown
+                      size={18}
+                      className={`text-body-copy dark:text-slate-300 transition-transform ${
+                        mobileSection === 'company' ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {mobileSection === 'company' && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.18, ease: 'easeOut' }}
+                        className="mt-2 u-glass border border-slate-200/70 dark:border-white/15 rounded-2xl p-2"
+                      >
+                        <Link
+                          href="/about"
+                          onClick={closeAllModals}
+                          className="block rounded-xl px-3 py-2 font-semibold text-headings dark:text-white hover:bg-slate-100/80 dark:hover:bg-white/10"
+                        >
+                          About overview
+                        </Link>
+                        <div className="mt-2 grid grid-cols-1 gap-1">
+                          {companyMenu.featured.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={closeAllModals}
+                              className="block rounded-xl px-3 py-2 hover:bg-slate-100/80 dark:hover:bg-white/10"
+                            >
+                              <p className="font-semibold text-headings dark:text-white">{item.name}</p>
+                              <p className="text-sm text-body-copy dark:text-slate-400">{item.description}</p>
+                            </Link>
+                          ))}
+                          {companyMenu.grid.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={closeAllModals}
+                              className="block rounded-xl px-3 py-2 hover:bg-slate-100/80 dark:hover:bg-white/10"
+                            >
+                              <p className="font-semibold text-headings dark:text-white">{item.name}</p>
+                              <p className="text-sm text-body-copy dark:text-slate-400">{item.description}</p>
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Quick links */}
+                <div className="grid grid-cols-2 gap-3 pt-1">
+                  <Link
+                    href="/integrations"
+                    onClick={closeAllModals}
+                    className="u-surface-soft rounded-2xl px-4 py-3 font-semibold text-headings dark:text-white hover:bg-slate-100/80 dark:hover:bg-white/10"
+                  >
+                    Integrations
+                  </Link>
+                  <Link
+                    href="/pricing"
+                    onClick={closeAllModals}
+                    className="u-surface-soft rounded-2xl px-4 py-3 font-semibold text-headings dark:text-white hover:bg-slate-100/80 dark:hover:bg-white/10"
+                  >
+                    Pricing
+                  </Link>
+                  <Link
+                    href="/help-center"
+                    onClick={closeAllModals}
+                    className="u-surface-soft rounded-2xl px-4 py-3 font-semibold text-headings dark:text-white hover:bg-slate-100/80 dark:hover:bg-white/10"
+                  >
+                    Help
+                  </Link>
+                  <Link
+                    href="/contact"
+                    onClick={closeAllModals}
+                    className="u-surface-soft rounded-2xl px-4 py-3 font-semibold text-headings dark:text-white hover:bg-slate-100/80 dark:hover:bg-white/10"
+                  >
+                    Contact
+                  </Link>
+                </div>
+
+                <div className="border-t border-slate-200 dark:border-white/10 w-full my-2" />
+
+                <button
+                  onClick={toggleTheme}
+                  className="w-full u-glass border border-slate-200/70 dark:border-white/15 rounded-2xl px-4 py-3 flex items-center justify-between"
+                  aria-label="Toggle theme"
+                  suppressHydrationWarning
+                >
+                  <span className="font-semibold text-headings dark:text-white">Theme</span>
+                  <span className="flex items-center gap-2 text-body-copy dark:text-slate-300">
+                    {!mounted ? null : theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                    <span className="text-sm">{mounted ? (theme === 'dark' ? 'Dark' : 'Light') : ''}</span>
+                  </span>
+                </button>
+
+                <div className="border-t border-slate-200 dark:border-white/10 w-full my-2" />
+
+                <button
+                  onClick={handleShowSignup}
+                  className="bg-neon-teal text-black px-6 py-3 rounded-full font-semibold text-lg w-full"
+                >
+                  Get started
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

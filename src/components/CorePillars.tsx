@@ -78,11 +78,38 @@ const PILLARS: ThemePillar[] = [
   },
 ];
 
+const PILLAR_HOTSPOTS: Record<ThemePillar['key'], Array<{ left: string; top: string; label: string }>> = {
+  communication: [
+    { left: '18%', top: '28%', label: 'Assign thread' },
+    { left: '62%', top: '32%', label: 'SLA / follow-up' },
+    { left: '34%', top: '66%', label: 'Turn into task' },
+  ],
+  productivity: [
+    { left: '22%', top: '30%', label: 'Doc → action' },
+    { left: '64%', top: '44%', label: 'Shared notes' },
+    { left: '38%', top: '72%', label: 'Track progress' },
+  ],
+  growth: [
+    { left: '22%', top: '34%', label: 'Pipeline stage' },
+    { left: '62%', top: '34%', label: 'Auto follow-up' },
+    { left: '40%', top: '70%', label: 'Revenue report' },
+  ],
+  operations: [
+    { left: '22%', top: '32%', label: 'Template kickoff' },
+    { left: '62%', top: '46%', label: 'Approvals' },
+    { left: '40%', top: '72%', label: 'Delivery health' },
+  ],
+};
+
 function clamp(n: number, min: number, max: number) {
   return Math.min(max, Math.max(min, n));
 }
 
 const CorePillars = () => {
+  // Sticky header offset so this section never tucks behind the Navbar.
+  // (Navbar height changes slightly on scroll; this value keeps the experience smooth.)
+  const NAV_OFFSET = 104;
+
   const pillars = useMemo(() => PILLARS, []);
   const storyRef = useRef<HTMLDivElement | null>(null);
   const detailViewportRef = useRef<HTMLDivElement | null>(null);
@@ -117,14 +144,18 @@ const CorePillars = () => {
 
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight || 1;
-      const total = el.offsetHeight - vh;
+
+      // Our sticky panel starts below the Navbar, so we base scroll progress
+      // on the actual sticky viewport height (vh - NAV_OFFSET).
+      const stickyViewport = Math.max(1, vh - NAV_OFFSET);
+      const total = el.offsetHeight - stickyViewport;
       if (total <= 0) {
         scrollProgress.set(0);
         return;
       }
 
       // Only map while we're around the section, but keep values clamped.
-      const raw = -rect.top;
+      const raw = NAV_OFFSET - rect.top;
       const scrolled = clamp(raw, 0, total);
       const p = scrolled / total;
       scrollProgress.set(p);
@@ -157,7 +188,8 @@ const CorePillars = () => {
       const el = storyRef.current;
       if (!el) return;
       const vh = window.innerHeight || 1;
-      const top = el.offsetTop + index * vh;
+      const stickyViewport = Math.max(1, vh - NAV_OFFSET);
+      const top = el.offsetTop - NAV_OFFSET + index * stickyViewport;
       window.scrollTo({ top, behavior: 'smooth' });
     },
     []
@@ -171,9 +203,9 @@ const CorePillars = () => {
   });
 
   return (
-    <section className="py-24 bg-white dark:bg-black" style={{ minHeight: '1px' }}>
+    <section id="core-pillars" className="scroll-mt-32 py-24 bg-white dark:bg-black" style={{ minHeight: '1px' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
+        <div className="text-center mb-16">
           <h2 className="text-4xl font-extrabold text-headings dark:text-white">Everything you need. Nothing you don't.</h2>
           <p className="mt-4 text-lg text-body-copy dark:text-slate-400 max-w-2xl mx-auto">
             A fully integrated suite of tools to run your entire business.
@@ -188,7 +220,10 @@ const CorePillars = () => {
             aria-label="Platform pillars"
             ref={storyRef}
           >
-            <div className="sticky top-0 h-screen flex items-center">
+            <div
+              className="sticky flex items-center"
+              style={{ top: NAV_OFFSET, height: `calc(100vh - ${NAV_OFFSET}px)` }}
+            >
               <div className="grid grid-cols-12 gap-10 w-full">
                 {/* Left: tabs + scroll-through details */}
                 <div className="col-span-5 flex flex-col">
@@ -227,7 +262,7 @@ const CorePillars = () => {
 
                 {/* Right: sticky visual */}
                 <div className="col-span-7">
-                  <div className="relative h-[520px] rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5">
+                  <div className="relative h-[520px] rounded-2xl overflow-hidden border border-slate-200/70 dark:border-white/10 bg-slate-100 dark:bg-white/5">
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={pillars[activeTab].key}
@@ -243,6 +278,35 @@ const CorePillars = () => {
                           className="h-full w-full object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent" />
+
+                        {/* Micro-animated hotspots to help users understand what happens in each pillar. */}
+                        <div className="absolute inset-0 pointer-events-none">
+                          <AnimatePresence mode="wait">
+                            {PILLAR_HOTSPOTS[pillars[activeTab].key].map((spot) => (
+                              <motion.div
+                                key={`${pillars[activeTab].key}-${spot.label}`}
+                                initial={{ opacity: 0, scale: 0.96, y: 8 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.98, y: -8 }}
+                                transition={{ duration: 0.22, ease: 'easeOut' }}
+                                className="absolute"
+                                style={{ left: spot.left, top: spot.top }}
+                              >
+                                <motion.div
+                                  aria-hidden="true"
+                                  className="relative"
+                                  animate={{ scale: [1, 1.25, 1], opacity: [0.95, 0.55, 0.95] }}
+                                  transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+                                >
+                                  <span className="block h-3 w-3 rounded-full bg-neon-teal shadow-[0_0_0_7px_rgba(0,212,255,0.12)]" />
+                                </motion.div>
+                                <div className="mt-2 inline-flex items-center rounded-full bg-black/45 px-3 py-1 text-[11px] font-semibold text-white backdrop-blur-md border border-white/15">
+                                  {spot.label}
+                                </div>
+                              </motion.div>
+                            ))}
+                          </AnimatePresence>
+                        </div>
                         <div className="absolute bottom-6 left-6 right-6">
                           <div className="inline-flex items-center gap-2 rounded-full bg-black/40 px-4 py-2 text-white backdrop-blur-md border border-white/15">
                             <span className="h-2 w-2 rounded-full bg-neon-teal" aria-hidden="true" />
@@ -266,9 +330,9 @@ const CorePillars = () => {
               <div
                 key={tab.key}
                 className="sticky"
-                style={{ top: 88 + idx * 10, marginBottom: idx === pillars.length - 1 ? 0 : 18 }}
+                style={{ top: NAV_OFFSET + idx * 10, marginBottom: idx === pillars.length - 1 ? 0 : 18 }}
               >
-                <div className="u-glass border rounded-3xl p-6 shadow-lg">
+                <div className="u-glass border rounded-2xl p-6 shadow-lg">
                   <div className="flex items-start gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 dark:bg-white/5">
                       {tab.icon}

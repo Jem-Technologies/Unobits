@@ -84,7 +84,7 @@ export default function SolutionsPage() {
 
         <section className="pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="rounded-3xl bg-obsidian px-6 py-12 sm:px-12">
+            <div className="rounded-2xl bg-obsidian px-6 py-12 sm:px-12">
               <div className="max-w-3xl">
                 <h2 className="text-3xl font-bold text-white">Not sure where to start?</h2>
                 <p className="mt-4 text-gray-300">

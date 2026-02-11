@@ -9,10 +9,17 @@
   */
   html {
     background: #000;
+    scroll-behavior: smooth;
   }
 
   body {
     background: #000;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   /* Shared UI tokens (used for consistent glass/blur surfaces). */
@@ -66,7 +73,8 @@
 
   /* Primary surface / card panel. */
   .u-surface {
-    @apply rounded-3xl border border-slate-200 bg-white shadow-sm;
+    /* Slightly tighter radius + softer border for a calmer, more consistent UI. */
+    @apply rounded-2xl border border-slate-200/70 bg-white shadow-sm;
   }
 
   .dark .u-surface {
@@ -75,7 +83,7 @@
 
   /* Softer nested surface (used for inset callouts). */
   .u-surface-soft {
-    @apply rounded-3xl bg-slate-50;
+    @apply rounded-2xl bg-slate-50;
   }
 
   .dark .u-surface-soft {
