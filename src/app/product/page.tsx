@@ -5,6 +5,7 @@ import OpenSignupButton from '@/components/common/OpenSignupButton';
 import Link from 'next/link';
 
 import { PRODUCT_CATEGORIES } from '@/lib/productData';
+import { makeTitleCardDataUri } from '@/lib/titleCard';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata = buildMetadata({
