@@ -11,7 +11,7 @@ export type TemplatePageDefinition = {
   title: string;
   subtitle: string;
   summary: string;
-  /** A lightweight “preview” image. Use remote placeholders so the marketing site stays light. */
+  /** Template preview image (local app screenshots). */
   image: string;
   bestFor: string[];
   includesModules: Array<{ title: string; href: string }>;
@@ -26,7 +26,7 @@ export const TEMPLATE_PAGES: TemplatePageDefinition[] = [
     subtitle: 'A ready-to-run agency workspace: leads → onboarding → delivery → reporting.',
     summary:
       'Replace 6–10 tools with one connected OS. This template includes CRM pipelines, shared inbox routing, project templates, client portal views, and reporting dashboards for recurring delivery.',
-    image: 'https://placehold.co/1200x675/png?text=Digital%20Marketing%20Agency%20Template',
+    image: '/app/templates/template-01.jpg',
     bestFor: ['Marketing agencies', 'Creative studios', 'Performance teams', 'Client delivery businesses'],
     includesModules: [
       { title: 'Inbox', href: '/product/inbox' },
@@ -76,7 +76,7 @@ export const TEMPLATE_PAGES: TemplatePageDefinition[] = [
     subtitle: 'Run retail ops with fewer apps: inventory, sales follow-ups, and daily execution.',
     summary:
       'A modern retail workspace that connects customer conversations, inventory signals, internal tasks, and reporting — so founders can operate mobile-first.',
-    image: 'https://placehold.co/1200x675/png?text=Retail%20Startup%20Template',
+    image: '/app/templates/template-02.jpg',
     bestFor: ['Retail startups', 'Pop-up stores', 'Small multi-location operators'],
     includesModules: [
       { title: 'Inbox', href: '/product/inbox' },
@@ -116,7 +116,7 @@ export const TEMPLATE_PAGES: TemplatePageDefinition[] = [
     subtitle: 'A founder-friendly workspace: sales, support, delivery, and internal execution in one OS.',
     summary:
       'Connect inbound support, CRM pipeline, onboarding, and product delivery tasks so nothing falls through the cracks — even when the team is small and moving fast.',
-    image: 'https://placehold.co/1200x675/png?text=SaaS%20Startup%20Template',
+    image: '/app/templates/template-03.jpg',
     bestFor: ['SaaS founders', 'Remote teams', 'Early-stage startups'],
     includesModules: [
       { title: 'Inbox', href: '/product/inbox' },
@@ -157,7 +157,7 @@ export const TEMPLATE_PAGES: TemplatePageDefinition[] = [
     subtitle: 'A clean client delivery system for consultants: proposals → onboarding → execution → renewal.',
     summary:
       'Designed for service businesses that sell expertise: keep conversations, deliverables, files, and renewals in one connected workspace.',
-    image: 'https://placehold.co/1200x675/png?text=Consulting%20Studio%20Template',
+    image: '/app/templates/template-04.jpg',
     bestFor: ['Consultants', 'Boutique firms', 'Fractional operators'],
     includesModules: [
       { title: 'CRM', href: '/product/crm' },
@@ -197,7 +197,7 @@ export const TEMPLATE_PAGES: TemplatePageDefinition[] = [
     subtitle: 'Connect customer conversations, fulfillment workflows, and operational reporting.',
     summary:
       'A template for operators who want fewer tabs: inbox triage, task routing, inventory signals, and reporting dashboards tied together.',
-    image: 'https://placehold.co/1200x675/png?text=E-commerce%20Ops%20Template',
+    image: '/app/templates/template-05.jpg',
     bestFor: ['E‑commerce operators', 'Small teams', 'Ops managers'],
     includesModules: [
       { title: 'Inbox', href: '/product/inbox' },

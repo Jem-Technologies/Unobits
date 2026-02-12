@@ -2,8 +2,11 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
-import type { MotionProps } from 'framer-motion';
+import { motion, type TargetAndTransition } from 'framer-motion';
+
+// Framer Motion v12 types are strict about the `ease` field.
+// Using a typed cubic-bezier tuple avoids `string` widening issues in helpers.
+const EASE_IN_OUT = [0.42, 0, 0.58, 1] as const;
 
 /**
  * Small, lightweight animated illustrations used across the homepage.
@@ -11,12 +14,11 @@ import type { MotionProps } from 'framer-motion';
  */
 
 export function MiniKanban() {
-  const pulse = (delay: number) =>
-    ({
-      opacity: [0.55, 1, 0.55],
-      y: [0, -2, 0],
-      transition: { duration: 2.2, repeat: Infinity, delay, ease: 'easeInOut' },
-    } as unknown as MotionProps['animate']);
+  const pulse = (delay: number): TargetAndTransition => ({
+    opacity: [0.55, 1, 0.55],
+    y: [0, -2, 0],
+    transition: { duration: 2.2, repeat: Infinity, delay, ease: EASE_IN_OUT },
+  });
 
   return (
     <div className="mt-4 grid grid-cols-3 gap-2">
@@ -48,7 +50,7 @@ export function MiniDoc() {
         aria-hidden="true"
         className="pointer-events-none absolute left-0 top-0 h-10 w-full bg-gradient-to-r from-transparent via-neon-teal/15 to-transparent"
         animate={{ y: [0, 64, 0] }}
-        transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: EASE_IN_OUT }}
       />
 
       {/* Blinking cursor */}
@@ -56,7 +58,7 @@ export function MiniDoc() {
         aria-hidden="true"
         className="pointer-events-none absolute bottom-4 left-4 h-4 w-[2px] bg-neon-teal"
         animate={{ opacity: [0, 1, 0] }}
-        transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 1.1, repeat: Infinity, ease: EASE_IN_OUT }}
       />
     </div>
   );
@@ -74,7 +76,7 @@ export function MiniMobile() {
           <motion.div
             className="absolute left-3 right-3 top-8 rounded-xl bg-white/90 dark:bg-black/50 border border-slate-200/70 dark:border-white/10 px-3 py-2 shadow-sm"
             animate={{ y: [-18, 0, 0, -18], opacity: [0, 1, 1, 0] }}
-            transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
+            transition={{ duration: 3.6, repeat: Infinity, ease: EASE_IN_OUT }}
           >
             <div className="flex items-center gap-2">
               <span className="inline-block h-2.5 w-2.5 rounded-full bg-neon-teal" aria-hidden="true" />
@@ -116,7 +118,7 @@ export function MiniAutomation() {
           aria-hidden="true"
           className="absolute -top-[5px] h-3 w-3 rounded-full bg-neon-teal shadow-[0_0_0_6px_rgba(0,212,255,0.12)]"
           animate={{ x: [0, 128, 0] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: EASE_IN_OUT }}
         />
       </div>
 

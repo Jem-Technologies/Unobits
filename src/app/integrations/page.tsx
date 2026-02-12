@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import Script from 'next/script';
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import InnerPageHero from '@/components/common/InnerPageHero';
 import OpenSignupButton from '@/components/common/OpenSignupButton';
+import IntegrationSphereCanvas from '@/components/integrations/IntegrationSphereCanvas';
 import { buildMetadata } from '@/lib/seo';
 import {
   INTEGRATION_SPHERE_LOGOS,
@@ -61,14 +61,6 @@ const integrations = [
 ];
 
 export default function IntegrationsPage() {
-  const spherePayload = {
-    logos: INTEGRATION_SPHERE_LOGOS,
-    sprite: INTEGRATION_SPRITE,
-  };
-
-  const tile = 56; // CSS px for fallback grid + directory icons
-  const bgSize = `${INTEGRATION_SPRITE.columns * tile}px ${INTEGRATION_SPRITE.rows * tile}px`;
-
   return (
     <div className="u-page">
       <Navbar />
@@ -79,16 +71,6 @@ export default function IntegrationsPage() {
           breadcrumbs={[{ name: 'Integrations', href: '/integrations' }]}
           visual="operations"
         />
-
-        {/* Payload first, then the dependency-free canvas module. */}
-        <Script
-          id="integrationSpherePayload"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `window.__UNOBITS_INTEGRATION_SPHERE__=${JSON.stringify(spherePayload)};`,
-          }}
-        />
-        <Script src="/js/integration-sphere.js" strategy="afterInteractive" />
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
           <div className="u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
@@ -142,40 +124,7 @@ export default function IntegrationsPage() {
 
               <div className="relative">
                 <div className="u-glow relative overflow-hidden rounded-2xl border border-slate-200 bg-white/70 dark:border-white/10 dark:bg-black/40">
-                  <canvas
-                    id="integrationSphere"
-                    className="block w-full h-[360px] sm:h-[460px] lg:h-[520px]"
-                  />
-
-                  {/* Fallback grid (used if canvas fails) */}
-                  <div id="integrationSphereFallback" className="hidden p-6">
-                    <div className="grid grid-cols-5 gap-3 sm:grid-cols-8 md:grid-cols-10">
-                      {INTEGRATION_SPHERE_LOGOS.map((it) => {
-                        const pos = getIntegrationSpritePosition(it.spriteIndex, tile);
-                        return (
-                          <a
-                            key={it.id}
-                            href={it.href}
-                            className="group relative aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white/60 shadow-sm transition hover:-translate-y-0.5 hover:border-neon-teal dark:border-white/10 dark:bg-white/5"
-                            aria-label={it.name}
-                          >
-                            <span className="sr-only">{it.name}</span>
-                            <div
-                              className="absolute inset-0"
-                              style={{
-                                backgroundImage: `url(${INTEGRATION_SPRITE.url})`,
-                                backgroundSize: bgSize,
-                                backgroundPosition: `-${pos.x}px -${pos.y}px`,
-                              }}
-                            />
-                          </a>
-                        );
-                      })}
-                    </div>
-                    <p className="mt-5 text-sm text-slate-600 dark:text-slate-400">
-                      Canvas is unavailable — showing a static grid fallback.
-                    </p>
-                  </div>
+                  <IntegrationSphereCanvas logos={INTEGRATION_SPHERE_LOGOS} sprite={INTEGRATION_SPRITE} />
 
                   {/* HUD */}
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 px-4 py-3 text-xs font-semibold text-slate-700 dark:text-slate-200">
@@ -189,38 +138,6 @@ export default function IntegrationsPage() {
                   </div>
                 </div>
 
-                {/* Noscript fallback */}
-                <noscript>
-                  <div className="mt-6 u-surface p-6 shadow-sm dark:border-white/10 dark:bg-obsidian">
-                    <h3 className="text-lg font-bold text-headings dark:text-white">Integrations grid</h3>
-                    <p className="mt-2 text-sm text-body-copy dark:text-slate-400">
-                      JavaScript is disabled, so the 3D sphere is unavailable. Here is a static grid instead.
-                    </p>
-                    <div className="mt-5 grid grid-cols-5 gap-3 sm:grid-cols-8 md:grid-cols-10">
-                      {INTEGRATION_SPHERE_LOGOS.map((it) => {
-                        const pos = getIntegrationSpritePosition(it.spriteIndex, tile);
-                        return (
-                          <a
-                            key={it.id}
-                            href={it.href}
-                            className="relative aspect-square overflow-hidden rounded-2xl border border-slate-200 bg-white/60 shadow-sm dark:border-white/10 dark:bg-white/5"
-                            aria-label={it.name}
-                          >
-                            <span className="sr-only">{it.name}</span>
-                            <div
-                              className="absolute inset-0"
-                              style={{
-                                backgroundImage: `url(${INTEGRATION_SPRITE.url})`,
-                                backgroundSize: bgSize,
-                                backgroundPosition: `-${pos.x}px -${pos.y}px`,
-                              }}
-                            />
-                          </a>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </noscript>
               </div>
             </div>
           </div>

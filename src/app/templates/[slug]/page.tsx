@@ -55,6 +55,8 @@ export default async function TemplatePage({ params }: { params: Promise<{ slug:
             { name: 'Templates', href: '/templates' },
             { name: page.title, href: `/templates/${page.slug}` },
           ]}
+          imageUrl={page.image}
+          imageAlt={`${page.title} — UNOBITS template preview`}
         />
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">

@@ -21,6 +21,26 @@ type InnerPageHeroProps = {
   visual?: 'communication' | 'productivity' | 'operations' | 'growth';
 };
 
+type VisualKey = NonNullable<InnerPageHeroProps['visual']>;
+
+const HERO_IMAGES = Array.from({ length: 24 }).map(
+  (_, i) => `/app/hero/hero-${String(i + 1).padStart(2, '0')}.jpg`
+);
+
+function hashToIndex(input: string, len: number) {
+  // Simple deterministic string hash (fast + stable across builds).
+  let hash = 0;
+  for (let i = 0; i < input.length; i += 1) {
+    hash = (hash * 31 + input.charCodeAt(i)) >>> 0;
+  }
+  return len === 0 ? 0 : hash % len;
+}
+
+function pickDefaultHeroImage(visualKey: VisualKey, title: string, breadcrumbs: Breadcrumb[]) {
+  const seed = `${visualKey}|${title}|${breadcrumbs.map((b) => b.href).join('|')}`;
+  return HERO_IMAGES[hashToIndex(seed, HERO_IMAGES.length)];
+}
+
 function resolveVisualKey(title: string, breadcrumbs: Breadcrumb[]): NonNullable<InnerPageHeroProps['visual']> {
   const t = title.toLowerCase();
   const bc = (breadcrumbs?.[0]?.name ?? '').toLowerCase();
@@ -36,9 +56,9 @@ function resolveVisualKey(title: string, breadcrumbs: Breadcrumb[]): NonNullable
 }
 export default function InnerPageHero({ title, subtitle, breadcrumbs, imageUrl, imageAlt, visual }: InnerPageHeroProps) {
   const visualKey = visual ?? resolveVisualKey(title, breadcrumbs);
-  const fallbackImageUrl = `/illustrations/pillars/${visualKey}.svg`;
+  const fallbackImageUrl = pickDefaultHeroImage(visualKey, title, breadcrumbs);
   const resolvedImageUrl = imageUrl ?? fallbackImageUrl;
-  const resolvedImageAlt = imageAlt ?? `${title} illustration`;
+  const resolvedImageAlt = imageAlt ?? `${title} — UNOBITS interface preview`;
   const allCrumbs: Breadcrumb[] = [{ name: 'Home', href: '/' }, ...breadcrumbs];
 
   // Breadcrumb structured data helps Google understand page hierarchy.

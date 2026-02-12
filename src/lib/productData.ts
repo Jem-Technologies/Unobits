@@ -19,8 +19,29 @@ export type ProductPageDefinition = {
   relatedSlugs?: string[];
 };
 
-const img = (label: string) =>
-  `https://placehold.co/1600x1000/050507/00D4FF?text=${encodeURIComponent(label)}`;
+// Use real app imagery (local assets) instead of remote placeholder images.
+// This avoids slow/blocked third-party image hosts and prevents "empty" text-only blocks.
+
+const APP_HERO_IMAGES = Array.from({ length: 24 }).map(
+  (_, i) => `/app/hero/hero-${String(i + 1).padStart(2, '0')}.jpg`
+);
+const APP_SHOTS = Array.from({ length: 20 }).map(
+  (_, i) => `/app/shots/shot-${String(i + 1).padStart(2, '0')}.jpg`
+);
+
+function hashToIndex(input: string, len: number) {
+  let hash = 0;
+  for (let i = 0; i < input.length; i += 1) {
+    hash = (hash * 31 + input.charCodeAt(i)) >>> 0;
+  }
+  return len === 0 ? 0 : hash % len;
+}
+
+export function getProductHeroImage(slug: string) {
+  return APP_HERO_IMAGES[hashToIndex(slug, APP_HERO_IMAGES.length)];
+}
+
+const pickShot = (seed: string) => APP_SHOTS[hashToIndex(seed, APP_SHOTS.length)];
 
 function makeHub(
   slug: string,
@@ -41,7 +62,7 @@ function makeHub(
       name: `${slug}-section-${i + 1}`,
       title: s.title,
       description: s.desc,
-      imageUrl: img(`${title} · ${s.title}`),
+      imageUrl: pickShot(`${slug}|${i}|${s.title}`),
       highlights: s.bullets,
     })),
     relatedSlugs,
@@ -69,7 +90,7 @@ function makeModule(
         title: `Built for real work — not more tabs`,
         description:
           `UNOBITS keeps ${title.toLowerCase()} connected to your projects, clients, and communication so your team works in one place.`,
-        imageUrl: img(title),
+        imageUrl: pickShot(`${slug}|overview`),
         highlights: bullets,
       },
       {
@@ -77,7 +98,7 @@ function makeModule(
         title: `Connected to the rest of your OS`,
         description:
           `Link ${title.toLowerCase()} directly to CRM records, project tasks, files, and automations so context never gets lost.`,
-        imageUrl: img(`${title} · Connected`),
+        imageUrl: pickShot(`${slug}|connected`),
         highlights: [
           'Cross‑link anything (clients ↔ tasks ↔ conversations)',
           'Permissions & roles keep data clean',
