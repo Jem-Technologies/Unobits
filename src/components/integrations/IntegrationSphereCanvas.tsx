@@ -236,7 +236,7 @@ export default function IntegrationSphereCanvas({
       hoverRef.current = true;
     };
 
-    const onPointerLeave = () => {
+    const onPointerLeave = (e: PointerEvent) => {
       pointerInside = false;
       // Keep the "spread" effect while the pointer is still hovering.
       // On touch screens (no hover), collapse back after release.
