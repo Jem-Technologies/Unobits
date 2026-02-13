@@ -99,7 +99,7 @@ export default function IntegrationsPage() {
 
         {/* 3D Canvas Sphere (100 logos) */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-          <div className="u-surface p-6 sm:p-8 shadow-sm dark:border-white/10 dark:bg-obsidian">
+          <div className="u-surface sm:p-8">
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
               <div>
                 <p className="text-sm font-semibold text-neon-teal">Interactive</p>
@@ -107,8 +107,7 @@ export default function IntegrationsPage() {
                   100 integrations, one visual map
                 </h2>
                 <p className="mt-4 text-body-copy dark:text-slate-400">
-                  Drag (or swipe) to spin the sphere. Click a logo to jump to its listing below. This runs entirely on a
-                  single HTML5 canvas for smooth FPS on mobile.
+                  Drag (or swipe) to spin the sphere. Click a logo to jump to its listing below.
                 </p>
                 <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div className="u-surface-soft p-4 dark:bg-white/5">
