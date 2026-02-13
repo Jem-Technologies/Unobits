@@ -266,9 +266,9 @@ export default function IntegrationSphereCanvas({
       const p = getPointerPos(e);
       lastPointerX = p.x;
       lastPointerY = p.y;
-      hoverRef.current = false;
 
       if (isDragging) {
+        hoverRef.current = false;
         const dx = p.x - dragStartX;
         const dy = p.y - dragStartY;
         if (Math.abs(dx) > 6 || Math.abs(dy) > 6) dragMoved = true;
