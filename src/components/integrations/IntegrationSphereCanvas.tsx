@@ -68,7 +68,7 @@ export default function IntegrationSphereCanvas({
   sprite,
   canvasHeightClassName = 'h-[360px] sm:h-[460px] lg:h-[520px]',
   className,
-  hoverSpread = 1.12,
+  hoverSpread = 1.05,
 }: IntegrationSphereCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -259,13 +259,14 @@ export default function IntegrationSphereCanvas({
       lastPointerX = p.x;
       lastPointerY = p.y;
 
-      hoverRef.current = true;
+      hoverRef.current = false;
     };
 
     const onPointerMove = (e: PointerEvent) => {
       const p = getPointerPos(e);
       lastPointerX = p.x;
       lastPointerY = p.y;
+      hoverRef.current = false;
 
       if (isDragging) {
         const dx = p.x - dragStartX;
