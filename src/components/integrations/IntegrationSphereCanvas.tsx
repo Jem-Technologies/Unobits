@@ -256,27 +256,44 @@ export default function IntegrationSphereCanvas({
       dragMoved = false;
       dragStartX = p.x;
       dragStartY = p.y;
+      
+      // FIX: Initialize lastPointer immediately
       lastPointerX = p.x;
       lastPointerY = p.y;
+      
+      // FIX: Stop momentum immediately on grab
+      velX = 0;
+      velY = 0;
 
       hoverRef.current = false;
     };
 
     const onPointerMove = (e: PointerEvent) => {
       const p = getPointerPos(e);
-      lastPointerX = p.x;
-      lastPointerY = p.y;
 
       if (isDragging) {
         hoverRef.current = false;
-        const dx = p.x - dragStartX;
-        const dy = p.y - dragStartY;
-        if (Math.abs(dx) > 6 || Math.abs(dy) > 6) dragMoved = true;
+        
+        // FIX: Calculate delta from last frame (Direct Manipulation)
+        const dx = p.x - lastPointerX;
+        const dy = p.y - lastPointerY;
+        
+        if (Math.abs(p.x - dragStartX) > 6 || Math.abs(p.y - dragStartY) > 6) {
+          dragMoved = true;
+        }
 
-        // Directly drive velocity during drag.
-        velY = clamp(dx * 0.0024, -0.055, 0.055);
-        velX = clamp(dy * 0.0024, -0.055, 0.055);
+        // FIX: Apply rotation immediately (1:1 movement)
+        // 0.005 is the sensitivity factor
+        rotY += dx * 0.005;
+        rotX -= dy * 0.005; // Invert Y axis for natural feel
+
+        // Store velocity for momentum on release
+        velY = dx * 0.005;
+        velX = -dy * 0.005;
       }
+      
+      lastPointerX = p.x;
+      lastPointerY = p.y;
     };
 
     const onPointerUp = (e: PointerEvent) => {
@@ -368,7 +385,11 @@ export default function IntegrationSphereCanvas({
         // Depth-based alpha + size
         const depth = (z3 / radius + 1) / 2; // 0..1
         const alpha = lerp(0.35, 1, depth);
-        const drawSize = baseDraw * scale;
+
+        // FIX: Decouple drawSize from perspective scale to prevent magnification distortion.
+        // We use a gentle scale factor (0.4) so they get slightly smaller in back, 
+        // but don't blow up in front.
+        const drawSize = baseDraw * (0.6 + 0.4 * scale);
 
         n.x = x3;
         n.y = y3;
@@ -427,18 +448,30 @@ export default function IntegrationSphereCanvas({
         const ny = (lastPointerY - centerY) / (cssH / 2);
         targetVelY = clamp(nx * 0.004, -0.02, 0.02);
         targetVelX = clamp(ny * 0.004, -0.02, 0.02);
+        
+        // Blend to target velocity
+        velX = lerp(velX, targetVelX, 0.04);
+        velY = lerp(velY, targetVelY, 0.04);
       } else if (!isDragging) {
         // Default drift.
         targetVelX = 0.0006;
         targetVelY = 0.0011;
+        
+        // Blend to default drift
+        velX = lerp(velX, targetVelX, 0.02);
+        velY = lerp(velY, targetVelY, 0.02);
       }
 
-      // Ease velocity towards target (and apply friction).
-      velX = lerp(velX, targetVelX, 0.04) * 0.985;
-      velY = lerp(velY, targetVelY, 0.04) * 0.985;
+      // FIX: Only apply velocity to rotation if NOT dragging.
+      // When dragging, rotation is handled directly in onPointerMove.
+      if (!isDragging) {
+        // Apply friction
+        velX *= 0.95;
+        velY *= 0.95;
 
-      rotX += velX;
-      rotY += velY;
+        rotX += velX;
+        rotY += velY;
+      }
 
       // Clear
       ctx.clearRect(0, 0, cssW, cssH);
