@@ -99,7 +99,7 @@ export default function IntegrationsPage() {
 
         {/* 3D Canvas Sphere (100 logos) */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-          <div className="u-surface sm:p-8">
+          <div className="u-surface p-6 sm:p-8 shadow-sm dark:border-white/10 dark:bg-obsidian">
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
               <div>
                 <p className="text-sm font-semibold text-neon-teal">Interactive</p>

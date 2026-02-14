@@ -122,7 +122,7 @@ const RAW_INTEGRATIONS: Array<Omit<IntegrationSphereItem, 'id' | 'href' | 'sprit
  */
 export const INTEGRATION_SPRITE = {
   url: '/integrations/integration-sprite.png',
-  tileSize: 128,
+  tileSize: 162,
   columns: 10,
   rows: 10,
 } as const;

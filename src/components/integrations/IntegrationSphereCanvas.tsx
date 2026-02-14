@@ -57,11 +57,6 @@ function safeMatchMedia(query: string): MediaQueryList | null {
   return window.matchMedia(query);
 }
 
-function getSpriteSourceXY(index: number, sprite: IntegrationSpriteMeta) {
-  const col = index % sprite.columns;
-  const row = Math.floor(index / sprite.columns);
-  return { sx: col * sprite.tileSize, sy: row * sprite.tileSize };
-}
 
 export default function IntegrationSphereCanvas({
   logos,
@@ -119,6 +114,11 @@ export default function IntegrationSphereCanvas({
       };
     }
 
+
+    // Quality settings (helps the sprite logos look crisp when scaled).
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+
     // Canvas metrics in CSS pixels.
     let cssW = 0;
     let cssH = 0;
@@ -172,8 +172,9 @@ export default function IntegrationSphereCanvas({
     });
 
     const spriteImg = new Image();
-    // Local asset — still set to anonymous to avoid taint if the site is hosted behind a CDN.
-    spriteImg.crossOrigin = 'anonymous';
+    // We never read pixels back from the canvas, so we don't need to force CORS.
+    // For some CDN / custom-domain setups, forcing crossOrigin can make images fail to load.
+    spriteImg.decoding = 'async';
 
     const resize = () => {
       const rect = container.getBoundingClientRect();
@@ -285,11 +286,12 @@ export default function IntegrationSphereCanvas({
         // FIX: Apply rotation immediately (1:1 movement)
         // 0.005 is the sensitivity factor
         rotY += dx * 0.005;
-        rotX -= dy * 0.005; // Invert Y axis for natural feel
+        // Drag down => sphere goes down.
+        rotX += dy * 0.005;
 
         // Store velocity for momentum on release
         velY = dx * 0.005;
-        velX = -dy * 0.005;
+        velX = dy * 0.005;
       }
       
       lastPointerX = p.x;
@@ -380,7 +382,8 @@ export default function IntegrationSphereCanvas({
 
         const scale = perspective / (perspective - z3);
         const sx = x3 * scale + centerX;
-        const sy = y3 * scale + centerY;
+        // Flip Y for the canvas coordinate system so vertical drag feels natural.
+        const sy = -y3 * scale + centerY;
 
         // Depth-based alpha + size
         const depth = (z3 / radius + 1) / 2; // 0..1
@@ -403,14 +406,25 @@ export default function IntegrationSphereCanvas({
     };
 
     const drawNodes = () => {
-      // back-to-front
-      const sorted = [...nodes].sort((a, b) => a.z - b.z);
-      for (const n of sorted) {
+      // Back-to-front (mutate the array to avoid per-frame allocations).
+      nodes.sort((a, b) => a.z - b.z);
+
+      // Derive the *actual* source tile size from the loaded image.
+      // This prevents "cut in half / wrong logo" bugs when the sprite metadata is out of sync.
+      const tileW =
+        spriteImg.naturalWidth > 0 ? Math.round(spriteImg.naturalWidth / sprite.columns) : sprite.tileSize;
+      const tileH =
+        spriteImg.naturalHeight > 0 ? Math.round(spriteImg.naturalHeight / sprite.rows) : sprite.tileSize;
+
+      for (const n of nodes) {
         const size = n.drawSize;
         const dx = n.sx - size / 2;
         const dy = n.sy - size / 2;
 
-        const { sx, sy } = getSpriteSourceXY(n.item.spriteIndex, sprite);
+        const col = n.item.spriteIndex % sprite.columns;
+        const row = Math.floor(n.item.spriteIndex / sprite.columns);
+        const srcX = col * tileW;
+        const srcY = row * tileH;
 
         // Small glow for front nodes only
         const depth = (n.z / (baseRadius * spread) + 1) / 2;
@@ -427,10 +441,15 @@ export default function IntegrationSphereCanvas({
         ctx.save();
         ctx.globalAlpha = n.alpha;
         ctx.imageSmoothingEnabled = true;
-        ctx.drawImage(spriteImg, sx, sy, sprite.tileSize, sprite.tileSize, dx, dy, size, size);
+        // 1px inset prevents adjacent-tile bleeding when the sprite is scaled.
+        const inset = 1;
+        const sW = Math.max(1, tileW - inset * 2);
+        const sH = Math.max(1, tileH - inset * 2);
+        ctx.drawImage(spriteImg, srcX + inset, srcY + inset, sW, sH, dx, dy, size, size);
         ctx.restore();
       }
     };
+
 
     const tick = () => {
       if (disposed) return;

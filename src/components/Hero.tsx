@@ -62,316 +62,42 @@ function useTypewriter(words: string[]): TypewriterState {
 type DemoScene = {
   key: string;
   label: string;
+  videoSrc: string;
+  posterSrc: string;
+  cropTop?: string;
+  cropBottom?: string;
   topCard: { title: string; body: string };
   bottomCard: { title: string; body: string };
 };
 
-function DemoScreen({ sceneKey }: { sceneKey: DemoScene['key'] }) {
-  const commonPanel = 'bg-slate-900/5 dark:bg-white/10 rounded-2xl';
-  const commonLine = 'bg-slate-900/5 dark:bg-white/10 rounded-full';
-
-  const topBar = (
-    <div className="flex items-center justify-between px-4 py-3">
-      <div className="flex items-center gap-2">
-        <div className="h-2.5 w-2.5 rounded-full bg-slate-400/50" />
-        <div className="h-2.5 w-2.5 rounded-full bg-slate-400/50" />
-        <div className="h-2.5 w-2.5 rounded-full bg-slate-400/50" />
-      </div>
-      <div className={`h-3 w-40 ${commonLine}`} />
-      <div className={`h-8 w-8 ${commonPanel}`} />
-    </div>
+function ShowcaseVideo({
+  src,
+  poster,
+  className,
+  objectPosition = '50% 50%',
+}: {
+  src: string;
+  poster?: string;
+  className?: string;
+  objectPosition?: string;
+}) {
+  return (
+    <video
+      className={`h-full w-full object-cover pointer-events-none select-none ${className ?? ''}`}
+      style={{ objectPosition }}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      poster={poster}
+      aria-hidden="true"
+      disablePictureInPicture
+      controls={false}
+    >
+      <source src={src} type="video/mp4" />
+    </video>
   );
-
-  const base = (
-    <div className="h-full w-full p-4">
-      <div className={`h-full w-full rounded-2xl bg-neon-teal/10 border border-slate-200/70 dark:border-white/10 overflow-hidden`}>
-        {topBar}
-        <div className="h-[calc(100%-52px)] px-4 pb-4">
-          <div className="h-full grid grid-cols-12 gap-4">
-            <div className="col-span-3">
-              <div className={`${commonPanel} h-full p-3 flex flex-col gap-3`}>
-                <div className={`h-8 ${commonPanel}`} />
-                <div className={`h-10 ${commonPanel}`} />
-                <div className={`h-10 ${commonPanel}`} />
-                <div className={`h-10 ${commonPanel}`} />
-                <div className="mt-auto flex items-center gap-2">
-                  <div className={`h-9 w-9 ${commonPanel}`} />
-                  <div className={`h-3 flex-1 ${commonLine}`} />
-                </div>
-              </div>
-            </div>
-            <div className="col-span-9">
-              <div className={`${commonPanel} h-full p-4`}>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className={`h-9 w-9 ${commonPanel}`} />
-                    <div>
-                      <div className={`h-3 w-32 ${commonLine}`} />
-                      <div className={`mt-2 h-3 w-44 ${commonLine}`} />
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className={`h-8 w-24 ${commonPanel}`} />
-                    <div className={`h-8 w-8 ${commonPanel}`} />
-                  </div>
-                </div>
-                <div className="mt-4 h-[calc(100%-56px)]">
-                  <div className="h-full grid grid-cols-12 gap-4">
-                    <div className={`col-span-5 ${commonPanel}`} />
-                    <div className={`col-span-7 ${commonPanel}`} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const projects = (
-    <div className="h-full w-full p-4">
-      <div className="h-full w-full rounded-2xl bg-neon-teal/10 border border-slate-200/70 dark:border-white/10 overflow-hidden">
-        {topBar}
-        <div className="h-[calc(100%-52px)] px-4 pb-4">
-          <div className={`${commonPanel} h-full p-4`}>
-            <div className="flex items-center justify-between">
-              <div>
-                <div className={`h-3 w-40 ${commonLine}`} />
-                <div className={`mt-2 h-3 w-60 ${commonLine}`} />
-              </div>
-              <div className="flex items-center gap-2">
-                <div className={`h-9 w-24 ${commonPanel}`} />
-                <div className={`h-9 w-9 ${commonPanel}`} />
-              </div>
-            </div>
-            <div className="mt-4 grid grid-cols-3 gap-4 h-[calc(100%-56px)]">
-              {[0, 1, 2].map((col) => (
-                <div key={col} className={`${commonPanel} p-3 flex flex-col gap-3`}>
-                  <div className="flex items-center justify-between">
-                    <div className={`h-3 w-20 ${commonLine}`} />
-                    <div className={`h-6 w-6 ${commonPanel}`} />
-                  </div>
-                  {[0, 1, 2, 3].map((i) => (
-                    <div key={i} className={`${commonPanel} p-3`}>
-                      <div className={`h-3 w-28 ${commonLine}`} />
-                      <div className={`mt-2 h-3 w-20 ${commonLine}`} />
-                      <div className="mt-3 flex gap-2">
-                        <div className={`h-6 w-16 ${commonPanel}`} />
-                        <div className={`h-6 w-10 ${commonPanel}`} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const chat = (
-    <div className="h-full w-full p-4">
-      <div className="h-full w-full rounded-2xl bg-neon-teal/10 border border-slate-200/70 dark:border-white/10 overflow-hidden">
-        {topBar}
-        <div className="h-[calc(100%-52px)] px-4 pb-4">
-          <div className="h-full grid grid-cols-12 gap-4">
-            <div className={`${commonPanel} col-span-4 p-3 flex flex-col gap-3`}>
-              <div className={`h-8 ${commonPanel}`} />
-              {[0, 1, 2, 3, 4].map((i) => (
-                <div key={i} className={`${commonPanel} p-3`}>
-                  <div className="flex items-center gap-2">
-                    <div className={`h-8 w-8 ${commonPanel}`} />
-                    <div className="flex-1">
-                      <div className={`h-3 w-24 ${commonLine}`} />
-                      <div className={`mt-2 h-3 w-32 ${commonLine}`} />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className={`${commonPanel} col-span-8 p-4 flex flex-col`}>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className={`h-9 w-9 ${commonPanel}`} />
-                  <div>
-                    <div className={`h-3 w-28 ${commonLine}`} />
-                    <div className={`mt-2 h-3 w-40 ${commonLine}`} />
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <div className={`h-9 w-20 ${commonPanel}`} />
-                  <div className={`h-9 w-9 ${commonPanel}`} />
-                </div>
-              </div>
-              <div className="mt-4 flex-1 flex flex-col gap-3 overflow-hidden">
-                {[0, 1, 2, 3].map((i) => (
-                  <div key={i} className={`max-w-[85%] ${commonPanel} p-3 ${i % 2 === 0 ? 'self-start' : 'self-end'}`}>
-                    <div className={`h-3 w-44 ${commonLine}`} />
-                    <div className={`mt-2 h-3 w-28 ${commonLine}`} />
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 flex items-center gap-2">
-                <div className={`h-10 flex-1 ${commonPanel}`} />
-                <div className={`h-10 w-16 ${commonPanel}`} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const crm = (
-    <div className="h-full w-full p-4">
-      <div className="h-full w-full rounded-2xl bg-neon-teal/10 border border-slate-200/70 dark:border-white/10 overflow-hidden">
-        {topBar}
-        <div className="h-[calc(100%-52px)] px-4 pb-4">
-          <div className={`${commonPanel} h-full p-4`}>
-            <div className="flex items-center justify-between">
-              <div>
-                <div className={`h-3 w-44 ${commonLine}`} />
-                <div className={`mt-2 h-3 w-64 ${commonLine}`} />
-              </div>
-              <div className="flex gap-2">
-                <div className={`h-9 w-24 ${commonPanel}`} />
-                <div className={`h-9 w-9 ${commonPanel}`} />
-              </div>
-            </div>
-            <div className="mt-4 grid grid-cols-4 gap-4 h-[calc(100%-56px)]">
-              {[0, 1, 2, 3].map((col) => (
-                <div key={col} className={`${commonPanel} p-3 flex flex-col gap-3`}>
-                  <div className="flex items-center justify-between">
-                    <div className={`h-3 w-16 ${commonLine}`} />
-                    <div className={`h-6 w-6 ${commonPanel}`} />
-                  </div>
-                  {[0, 1, 2].map((i) => (
-                    <div key={i} className={`${commonPanel} p-3`}>
-                      <div className={`h-3 w-20 ${commonLine}`} />
-                      <div className={`mt-2 h-3 w-28 ${commonLine}`} />
-                      <div className="mt-3 flex items-center justify-between">
-                        <div className={`h-6 w-20 ${commonPanel}`} />
-                        <div className={`h-6 w-6 ${commonPanel}`} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const finance = (
-    <div className="h-full w-full p-4">
-      <div className="h-full w-full rounded-2xl bg-neon-teal/10 border border-slate-200/70 dark:border-white/10 overflow-hidden">
-        {topBar}
-        <div className="h-[calc(100%-52px)] px-4 pb-4">
-          <div className="grid grid-cols-12 gap-4 h-full">
-            <div className={`${commonPanel} col-span-4 p-4 flex flex-col gap-3`}>
-              <div className={`h-3 w-28 ${commonLine}`} />
-              <div className={`h-9 w-full ${commonPanel}`} />
-              <div className={`h-9 w-full ${commonPanel}`} />
-              <div className={`h-9 w-full ${commonPanel}`} />
-              <div className="mt-auto">
-                <div className={`h-3 w-24 ${commonLine}`} />
-                <div className={`mt-2 h-24 w-full ${commonPanel}`} />
-              </div>
-            </div>
-            <div className={`${commonPanel} col-span-8 p-4 flex flex-col`}>
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className={`h-3 w-40 ${commonLine}`} />
-                  <div className={`mt-2 h-3 w-56 ${commonLine}`} />
-                </div>
-                <div className="flex gap-2">
-                  <div className={`h-9 w-20 ${commonPanel}`} />
-                  <div className={`h-9 w-9 ${commonPanel}`} />
-                </div>
-              </div>
-              <div className="mt-4 grid grid-cols-2 gap-4">
-                <div className={`${commonPanel} p-4`}>
-                  <div className={`h-3 w-24 ${commonLine}`} />
-                  <div className={`mt-3 h-10 w-full ${commonPanel}`} />
-                </div>
-                <div className={`${commonPanel} p-4`}>
-                  <div className={`h-3 w-28 ${commonLine}`} />
-                  <div className={`mt-3 h-10 w-full ${commonPanel}`} />
-                </div>
-              </div>
-              <div className="mt-4 flex-1">
-                <div className={`${commonPanel} h-full p-4 flex flex-col gap-3`}>
-                  <div className={`h-3 w-24 ${commonLine}`} />
-                  <div className="grid grid-cols-12 gap-2 items-end flex-1">
-                    {Array.from({ length: 12 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className={`${commonPanel} col-span-1`}
-                        style={{ height: `${30 + (i % 5) * 12}%` }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const docs = (
-    <div className="h-full w-full p-4">
-      <div className="h-full w-full rounded-2xl bg-neon-teal/10 border border-slate-200/70 dark:border-white/10 overflow-hidden">
-        {topBar}
-        <div className="h-[calc(100%-52px)] px-4 pb-4">
-          <div className="grid grid-cols-12 gap-4 h-full">
-            <div className={`${commonPanel} col-span-4 p-4 flex flex-col gap-3`}>
-              <div className={`h-8 ${commonPanel}`} />
-              {[0, 1, 2, 3].map((i) => (
-                <div key={i} className={`${commonPanel} h-10`} />
-              ))}
-              <div className="mt-auto">
-                <div className={`h-3 w-28 ${commonLine}`} />
-                <div className={`mt-2 h-10 ${commonPanel}`} />
-              </div>
-            </div>
-            <div className={`${commonPanel} col-span-8 p-6`}>
-              <div className={`h-4 w-56 ${commonLine}`} />
-              <div className="mt-6 grid gap-4">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className={`h-3 ${i % 3 === 0 ? 'w-10/12' : i % 3 === 1 ? 'w-11/12' : 'w-9/12'} ${commonLine}`} />
-                ))}
-              </div>
-              <div className="mt-8">
-                <div className={`h-3 w-24 ${commonLine}`} />
-                <div className={`mt-3 h-28 w-full ${commonPanel}`} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  switch (sceneKey) {
-    case 'projects':
-      return projects;
-    case 'chat':
-      return chat;
-    case 'crm':
-      return crm;
-    case 'finance':
-      return finance;
-    case 'docs':
-      return docs;
-    default:
-      return base;
-  }
 }
 
 const Hero = () => {
@@ -386,36 +112,60 @@ const Hero = () => {
       {
         key: 'projects',
         label: 'Projects',
+        videoSrc: '/demos/projects.mp4',
+        posterSrc: '/demos/projects.jpg',
+        cropTop: '18% 18%',
+        cropBottom: '82% 78%',
         topCard: { title: 'Project Updated', body: "'Q4 Launch Plan' moved to 'Done'" },
         bottomCard: { title: 'Share projects with externals', body: 'Invite clients • Comments • Approvals' },
       },
       {
         key: 'chat',
         label: 'Chat',
+        videoSrc: '/demos/chat.mp4',
+        posterSrc: '/demos/chat.jpg',
+        cropTop: '20% 20%',
+        cropBottom: '78% 74%',
         topCard: { title: 'New message → task', body: 'Turn decisions into action in one click' },
         bottomCard: { title: 'Context stays attached', body: 'Messages ↔ docs ↔ projects ↔ CRM' },
       },
       {
         key: 'crm',
         label: 'CRM',
+        videoSrc: '/demos/crm.mp4',
+        posterSrc: '/demos/crm.jpg',
+        cropTop: '22% 20%',
+        cropBottom: '78% 76%',
         topCard: { title: 'Deal advanced', body: "Acme Co moved to 'Proposal'" },
         bottomCard: { title: 'Automations running', body: 'Follow‑up scheduled • Handoff created' },
       },
       {
         key: 'inbox',
         label: 'Inbox',
+        videoSrc: '/demos/inbox.mp4',
+        posterSrc: '/demos/inbox.jpg',
+        cropTop: '20% 18%',
+        cropBottom: '80% 78%',
         topCard: { title: 'Ticket Assigned', body: "'Refund request' → Support" },
         bottomCard: { title: 'SLA protected', body: 'Priority flagged • Timer running' },
       },
       {
         key: 'finance',
         label: 'Finance',
+        videoSrc: '/demos/finance.mp4',
+        posterSrc: '/demos/finance.jpg',
+        cropTop: '20% 20%',
+        cropBottom: '78% 78%',
         topCard: { title: 'Invoice Paid', body: 'Payment received • Receipt sent' },
         bottomCard: { title: 'Cashflow updated', body: 'Forecast refreshed • Alerts enabled' },
       },
       {
         key: 'docs',
         label: 'Docs',
+        videoSrc: '/demos/docs.mp4',
+        posterSrc: '/demos/docs.jpg',
+        cropTop: '20% 20%',
+        cropBottom: '82% 82%',
         topCard: { title: 'Policy approved', body: 'Changes signed off and tracked' },
         bottomCard: { title: 'Knowledge stays searchable', body: 'Docs, notes, and SOPs in one place' },
       },
@@ -434,7 +184,8 @@ const Hero = () => {
   }, [scenes.length]);
 
   return (
-    <section className="relative overflow-hidden bg-white dark:bg-black text-center pt-32 pb-20 md:pt-52 md:pb-32 px-4 flex flex-col items-center">      <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] md:w-[100%] md:h-[100%] z-0">
+    <section className="relative overflow-hidden bg-white dark:bg-black text-center pt-32 pb-20 md:pt-52 md:pb-32 px-4 flex flex-col items-center">
+      <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] md:w-[100%] md:h-[100%] z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-white via-transparent to-white dark:from-black dark:via-transparent dark:to-black" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(0,212,255,0.12)_0%,_rgba(0,212,255,0)_54%)]" />
       </div>
@@ -482,7 +233,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Multiplayer showcase */}
+      {/* Workspace showcase */}
       <div className="relative mt-20 w-full flex justify-center" style={{ perspective: '2000px' }}>
         <motion.div
           className="relative w-full max-w-5xl h-80 md:h-[480px] bg-slate-200 dark:bg-slate-800/50 rounded-2xl border border-slate-200/70 dark:border-white/10 shadow-2xl"
@@ -505,13 +256,17 @@ const Hero = () => {
                   animate={{ translateY: ['-1.5%', '1.5%', '-1.5%'] }}
                   transition={{ duration: 6, ease: 'easeInOut', repeat: Infinity }}
                 >
-                  <DemoScreen sceneKey={scene.key} />
+                  <ShowcaseVideo src={scene.videoSrc} poster={scene.posterSrc} />
                 </motion.div>
+
+                {/* Soft vignette for readability + depth */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/35 pointer-events-none" />
+
                 <div className="absolute left-6 bottom-6">
                   <div className="inline-flex items-center gap-2 rounded-full bg-black/40 px-4 py-2 text-white backdrop-blur-md border border-white/15">
                     <span className="h-2 w-2 rounded-full bg-neon-teal" aria-hidden="true" />
                     <span className="text-sm font-semibold">{scene.label}</span>
-                    <span className="text-xs text-white/70">— live workspace view</span>
+                    <span className="text-xs text-white/70">— recorded workspace flow</span>
                   </div>
                 </div>
               </motion.div>
@@ -521,28 +276,46 @@ const Hero = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={`${scene.key}-top`}
-              className="absolute -top-8 -left-10 md:-left-14 w-56 md:w-60 rounded-2xl u-glass-strong border border-slate-200/70 dark:border-white/20 p-4 text-left"
+              className="absolute -top-8 -left-10 md:-left-14 w-56 md:w-60 rounded-2xl overflow-hidden border border-slate-200/70 dark:border-white/20 shadow-2xl text-left"
               initial={{ opacity: 0, scale: 0.96, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: 16 }}
               transition={{ duration: 0.22, ease: 'easeOut' }}
             >
-              <p className="text-sm font-semibold text-headings dark:text-white">{scene.topCard.title}</p>
-              <p className="mt-1 text-xs text-body-copy dark:text-slate-300">{scene.topCard.body}</p>
+              <ShowcaseVideo
+                src={scene.videoSrc}
+                poster={scene.posterSrc}
+                className="absolute inset-0 scale-[1.35]"
+                objectPosition={scene.cropTop ?? '20% 20%'}
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/40 to-black/10 dark:from-black/80 dark:via-black/45 pointer-events-none" />
+              <div className="relative p-4">
+                <p className="text-sm font-semibold text-white">{scene.topCard.title}</p>
+                <p className="mt-1 text-xs text-white/80">{scene.topCard.body}</p>
+              </div>
             </motion.div>
           </AnimatePresence>
 
           <AnimatePresence mode="wait">
             <motion.div
               key={`${scene.key}-bottom`}
-              className="absolute -bottom-10 -right-10 md:-right-14 w-64 md:w-72 rounded-2xl u-glass-strong border border-slate-200/70 dark:border-white/20 p-4 text-left"
+              className="absolute -bottom-10 -right-10 md:-right-14 w-64 md:w-72 rounded-2xl overflow-hidden border border-slate-200/70 dark:border-white/20 shadow-2xl text-left"
               initial={{ opacity: 0, scale: 0.96, y: -16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: -16 }}
               transition={{ duration: 0.22, ease: 'easeOut' }}
             >
-              <p className="text-sm font-semibold text-headings dark:text-white">{scene.bottomCard.title}</p>
-              <p className="mt-1 text-xs text-body-copy dark:text-slate-300">{scene.bottomCard.body}</p>
+              <ShowcaseVideo
+                src={scene.videoSrc}
+                poster={scene.posterSrc}
+                className="absolute inset-0 scale-[1.35]"
+                objectPosition={scene.cropBottom ?? '80% 80%'}
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/40 to-black/10 dark:from-black/80 dark:via-black/45 pointer-events-none" />
+              <div className="relative p-4">
+                <p className="text-sm font-semibold text-white">{scene.bottomCard.title}</p>
+                <p className="mt-1 text-xs text-white/80">{scene.bottomCard.body}</p>
+              </div>
             </motion.div>
           </AnimatePresence>
         </motion.div>
