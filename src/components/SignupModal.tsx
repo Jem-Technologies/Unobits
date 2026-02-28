@@ -63,22 +63,36 @@ const SignupModal = ({ onSwitchToLogin, onClose }: SignupModalProps) => {
         return;
       }
 
-      await apiPost('/signup', {
+      const res: any = await apiPost('/auth/web/signup', {
         name,
         email,
         password,
         org_name: company,
+        to: '/',
       });
+
+      if (!res?.exchangeUrl) {
+        showMsg('error', 'Account created, but redirect was missing. Please try signing in.');
+        return;
+      }
 
       showMsg('notice', 'Account created. Redirecting…');
       setTimeout(() => {
-        window.location.href = getAppOrigin() + '/';
-      }, 300);
+        window.location.href = String(res.exchangeUrl);
+      }, 250);
     } catch (err: any) {
       showMsg('error', err?.message || 'Unable to sign up.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogle = () => {
+    const u = new URL(getAppOrigin() + '/api/auth/google/start');
+    u.searchParams.set('client', 'web');
+    u.searchParams.set('to', '/');
+    if (company) u.searchParams.set('org_name', company);
+    window.location.href = u.toString();
   };
 
   return (
@@ -201,6 +215,21 @@ const SignupModal = ({ onSwitchToLogin, onClose }: SignupModalProps) => {
             <span className="unb-btn-text" data-loading={loading ? '1' : '0'}>
               {loading ? 'Please wait…' : 'Create account'}
             </span>
+          </button>
+
+          <div className="flex items-center gap-3 text-xs text-slate-400">
+            <div className="h-px flex-1 bg-white/10" />
+            <span>or</span>
+            <div className="h-px flex-1 bg-white/10" />
+          </div>
+
+          <button
+            type="button"
+            onClick={handleGoogle}
+            disabled={loading}
+            className="group relative inline-flex w-full items-center justify-center rounded-lg border border-white/15 bg-transparent px-4 py-2.5 text-sm font-semibold text-slate-100 transition hover:bg-white/5 disabled:opacity-60"
+          >
+            Continue with Google
           </button>
         </form>
 

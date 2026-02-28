@@ -42,22 +42,46 @@ const LoginModal = ({ onSwitchToSignup, onClose }: LoginModalProps) => {
     setLoading(true);
 
     try {
-      const org_slug = orgFromPath || slugifyOrg(orgInput);
-      if (!org_slug) {
-        showMsg('error', 'Please enter your Organization.');
+      const payload: any = { email, password, to: '/' };
+      const org_slug = orgFromPath || (orgInput ? slugifyOrg(orgInput) : '');
+      if (org_slug) payload.org_slug = org_slug;
+
+      const res: any = await apiPost('/auth/web/login', payload);
+      if (!res?.exchangeUrl) {
+        showMsg('error', 'Sign-in succeeded, but redirect was missing. Please try again.');
         return;
       }
-      await apiPost('/login', { email, password, org_slug });
+
       showMsg('notice', 'Signed in. Redirecting…');
-      // Small delay to let the message render before redirect
       setTimeout(() => {
-        window.location.href = getAppOrigin() + '/';
-      }, 300);
+        window.location.href = String(res.exchangeUrl);
+      }, 250);
     } catch (err: any) {
-      showMsg('error', err?.message || 'Unable to sign in.');
+      const data = err?.data;
+      if (data?.error === 'organization_required' && Array.isArray(data?.orgs) && data.orgs.length) {
+        const list = data.orgs
+          .slice(0, 5)
+          .map((o: any) => o.slug || o.name)
+          .filter(Boolean)
+          .join(', ');
+        showMsg('error', list ? `Please enter your organization slug. Available: ${list}` : 'Please enter your organization slug.');
+      } else if (data?.error === 'multiple_org_matches') {
+        showMsg('error', 'Multiple organizations match that value. Please enter the full organization slug (e.g. acme-inc-2).');
+      } else {
+        showMsg('error', err?.message || 'Unable to sign in.');
+      }
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogle = () => {
+    const u = new URL(getAppOrigin() + '/api/auth/google/start');
+    u.searchParams.set('client', 'web');
+    u.searchParams.set('to', '/');
+    const org_slug = orgFromPath || (orgInput ? slugifyOrg(orgInput) : '');
+    if (org_slug) u.searchParams.set('org', org_slug);
+    window.location.href = u.toString();
   };
 
   return (
@@ -122,11 +146,11 @@ const LoginModal = ({ onSwitchToSignup, onClose }: LoginModalProps) => {
           {!orgFromPath && (
             <div>
               <label htmlFor="loginOrg" className="block text-sm font-medium text-headings dark:text-slate-200">
-                Organization
+                Organization (optional if you belong to one org)
               </label>
               <input
                 id="loginOrg"
-                required={!orgFromPath}
+                required={false}
                 value={orgInput}
                 onChange={(e) => setOrgInput(e.target.value)}
                 placeholder="your-company"
@@ -144,6 +168,21 @@ const LoginModal = ({ onSwitchToSignup, onClose }: LoginModalProps) => {
             <span className="unb-btn-text" data-loading={loading ? '1' : '0'}>
               {loading ? 'Please wait…' : 'Sign in'}
             </span>
+          </button>
+
+          <div className="flex items-center gap-3 text-xs text-slate-400">
+            <div className="h-px flex-1 bg-white/10" />
+            <span>or</span>
+            <div className="h-px flex-1 bg-white/10" />
+          </div>
+
+          <button
+            type="button"
+            onClick={handleGoogle}
+            disabled={loading}
+            className="group relative inline-flex w-full items-center justify-center rounded-lg border border-white/15 bg-transparent px-4 py-2.5 text-sm font-semibold text-slate-100 transition hover:bg-white/5 disabled:opacity-60"
+          >
+            Continue with Google
           </button>
         </form>
 

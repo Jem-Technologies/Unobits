@@ -46,8 +46,10 @@ export async function apiPost<T = any>(path: string, body?: any): Promise<T> {
       (code === 'email_exists')          ? 'That email is already in use.' :
       (code === 'signup_failed')         ? (data?.detail || 'Unable to create your account.') :
       (data?.error_description || data?.message || code);
-    const err = new Error(msg) as Error & { code?: string };
+    const err = new Error(msg) as Error & { code?: string; status?: number; data?: any };
     (err as any).code = code;
+    (err as any).status = res.status;
+    (err as any).data = data;
     throw err;
   }
   return data as T;
